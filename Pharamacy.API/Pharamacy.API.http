@@ -1,0 +1,6 @@
+@Pharamacy.API_HostAddress = http://localhost:5294
+
+GET {{Pharamacy.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
