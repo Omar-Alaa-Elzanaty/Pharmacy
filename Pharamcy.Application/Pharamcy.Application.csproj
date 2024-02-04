@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <Folder Include="Common\Mapping\" />
+    <Folder Include="Common\Mapping\" />
   </ItemGroup>
 
 </Project>

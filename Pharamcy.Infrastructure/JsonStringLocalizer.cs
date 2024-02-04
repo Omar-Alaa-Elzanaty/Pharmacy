@@ -6,7 +6,7 @@ namespace Pharamcy.Infrastructure
 {
     public class JsonStringLocalizer : IStringLocalizer
     {
-        private readonly JsonSerializer? _serializer = new JsonSerializer();
+        private readonly JsonSerializer? _serializer = new();
         private readonly IDistributedCache cache;
 
         public JsonStringLocalizer(IDistributedCache cache)
@@ -37,19 +37,19 @@ namespace Pharamcy.Infrastructure
         public IEnumerable<LocalizedString> GetAllStrings(bool includeParentCultures)
         {
             var filePath = $"Resources/{Thread.CurrentThread.CurrentCulture.Name}.json";
-            using FileStream stream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
-            using StreamReader streamReader = new StreamReader(stream);
+            using FileStream stream = new(filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
+            using StreamReader streamReader = new(stream);
 
-            using JsonTextReader reader = new JsonTextReader(streamReader);
+            using JsonTextReader reader = new(streamReader);
             while (reader.Read())
             {
                 if (reader.TokenType != JsonToken.PropertyName) continue;
 
-                var key =reader.Value as string;
+                var key =reader.Value  as string??"";
 
                 reader.Read();
 
-                var value = _serializer.Deserialize<string>(reader);
+                var value = _serializer?.Deserialize<string>(reader);
                 yield return new LocalizedString(key, value);
                 
             }
@@ -88,16 +88,17 @@ namespace Pharamcy.Infrastructure
                 string.IsNullOrEmpty(filePath))
                 return string.Empty;
 
-            using FileStream stream = new FileStream(filePath,FileMode.Open,FileAccess.Read,FileShare.Read);
-            using StreamReader streamReader = new StreamReader(stream);
+            using FileStream stream = new(filePath,FileMode.Open,FileAccess.Read,FileShare.Read);
+            using StreamReader streamReader = new(stream);
 
-            using JsonTextReader reader = new JsonTextReader(streamReader);
+            using JsonTextReader reader = new(streamReader);
 
             while (reader.Read())
             {
                 if(reader.TokenType == JsonToken.PropertyName&&reader.Value as string==propertyName) {
                     reader.Read();
-                    return _serializer.Deserialize<string>(reader);
+
+                    return _serializer?.Deserialize<string>(reader)??"";
                 
                 }  
                 
