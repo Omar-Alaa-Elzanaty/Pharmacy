@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Pharamcy.Domain.Models
 {
-    public class Clients : BaseEntity
+    public class SalesInvoice : BaseEntity 
     {
     }
 }

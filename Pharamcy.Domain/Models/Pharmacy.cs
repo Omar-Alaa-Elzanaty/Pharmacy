@@ -9,10 +9,10 @@ namespace Pharamcy.Domain.Models
     public class Pharmacy:BaseEntity
     {
         public List<Medicine> Medicines { get; set; } = new();
-        public List<PurchaseInvoices>  PurchaseInvoices { get; set; } = new();
-        public List<SalesInvoices>  SalesInvoices{ get; set; } = new();
-        public List<Clients>  Clients { get; set; } = new();
-        public List<LostPofit>  LostPofits  { get; set; } = new();
+        public List<PurchaseInvoice>  PurchaseInvoices { get; set; } = new();
+        public List<SalesInvoice>  SalesInvoices{ get; set; } = new();
+        public List<Client>  Clients { get; set; } = new();
+        public List<Lost>  LostPofits  { get; set; } = new();
 
     }
 }

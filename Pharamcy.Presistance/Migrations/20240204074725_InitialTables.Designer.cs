@@ -12,8 +12,8 @@ using Pharamcy.Presistance.Context;
 namespace Pharamcy.Presistance.Migrations
 {
     [DbContext(typeof(PharmacyDBContext))]
-    [Migration("20240204063931_initial")]
-    partial class initial
+    [Migration("20240204074725_InitialTables")]
+    partial class InitialTables
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,7 @@ namespace Pharamcy.Presistance.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Pharamcy.Domain.Models.Clients", b =>
+            modelBuilder.Entity("Pharamcy.Domain.Models.Client", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -46,7 +46,7 @@ namespace Pharamcy.Presistance.Migrations
                     b.ToTable("Clients");
                 });
 
-            modelBuilder.Entity("Pharamcy.Domain.Models.LostPofit", b =>
+            modelBuilder.Entity("Pharamcy.Domain.Models.Lost", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -64,7 +64,7 @@ namespace Pharamcy.Presistance.Migrations
 
                     b.HasIndex("PharmacyId");
 
-                    b.ToTable("LostPofit");
+                    b.ToTable("Losts");
                 });
 
             modelBuilder.Entity("Pharamcy.Domain.Models.Medicine", b =>
@@ -88,7 +88,7 @@ namespace Pharamcy.Presistance.Migrations
 
                     b.HasIndex("pharmacyId");
 
-                    b.ToTable("Medicine");
+                    b.ToTable("Medicines");
                 });
 
             modelBuilder.Entity("Pharamcy.Domain.Models.Pharmacy", b =>
@@ -107,7 +107,7 @@ namespace Pharamcy.Presistance.Migrations
                     b.ToTable("Pharmacies");
                 });
 
-            modelBuilder.Entity("Pharamcy.Domain.Models.PurchaseInvoices", b =>
+            modelBuilder.Entity("Pharamcy.Domain.Models.PurchaseInvoice", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -128,7 +128,7 @@ namespace Pharamcy.Presistance.Migrations
                     b.ToTable("PurchaseInvoices");
                 });
 
-            modelBuilder.Entity("Pharamcy.Domain.Models.SalesInvoices", b =>
+            modelBuilder.Entity("Pharamcy.Domain.Models.SalesInvoice", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -149,14 +149,41 @@ namespace Pharamcy.Presistance.Migrations
                     b.ToTable("SalesInvoices");
                 });
 
-            modelBuilder.Entity("Pharamcy.Domain.Models.Clients", b =>
+            modelBuilder.Entity("Pharamcy.Domain.Models.Store", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("MedicineId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MedicineId");
+
+                    b.HasIndex("PId")
+                        .IsUnique();
+
+                    b.ToTable("Stores");
+                });
+
+            modelBuilder.Entity("Pharamcy.Domain.Models.Client", b =>
                 {
                     b.HasOne("Pharamcy.Domain.Models.Pharmacy", null)
                         .WithMany("Clients")
                         .HasForeignKey("PharmacyId");
                 });
 
-            modelBuilder.Entity("Pharamcy.Domain.Models.LostPofit", b =>
+            modelBuilder.Entity("Pharamcy.Domain.Models.Lost", b =>
                 {
                     b.HasOne("Pharamcy.Domain.Models.Pharmacy", null)
                         .WithMany("LostPofits")
@@ -174,18 +201,37 @@ namespace Pharamcy.Presistance.Migrations
                     b.Navigation("pharmacy");
                 });
 
-            modelBuilder.Entity("Pharamcy.Domain.Models.PurchaseInvoices", b =>
+            modelBuilder.Entity("Pharamcy.Domain.Models.PurchaseInvoice", b =>
                 {
                     b.HasOne("Pharamcy.Domain.Models.Pharmacy", null)
                         .WithMany("PurchaseInvoices")
                         .HasForeignKey("PharmacyId");
                 });
 
-            modelBuilder.Entity("Pharamcy.Domain.Models.SalesInvoices", b =>
+            modelBuilder.Entity("Pharamcy.Domain.Models.SalesInvoice", b =>
                 {
                     b.HasOne("Pharamcy.Domain.Models.Pharmacy", null)
                         .WithMany("SalesInvoices")
                         .HasForeignKey("PharmacyId");
+                });
+
+            modelBuilder.Entity("Pharamcy.Domain.Models.Store", b =>
+                {
+                    b.HasOne("Pharamcy.Domain.Models.Medicine", "Medicine")
+                        .WithMany()
+                        .HasForeignKey("MedicineId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Pharamcy.Domain.Models.Pharmacy", "pharmacy")
+                        .WithOne()
+                        .HasForeignKey("Pharamcy.Domain.Models.Store", "PId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Medicine");
+
+                    b.Navigation("pharmacy");
                 });
 
             modelBuilder.Entity("Pharamcy.Domain.Models.Pharmacy", b =>

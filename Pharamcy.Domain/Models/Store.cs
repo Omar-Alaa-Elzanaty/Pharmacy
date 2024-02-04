@@ -11,8 +11,8 @@ namespace Pharamcy.Domain.Models
     {
         [ForeignKey("pharmacy")]
         public int PId { get; set; }
-        public Pharmacy   pharmacy { get; set; }
-        public List<Medicine> Medicines { get; set; } = new();
-
+        public Pharmacy pharmacy { get; set; }
+        public int MedicineId { get; set; }
+        public Medicine Medicine { get; set; }
     }
 }
