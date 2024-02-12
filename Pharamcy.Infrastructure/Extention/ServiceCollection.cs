@@ -1,8 +1,12 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Localization;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
 using Pharamcy.Application.Interfaces.Auth;
+using Pharamcy.Domain.Identity;
 using Pharamcy.Infrastructure.Services.Auth;
 using Pharamcy.Infrastructure.Services.Localization;
 using System.Globalization;
@@ -47,7 +51,6 @@ namespace Pharamcy.Infrastructure.Extention
 
             return services;
         }
-
         private static IServiceCollection AddCollections(this IServiceCollection services)
         {
             services.AddTransient<IAuthServices, Authentication>();
