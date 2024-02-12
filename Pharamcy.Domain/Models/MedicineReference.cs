@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace Pharamcy.Domain.Models
 {
-    public class Medicine : BaseEntity  
+    public class MedicineReference
     {
-        public int PharmacyId { get; set; }
-        public Pharmacy pharmacy { get; set; }
+        public string Name { get; set; }
     }
 }

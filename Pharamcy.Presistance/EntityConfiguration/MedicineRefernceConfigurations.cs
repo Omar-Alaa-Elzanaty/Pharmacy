@@ -9,11 +9,11 @@ using Pharamcy.Domain.Models;
 
 namespace Pharamcy.Presistance.EntityConfiguration
 {
-    internal class StoreConfigurations : IEntityTypeConfiguration<Store>
+    internal class MedicineRefernceConfigurations : IEntityTypeConfiguration<MedicineReference>
     {
-        public void Configure(EntityTypeBuilder<Store> builder)
+        public void Configure(EntityTypeBuilder<MedicineReference> builder)
         {
-
+            builder.HasKey(x => x.Name);
         }
     }
 }

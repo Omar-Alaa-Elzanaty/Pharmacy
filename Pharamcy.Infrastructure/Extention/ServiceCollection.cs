@@ -1,7 +1,14 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Localization;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
+using Pharamcy.Application.Interfaces.Auth;
+using Pharamcy.Domain.Identity;
+using Pharamcy.Infrastructure.Services.Auth;
+using Pharamcy.Infrastructure.Services.Localization;
 using System.Globalization;
 
 namespace Pharamcy.Infrastructure.Extention
@@ -10,15 +17,15 @@ namespace Pharamcy.Infrastructure.Extention
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {
-            services.Localization();
-              
+            services.AddLocalization()
+                    .AddCollections();
 
-            return services;    
+            return services;
         }
        
-        private static IServiceCollection Localization(this IServiceCollection services)
+        private static IServiceCollection AddLocalization(this IServiceCollection services)
         {
-            services.AddLocalization();
+            LocalizationServiceCollectionExtensions.AddLocalization(services);
 
             services.AddDistributedMemoryCache();
 
@@ -41,6 +48,12 @@ namespace Pharamcy.Infrastructure.Extention
 
                 op.SupportedCultures = supportedCultures;
             });
+
+            return services;
+        }
+        private static IServiceCollection AddCollections(this IServiceCollection services)
+        {
+            services.AddTransient<IAuthServices, AuthServices>();
 
             return services;
         }
