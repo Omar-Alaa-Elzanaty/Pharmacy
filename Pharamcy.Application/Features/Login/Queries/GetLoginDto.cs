@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace Pharamcy.Application.Features.Login.Queries
 {
-    internal class GetLoginDto
+    public class GetLoginDto
     {
+        public string Id { get; set; }
+        public string UserName { get; set; }
+        public string Role { get; set; }
+        public string Token { get; set; }
     }
 }
