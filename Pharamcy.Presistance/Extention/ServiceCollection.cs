@@ -32,6 +32,7 @@ namespace Pharamcy.Presistance.Extention
                     .AddUserManager<UserManager<ApplicationUser>>()
                     .AddSignInManager<SignInManager<ApplicationUser>>()
                     .AddDefaultTokenProviders();
+
             return services;
         }
     }

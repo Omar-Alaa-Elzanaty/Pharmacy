@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Pharamcy.Domain.Identity;
 using Pharamcy.Shared;
 
 namespace Pharamcy.Application.Interfaces.Auth
 {
     public interface IAuthServices
     {
-        Task<Response> SignUp();
+        string GenerateToken(ApplicationUser user, string role, int? pharmacyId = null);
     }
 }
