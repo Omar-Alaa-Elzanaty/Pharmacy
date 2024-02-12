@@ -21,6 +21,7 @@ namespace Pharamcy.Presistance.Context
             modelBuilder.Entity<IdentityUserLogin<string>>().ToTable("UserLogins", "Account");
             modelBuilder.Entity<IdentityRoleClaim<string>>().ToTable("RoleClaims", "Account");
             modelBuilder.Entity<IdentityUserToken<string>>().ToTable("UserTokens", "Account");
+
             modelBuilder.HasDefaultSchema("Phamracy");
 
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
@@ -32,6 +33,7 @@ namespace Pharamcy.Presistance.Context
         public DbSet<PurchaseInvoice> PurchaseInvoices { get; set; }
         public DbSet<SalesInvoice> SalesInvoices { get; set; }
         public DbSet<Store> Stores { get; set; }
+        public DbSet<MedicineReference> MedicinesReference { get; set;}
 
     }
 }

@@ -53,7 +53,7 @@ namespace Pharamcy.Infrastructure.Extention
         }
         private static IServiceCollection AddCollections(this IServiceCollection services)
         {
-            services.AddTransient<IAuthServices, Authentication>();
+            services.AddTransient<IAuthServices, AuthServices>();
 
             return services;
         }
