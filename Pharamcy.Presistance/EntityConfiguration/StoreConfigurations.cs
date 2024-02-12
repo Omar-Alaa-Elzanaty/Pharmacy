@@ -13,11 +13,7 @@ namespace Pharamcy.Presistance.EntityConfiguration
     {
         public void Configure(EntityTypeBuilder<Store> builder)
         {
-            builder
-                .HasOne(x => x.pharmacy)
-                .WithOne()
-                .HasForeignKey<Store>(x => x.PId)
-                .OnDelete(DeleteBehavior.NoAction);
+
         }
     }
 }

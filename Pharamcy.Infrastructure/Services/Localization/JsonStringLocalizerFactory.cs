@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Localization;
 
-namespace Pharamcy.Infrastructure
+namespace Pharamcy.Infrastructure.Services.Localization
 {
     public class JsonStringLocalizerFactory : IStringLocalizerFactory
     {
@@ -15,12 +15,12 @@ namespace Pharamcy.Infrastructure
         public IStringLocalizer Create(Type resourceSource)
         {
             return new JsonStringLocalizer(cache);
-        } 
+        }
 
         public IStringLocalizer Create(string baseName, string location)
         {
             return new JsonStringLocalizer(cache);
-           
+
         }
     }
 }

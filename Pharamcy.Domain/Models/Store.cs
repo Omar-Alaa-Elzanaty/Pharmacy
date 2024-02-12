@@ -10,8 +10,6 @@ namespace Pharamcy.Domain.Models
     public class Store:BaseEntity
     {
         [ForeignKey("pharmacy")]
-        public int PId { get; set; }
-        public Pharmacy pharmacy { get; set; }
         public int MedicineId { get; set; }
         public Medicine Medicine { get; set; }
     }

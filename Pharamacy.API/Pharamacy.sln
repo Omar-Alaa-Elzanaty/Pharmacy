@@ -3,19 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34408.163
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pharamacy.Api", "Pharamacy.Api.csproj", "{45B5ABE5-7DB7-45BA-AE03-09822498B6B2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pharamacy.Api", "Pharamacy.Api.csproj", "{45B5ABE5-7DB7-45BA-AE03-09822498B6B2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pharamcy.Domain", "..\Pharamcy.Domain\Pharamcy.Domain.csproj", "{CE5B09C3-786A-485B-8437-79CD4CC7A77C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pharamcy.Domain", "..\Pharamcy.Domain\Pharamcy.Domain.csproj", "{CE5B09C3-786A-485B-8437-79CD4CC7A77C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pharamcy.Application", "..\Pharamcy.Application\Pharamcy.Application.csproj", "{F57F0830-FC12-4A16-AB2D-13409C39487F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pharamcy.Application", "..\Pharamcy.Application\Pharamcy.Application.csproj", "{F57F0830-FC12-4A16-AB2D-13409C39487F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pharamcy.Presistance", "..\Pharamcy.Presistance\Pharamcy.Presistance.csproj", "{ABDD50DA-7957-4D07-9B04-B9C74AB6A093}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pharamcy.Presistance", "..\Pharamcy.Presistance\Pharamcy.Presistance.csproj", "{ABDD50DA-7957-4D07-9B04-B9C74AB6A093}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pharamcy.Infrastructure", "..\Pharamcy.Infrastructure\Pharamcy.Infrastructure.csproj", "{1A5151D7-7CC3-4B7C-B292-EF16214573DE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pharamcy.Infrastructure", "..\Pharamcy.Infrastructure\Pharamcy.Infrastructure.csproj", "{1A5151D7-7CC3-4B7C-B292-EF16214573DE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pharamcy.Shared", "..\Pharamcy.Shared\Pharamcy.Shared.csproj", "{574229DA-9D18-46A0-A8F7-3E3020BCD11B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pharamcy.Shared", "..\Pharamcy.Shared\Pharamcy.Shared.csproj", "{574229DA-9D18-46A0-A8F7-3E3020BCD11B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pharamcy.Presentation", "..\Pharamcy.Presentation\Pharamcy.Presentation.csproj", "{529BAF2A-9801-4969-B518-03EF6F91AB63}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pharamcy.Presentation", "..\Pharamcy.Presentation\Pharamcy.Presentation.csproj", "{529BAF2A-9801-4969-B518-03EF6F91AB63}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Src", "Src", "{5A71DD12-A898-42FA-8A27-1A22E60D5E77}"
 EndProject
@@ -28,6 +28,11 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{E27D2A24-0CAF-47F2-8414-B4B19C88E72F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{D2384D69-FB3F-413A-91E6-1CD29FDDFD81}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0D8796E5-FE9C-4890-AFD6-48C7C96DE13F}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

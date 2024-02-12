@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Localization;
 using Newtonsoft.Json;
 
-namespace Pharamcy.Infrastructure
+namespace Pharamcy.Infrastructure.Services.Localization
 {
     public class JsonStringLocalizer : IStringLocalizer
     {
@@ -14,7 +14,8 @@ namespace Pharamcy.Infrastructure
             this.cache = cache;
         }
 
-        public LocalizedString this[string name] {
+        public LocalizedString this[string name]
+        {
             get
             {
                 var value = GetString(name);
@@ -22,14 +23,15 @@ namespace Pharamcy.Infrastructure
             }
         }
 
-        public LocalizedString this[string name, params object[] arguments] {
+        public LocalizedString this[string name, params object[] arguments]
+        {
 
             get
             {
                 var actualvalue = this[name];
-                return !actualvalue.ResourceNotFound 
+                return !actualvalue.ResourceNotFound
                     ? new LocalizedString(name, string.Format(actualvalue.Value, arguments)
-                    ): actualvalue;
+                    ) : actualvalue;
             }
 
         }
@@ -45,30 +47,32 @@ namespace Pharamcy.Infrastructure
             {
                 if (reader.TokenType != JsonToken.PropertyName) continue;
 
-                var key =reader.Value  as string??"";
+                var key = reader.Value as string ?? "";
 
                 reader.Read();
 
                 var value = _serializer?.Deserialize<string>(reader);
                 yield return new LocalizedString(key, value);
-                
+
             }
 
         }
-        private string GetString(string key) {
+        private string GetString(string key)
+        {
             //Resources/ar-EG.json
             var filePath = $"Resources/{Thread.CurrentThread.CurrentCulture.Name}.json";
-            
-            var fullFilePath=Path.GetFullPath(filePath);    
 
-            if(File.Exists(fullFilePath)) {
+            var fullFilePath = Path.GetFullPath(filePath);
+
+            if (File.Exists(fullFilePath))
+            {
                 var cacheKey = $"local_{Thread.CurrentThread.CurrentCulture.Name}_{key}";
                 var cacheValue = cache.GetString(cacheKey);
                 if (!string.IsNullOrEmpty(cacheValue))
                 {
                     return cacheValue;
                 }
-                var result=GetValueFromJson(key,fullFilePath);
+                var result = GetValueFromJson(key, fullFilePath);
 
                 if (!string.IsNullOrEmpty(result))
                 {
@@ -83,30 +87,31 @@ namespace Pharamcy.Infrastructure
         }
 
         private string GetValueFromJson(string propertyName, string filePath)
-        { 
-               if(string.IsNullOrEmpty(propertyName)||
-                string.IsNullOrEmpty(filePath))
+        {
+            if (string.IsNullOrEmpty(propertyName) ||
+             string.IsNullOrEmpty(filePath))
                 return string.Empty;
 
-            using FileStream stream = new(filePath,FileMode.Open,FileAccess.Read,FileShare.Read);
+            using FileStream stream = new(filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
             using StreamReader streamReader = new(stream);
 
             using JsonTextReader reader = new(streamReader);
 
             while (reader.Read())
             {
-                if(reader.TokenType == JsonToken.PropertyName&&reader.Value as string==propertyName) {
+                if (reader.TokenType == JsonToken.PropertyName && reader.Value as string == propertyName)
+                {
                     reader.Read();
 
-                    return _serializer?.Deserialize<string>(reader)??"";
-                
-                }  
-                
+                    return _serializer?.Deserialize<string>(reader) ?? "";
+
+                }
+
             }
-            return string.Empty;    
+            return string.Empty;
         }
 
-        
+
 
     }
 }
