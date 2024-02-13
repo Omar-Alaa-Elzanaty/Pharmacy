@@ -1,12 +1,8 @@
 {
-  "PharmacyNotExist": "The Pharmacy Don't Exist",
-  "Success": "Successfull Operation",
-  "PharmacyExist": "The pharmacy Already Exsist",
-  "EmailExist": "The Email Already Exist",
-  "NameExist": "The Name Already Exist"
-
-
-
-
-
+  "PharmacyNotExist": "The Pharmacy Don't Exist.",
+  "Success": "Successfull Operation.",
+  "PharmacyExist": "The pharmacy Already Exsist.",
+  "EmailExist": "The Email Already Exist.",
+  "NameExist": "The Name Already Exist.",
+  "InvalidLogin": "Username or password isn't correct."
 }

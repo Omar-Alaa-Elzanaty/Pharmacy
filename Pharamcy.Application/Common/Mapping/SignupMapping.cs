@@ -1,6 +1,6 @@
 ﻿using Mapster;
 using Microsoft.AspNetCore.Routing.Constraints;
-using Pharamcy.Application.Features.Signup.Commands;
+using Pharamcy.Application.Features.Authentication.Signup.Commands;
 using Pharamcy.Domain.Identity;
 using System;
 using System.Collections.Generic;

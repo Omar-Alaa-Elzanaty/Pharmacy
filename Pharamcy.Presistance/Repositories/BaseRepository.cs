@@ -41,7 +41,7 @@ namespace Pharamcy.Presistance.Repositories
 
         public async Task<T> GetAsync(Func<T, bool> match)
         {
-            return dbContext.Set<T>().FirstOrDefault(match);    
+            return dbContext.Set<T>().FirstOrDefault(match);
         }
     }
 }

@@ -1,13 +1,13 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Pharamcy.Application.Features.Login.Queries;
-using Pharamcy.Application.Features.Signup.Commands;
+using Pharamcy.Application.Features.Authentication.Login.Queries;
+using Pharamcy.Application.Features.Authentication.Signup.Commands;
 
 namespace Pharamcy.Presentation.Controller
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthController:ApiController
+    public class AuthController : ApiController
     {
         private IMediator _mediator;
 
