@@ -13,17 +13,11 @@ namespace Pharamcy.Application.Features.Login.Queries
 {
     public record LoginQuery:IRequest<Response>
     {
-        public LoginQuery(string userName, string password)
-        {
-            UserName = userName;
-            Password = password;
-        }
-
         public string UserName { get; set; }
         public string Password { get; set; }
 
     }
-    public class LoginQueryHandler : IRequestHandler<LoginQuery, Response>
+    internal class LoginQueryHandler : IRequestHandler<LoginQuery, Response>
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IAuthServices _authServices;
