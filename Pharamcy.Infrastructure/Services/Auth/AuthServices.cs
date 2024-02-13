@@ -34,7 +34,7 @@ namespace Pharamcy.Infrastructure.Services.Auth
 
             if (role != Roles.SystemAdmin && role != Roles.Admin)
             {
-                claims.Append(new Claim(Comman.PharmacyId, pharmacyId.ToString() ?? " "));
+                claims.Append(new Claim(CommonConsts.PharmacyId, pharmacyId.ToString() ?? " "));
             }
 
             var token = new JwtSecurityToken(

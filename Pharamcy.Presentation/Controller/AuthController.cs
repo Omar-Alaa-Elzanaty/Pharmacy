@@ -5,7 +5,7 @@ using Pharamcy.Application.Features.Authentication.Signup.Commands;
 
 namespace Pharamcy.Presentation.Controller
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class AuthController : ApiController
     {
@@ -22,7 +22,13 @@ namespace Pharamcy.Presentation.Controller
             return Ok(await _mediator.Send(query));
         }
         [HttpPost]
-        public async Task<IActionResult> Signup(SignupCommand command)
+        public async Task<IActionResult> CreateSystemAdminAndAdmin(CreateSystemAdminAndAdminCommand command)
+        {
+            return Ok(await _mediator.Send(command));
+
+        }
+        [HttpPost]
+        public async Task<IActionResult> CreateModeratorAndCashier(CreateModeratorAndCashierCommand command)
         {
             return Ok(await _mediator.Send(command));
 

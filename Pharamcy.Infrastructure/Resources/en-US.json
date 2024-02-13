@@ -4,5 +4,6 @@
   "PharmacyExist": "The pharmacy Already Exsist.",
   "EmailExist": "The Email Already Exist.",
   "NameExist": "The Name Already Exist.",
-  "InvalidLogin": "Username or password isn't correct."
+  "InvalidLogin": "Username or password isn't correct.",
+  "InvalidOperation": "You Aren't Authorized."
 }

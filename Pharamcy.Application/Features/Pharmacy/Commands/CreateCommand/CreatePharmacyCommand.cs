@@ -35,7 +35,7 @@ namespace Pharamcy.Application.Features.Pharmacy.Commands.CreateCommand
 
             var oldpharmacy = await _unitofWork.Repository<Domain.Models.Pharmacy>().GetAsync(p => p.Name == command.Name);
             if (oldpharmacy != null)
-                return new Response { IsSuccess = false, Message = _localizer["pharmacy exist"] };
+                return new Response { IsSuccess = false, Message = _localizer["PharmacyExist"] };
 
             var pharmacy = _mapper.Map<Domain.Models.Pharmacy>(command);
 

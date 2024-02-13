@@ -14,7 +14,7 @@ namespace Pharamcy.Application.Common.Mapping
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<SignupCommand, ApplicationUser>();
+            config.NewConfig<CreateSystemAdminAndAdminCommand, ApplicationUser>();
 
 
         }
