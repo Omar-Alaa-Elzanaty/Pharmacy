@@ -36,7 +36,12 @@ namespace Pharamcy.Application.Features.Authentication.Signup.Commands
         }
         public async Task<Response> Handle(CreateSystemAdminAndAdminCommand command, CancellationToken cancellationToken)
         {
-            if(command.Role!=Roles.Casher|| command.Role != Roles.Moderator) {
+            var roles = await _userManager.GetRolesAsync(await _userManager.FindByIdAsync(command.UserId) ?? new ApplicationUser());
+
+            if (!roles.Any(i => i == Roles.SystemAdmin) && command.Role == Roles.Admin)
+                return await Response.FailureAsync(_localizer["InvalidOperation"]);
+
+            if (command.Role!=Roles.Casher|| command.Role != Roles.Moderator) {
                 return await Response.FailureAsync(_localizer["InvalidOperation"]);
             }
             if (await _userManager.FindByEmailAsync(command.Email) != null)
