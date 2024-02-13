@@ -2,7 +2,7 @@
 
 namespace Pharamcy.Application.Features.Authentication.Signup.Commands
 {
-    internal class SignupCommandValidator : AbstractValidator<SignupCommand>
+    internal class CreateSystemAdminCommandValidator : AbstractValidator<CreateSystemAdminAndAdminCommand>
     {
     }
 }

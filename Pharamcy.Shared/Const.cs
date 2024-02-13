@@ -13,7 +13,7 @@ namespace Pharamcy.Shared
         public static readonly string Moderator = "Moderator";
         public static readonly string Casher = "Casher";
     }
-    public class Comman 
+    public class CommonConsts 
     {
         public static readonly string PharmacyId = "PharamcyId";
     }
