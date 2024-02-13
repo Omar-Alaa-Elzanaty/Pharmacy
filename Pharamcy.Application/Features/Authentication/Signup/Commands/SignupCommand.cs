@@ -2,11 +2,10 @@
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Localization;
-using Pharamcy.Application.Features.Pharmacy.Commands.DeleteByIdCommand;
 using Pharamcy.Domain.Identity;
 using Pharamcy.Shared;
 
-namespace Pharamcy.Application.Features.Signup.Commands
+namespace Pharamcy.Application.Features.Authentication.Signup.Commands
 {
     public record SignupCommand : IRequest<Response>
     {
@@ -17,16 +16,16 @@ namespace Pharamcy.Application.Features.Signup.Commands
         public string NationalId { get; set; }
         public string Role { get; set; }
     };
-    public class SignupCommandHandler : IRequestHandler<SignupCommand, Response>
+    internal class SignupCommandHandler : IRequestHandler<SignupCommand, Response>
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IMapper _mapper;
-        private readonly IStringLocalizer<SignupCommandHandler> _localizer;
+        private readonly IStringLocalizer<SignupCommand> _localizer;
 
         public SignupCommandHandler(
             UserManager<ApplicationUser> userManager,
             IMapper mapper,
-            IStringLocalizer<SignupCommandHandler> localizer)
+            IStringLocalizer<SignupCommand> localizer)
         {
             _userManager = userManager;
             _mapper = mapper;

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Pharamcy.Application.Features.Login.Queries
+namespace Pharamcy.Application.Features.Authentication.Login.Queries
 {
     public class GetLoginDto
     {

@@ -1,7 +1,6 @@
 ﻿using MapsterMapper;
 using MediatR;
 using Microsoft.Extensions.Localization;
-using Pharamcy.Application.Features.Pharmacy.Commands.DeleteByIdCommand;
 using Pharamcy.Application.Interfaces.Repositories;
 using Pharamcy.Shared;
 namespace Pharamcy.Application.Features.Pharmacy.Commands.CreateCommand

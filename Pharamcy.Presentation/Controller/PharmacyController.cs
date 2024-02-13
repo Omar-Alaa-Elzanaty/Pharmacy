@@ -1,12 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Pharamcy.Application.Features.Login.Queries;
 using Pharamcy.Application.Features.Pharmacy.Commands.CreateCommand;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Pharamcy.Presentation.Controller
 {
