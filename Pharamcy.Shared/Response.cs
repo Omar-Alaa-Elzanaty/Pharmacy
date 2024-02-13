@@ -36,6 +36,15 @@ namespace Pharamcy.Shared
 
             return response;
         }
+        public async static Task<Response> SuccessAsync(string message)
+        {
+            Response response = new Response()
+            {
+                IsSuccess = true
+            };
+
+            return response;
+        }
         public async static Task<Response> FailureAsync(object data ,string message)
         {
             Response response = new Response()
