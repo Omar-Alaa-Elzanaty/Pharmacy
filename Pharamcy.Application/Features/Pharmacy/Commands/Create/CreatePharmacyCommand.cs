@@ -1,5 +1,7 @@
 ﻿using MapsterMapper;
 using MediatR;
+using Microsoft.Extensions.Localization;
+using Pharamcy.Application.Features.Pharmacy.Commands.DeleteByIdCommand;
 using Pharamcy.Application.Interfaces.Repositories;
 using Pharamcy.Shared;
 namespace Pharamcy.Application.Features.Pharmacy.Commands.CreateCommand
@@ -19,11 +21,14 @@ namespace Pharamcy.Application.Features.Pharmacy.Commands.CreateCommand
     {
         private readonly IUnitOfWork _unitofWork;
         private readonly IMapper _mapper;
+        private readonly IStringLocalizer<CreatePharmacyCommandHandler> _localizer;
 
-        public CreatePharmacyCommandHandler(IUnitOfWork unitofWork, IMapper mapper)
+
+        public CreatePharmacyCommandHandler(IUnitOfWork unitofWork, IMapper mapper, IStringLocalizer<CreatePharmacyCommandHandler> localizer)
         {
             _unitofWork = unitofWork;
             _mapper = mapper;
+            _localizer = localizer;
         }
 
         public async Task<Response> Handle(CreatePharmacyCommand command, CancellationToken cancellationToken)
@@ -31,7 +36,7 @@ namespace Pharamcy.Application.Features.Pharmacy.Commands.CreateCommand
 
             var oldpharmacy = await _unitofWork.Repository<Domain.Models.Pharmacy>().GetAsync(p => p.Name == command.Name);
             if (oldpharmacy != null)
-                return new Response { IsSuccess = false, Message = "The pharmacy Already Exsist" };
+                return new Response { IsSuccess = false, Message = _localizer["pharmacy exist"] };
 
             var pharmacy = _mapper.Map<Domain.Models.Pharmacy>(command);
 

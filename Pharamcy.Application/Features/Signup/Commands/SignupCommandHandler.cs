@@ -1,6 +1,8 @@
 ﻿using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Localization;
+using Pharamcy.Application.Features.Pharmacy.Commands.DeleteByIdCommand;
 using Pharamcy.Domain.Identity;
 using Pharamcy.Shared;
 
@@ -19,21 +21,25 @@ namespace Pharamcy.Application.Features.Signup.Commands
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IMapper _mapper;
+        private readonly IStringLocalizer<SignupCommandHandler> _localizer;
+
         public SignupCommandHandler(
             UserManager<ApplicationUser> userManager,
-            IMapper mapper)
+            IMapper mapper,
+            IStringLocalizer<SignupCommandHandler> localizer)
         {
             _userManager = userManager;
             _mapper = mapper;
+            _localizer = localizer;
         }
         public async Task<Response> Handle(SignupCommand command, CancellationToken cancellationToken)
         {
 
             if (await _userManager.FindByEmailAsync(command.Email) != null)
-                return new Response() { IsSuccess = false, Message = "The Email Already Exist" };
+                return new Response() { IsSuccess = false, Message = _localizer["email exist"] };
 
             if (await _userManager.FindByNameAsync(command.UserName) != null)
-                return new Response { IsSuccess = false, Message = "The Name Already Exist" };
+                return new Response { IsSuccess = false, Message = _localizer["name exist"] };
 
             var user = _mapper.Map<ApplicationUser>(command);
 
