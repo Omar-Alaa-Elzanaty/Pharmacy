@@ -1,7 +1,9 @@
 using Pharamcy.Application.extention;
+using Pharamcy.Application.Interfaces;
 using Pharamcy.Infrastructure.Extention;
 using Pharamcy.Presentation.Middleware;
 using Pharamcy.Presistance.Extention;
+using Pharamcy.Presistance.Seeding;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,15 +11,15 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-builder.Services.AddInfrastructure()
-                .AddApplication()
+
+builder.Services.AddApplication()
+                .AddInfrastructure()
                 .AddPresistance(builder.Configuration);
+
 
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen();
-
-
 
 
 var app = builder.Build();
@@ -33,7 +35,7 @@ app.UseMiddleware<GlobalExceptionHanlderMiddleware>();
 
 app.UseHttpsRedirection();
 
-var supportedCultures = new[] { "en-US", "ar-EG", "de-DE" };
+var supportedCultures = new[] { "en-US", "ar-EG" };
 
 var localizationOptions = new RequestLocalizationOptions()
     .SetDefaultCulture(supportedCultures[0])
@@ -44,5 +46,7 @@ app.UseRequestLocalization(localizationOptions);
 app.UseAuthorization();
 
 app.MapControllers();
+
+DataSeeding.Initialize(app.Services.CreateScope().ServiceProvider);
 
 app.Run();
