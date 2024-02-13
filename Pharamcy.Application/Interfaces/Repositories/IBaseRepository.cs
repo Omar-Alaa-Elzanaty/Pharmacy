@@ -4,12 +4,14 @@
     {
         //add-delete-update-getbyid
 
-        T GetById(int id);
+        public  Task<T> GetByIdAsync(int id);
+        public  Task<T> GetAsync(Func<T,bool>match);
 
-        void Add(T input);
 
-        void Update(T input);
+        public Task AddAsync(T input);
 
-        void Delete(int id);
+        public Task UpdateAsync(T input);
+
+        public Task DeleteAsync(int id);
     }
 }

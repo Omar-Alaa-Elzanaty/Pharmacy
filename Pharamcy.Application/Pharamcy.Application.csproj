@@ -23,9 +23,4 @@
     <ProjectReference Include="..\Pharamcy.Shared\Pharamcy.Shared.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Common\Mapping\" />
-    <Folder Include="Common\Mapping\" />
-  </ItemGroup>
-
 </Project>

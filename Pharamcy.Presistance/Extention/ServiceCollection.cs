@@ -16,6 +16,8 @@ namespace Pharamcy.Presistance.Extention
         {
             services.AddContext(configuration)
                     .AddTransient(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+            services.AddContext(configuration)
+                    .AddScoped<IUnitOfWork,UnitOfWork>();
 
             return services;
         }

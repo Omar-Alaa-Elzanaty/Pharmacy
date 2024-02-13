@@ -12,30 +12,36 @@ namespace Pharamcy.Presistance.Repositories
             this.dbContext = dbContext;
         }
 
-        public T GetById(int id)
+        public async Task<T> GetByIdAsync(int id)
         {
 
             return dbContext.Set<T>().Find(id);
         }
 
-        public void Add(T input)
+        public Task AddAsync(T input)
         {
             dbContext.Set<T>().Add(input);
             dbContext.SaveChanges();
+            return Task.CompletedTask;
         }
 
-        public void Update(T input)
+        public Task UpdateAsync(T input)
         {
             dbContext.Update(input);
             dbContext.SaveChanges();
+            return Task.CompletedTask;
         }
 
-        public void Delete(int id)
+        public Task DeleteAsync(int id)
         {
             dbContext.Remove(id);
             dbContext.SaveChanges();
+            return Task.CompletedTask;
         }
 
-
+        public async Task<T> GetAsync(Func<T, bool> match)
+        {
+            return dbContext.Set<T>().FirstOrDefault(match);    
+        }
     }
 }
