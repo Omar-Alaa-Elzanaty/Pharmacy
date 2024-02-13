@@ -15,7 +15,8 @@ namespace Pharamcy.Presistance.Extention
         public static IServiceCollection AddPresistance(this IServiceCollection services,IConfiguration configuration)
         {
             services.AddContext(configuration)
-                    .AddTransient(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+                    .AddTransient(typeof(IBaseRepository<>), typeof(BaseRepository<>))
+                    .AddTransient<IUnitOfWork, UnitOfWork>();
 
             return services;
         }
@@ -32,6 +33,7 @@ namespace Pharamcy.Presistance.Extention
                     .AddUserManager<UserManager<ApplicationUser>>()
                     .AddSignInManager<SignInManager<ApplicationUser>>()
                     .AddDefaultTokenProviders();
+            
 
             return services;
         }

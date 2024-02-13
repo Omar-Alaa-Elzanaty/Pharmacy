@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Pharamcy.Application.Features.Login.Queries;
-using Pharamcy.Application.Interfaces.Auth;
-using Pharamcy.Shared;
+using Pharamcy.Application.Features.Signup.Commands;
 
 namespace Pharamcy.Presentation.Controller
 {
@@ -26,6 +20,12 @@ namespace Pharamcy.Presentation.Controller
         public async Task<IActionResult> Login(LoginQuery query)
         {
             return Ok(await _mediator.Send(query));
+        }
+        [HttpPost]
+        public async Task<IActionResult> Signup(SignupCommand command)
+        {
+            return Ok(await _mediator.Send(command));
+
         }
     }
 }

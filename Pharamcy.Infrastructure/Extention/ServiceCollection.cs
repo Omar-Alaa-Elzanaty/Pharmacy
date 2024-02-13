@@ -1,12 +1,8 @@
 ﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Localization;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
 using Pharamcy.Application.Interfaces.Auth;
-using Pharamcy.Domain.Identity;
 using Pharamcy.Infrastructure.Services.Auth;
 using Pharamcy.Infrastructure.Services.Localization;
 using System.Globalization;
@@ -42,7 +38,6 @@ namespace Pharamcy.Infrastructure.Extention
                 var supportedCultures = new[] {
                   new CultureInfo("en-US"),
                   new CultureInfo("ar-EG"),
-                  new CultureInfo("de-DE")
                  };
                 op.DefaultRequestCulture = new RequestCulture(culture: supportedCultures[0]);
 
