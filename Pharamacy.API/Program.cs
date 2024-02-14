@@ -10,22 +10,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
-
-
-builder.Services.AddApplication()
-                .AddInfrastructure()
-                .AddPresistance(builder.Configuration);
-
-
-builder.Services.AddEndpointsApiExplorer();
-
-builder.Services.AddSwaggerGen();
-
-
-var app = builder.Build();
-
-
 builder.Services.AddSwaggerGen(option =>
 {
     option.SwaggerDoc("v1", new OpenApiInfo { Title = "Demo API", Version = "v1" });
@@ -52,6 +36,22 @@ builder.Services.AddSwaggerGen(option =>
                 }
             });
 });
+
+builder.Services.AddControllers();
+
+
+builder.Services.AddApplication()
+                .AddInfrastructure()
+                .AddPresistance(builder.Configuration);
+
+
+builder.Services.AddEndpointsApiExplorer();
+
+builder.Services.AddSwaggerGen();
+
+
+var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
