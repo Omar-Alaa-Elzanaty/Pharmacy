@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Pharamcy.Shared
 {
-    public class Roles
+    public class SystemRoles
     {
-        public static readonly string SystemAdmin = "system_Admin";
-        public static readonly string Admin = "Admin";
-        public static readonly string Moderator = "Moderator";
-        public static readonly string Casher = "Casher";
+        public const string SystemAdmin = "system_Admin";
+        public const string Admin = "Admin";
+        public const string Moderator = "Moderator";
+        public const string Cashier = "Cashier";
     }
     public class CommonConsts 
     {

@@ -32,7 +32,7 @@ namespace Pharamcy.Infrastructure.Services.Auth
                 new Claim(ClaimTypes.Role, role)
             };
 
-            if (role != Roles.SystemAdmin && role != Roles.Admin)
+            if (role != SystemRoles.SystemAdmin && role != SystemRoles.Admin)
             {
                 claims.Append(new Claim(CommonConsts.PharmacyId, pharmacyId.ToString() ?? " "));
             }

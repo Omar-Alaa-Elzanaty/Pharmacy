@@ -7,6 +7,8 @@ using Pharamcy.Application.Interfaces.Repositories;
 using Pharamcy.Domain.Identity;
 using Pharamcy.Presistance.Context;
 using Pharamcy.Presistance.Repositories;
+using Pharamcy.Application.Interfaces;
+using Pharamcy.Presistance.Seeding;
 
 namespace Pharamcy.Presistance.Extention
 {

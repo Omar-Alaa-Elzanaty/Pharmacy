@@ -1,9 +1,11 @@
 {
   "PharmacyNotExist": "The Pharmacy Don't Exist.",
   "Success": "Successfull Operation.",
+  "Failed": "Failed Operation",
   "PharmacyExist": "The pharmacy Already Exsist.",
   "EmailExist": "The Email Already Exist.",
   "NameExist": "The Name Already Exist.",
   "InvalidLogin": "Username or password isn't correct.",
-  "InvalidOperation": "You Aren't Authorized."
+  "UnAuthorized": "You Aren't Authorized.",
+  "InvalidRequest": "Invalid Request"
 }
