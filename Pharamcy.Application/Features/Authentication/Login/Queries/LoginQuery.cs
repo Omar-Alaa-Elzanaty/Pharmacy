@@ -33,7 +33,7 @@ namespace Pharamcy.Application.Features.Authentication.Login.Queries
         {
             var user = await _userManager.FindByNameAsync(query.UserName);
 
-            if (user is null || await _userManager.CheckPasswordAsync(user, query.Password))
+            if (user is null || !await _userManager.CheckPasswordAsync(user, query.Password))
             {
                 return await Response.FailureAsync(_stringLocalizer["InvalidLogin"].Value);
             }
