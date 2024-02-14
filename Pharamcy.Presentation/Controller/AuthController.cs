@@ -1,7 +1,10 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Pharamcy.Application.Features.Authentication.Login.Queries;
-using Pharamcy.Application.Features.Authentication.Signup.Commands;
+using Pharamcy.Application.Features.Authentication.Signup.Commands.CreateModeratorAndCashierCommandValidator;
+using Pharamcy.Application.Features.Authentication.Signup.Commands.CreateSystemAdminAndAdmin;
+using Pharamcy.Shared;
 
 namespace Pharamcy.Presentation.Controller
 {
@@ -22,12 +25,14 @@ namespace Pharamcy.Presentation.Controller
             return Ok(await _mediator.Send(query));
         }
         [HttpPost]
+        [Authorize(Roles = $"{SystemRoles.SystemAdmin}")]
         public async Task<IActionResult> CreateSystemAdminAndAdmin(CreateSystemAdminAndAdminCommand command)
         {
             return Ok(await _mediator.Send(command));
 
         }
         [HttpPost]
+        [Authorize(Roles =$"{SystemRoles.Admin},{SystemRoles.Moderator}")]
         public async Task<IActionResult> CreateModeratorAndCashier(CreateModeratorAndCashierCommand command)
         {
             return Ok(await _mediator.Send(command));

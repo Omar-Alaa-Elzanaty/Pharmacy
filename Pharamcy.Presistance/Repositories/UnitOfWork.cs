@@ -40,6 +40,9 @@ namespace Pharamcy.Presistance.Repositories
             _context.Dispose();
         }
 
-
+        public async Task<int> SaveAsync()
+        {
+            return await _context.SaveChangesAsync();
+        }
     }
 }
