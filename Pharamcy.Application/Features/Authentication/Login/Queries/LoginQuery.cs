@@ -37,8 +37,7 @@ namespace Pharamcy.Application.Features.Authentication.Login.Queries
             {
                 return await Response.FailureAsync(_stringLocalizer["InvalidLogin"].Value);
             }
-            var userRole = _userManager.GetRolesAsync(user).Result.SingleOrDefault();
-
+            var userRole = _userManager.GetRolesAsync(user).Result.Single();
             var token = _authServices.GenerateToken(user, userRole!);
 
             var response = new GetLoginDto()
@@ -46,7 +45,7 @@ namespace Pharamcy.Application.Features.Authentication.Login.Queries
                 Id = user.Id,
                 UserName = query.UserName,
                 Token = token,
-                Role = userRole!
+                Role = userRole
             };
 
             return await Response.SuccessAsync(response);
