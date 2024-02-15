@@ -1,9 +1,8 @@
+using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
 using Microsoft.OpenApi.Models;
 using Pharamcy.Application.extention;
-using Pharamcy.Application.Interfaces;
 using Pharamcy.Infrastructure.Extention;
 using Pharamcy.Presentation.Middleware;
 using Pharamcy.Presistance.Extention;

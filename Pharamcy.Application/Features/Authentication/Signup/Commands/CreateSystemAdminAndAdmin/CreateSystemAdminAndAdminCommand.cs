@@ -5,8 +5,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Localization;
 using Pharamcy.Domain.Identity;
 using Pharamcy.Shared;
-using System.Net.WebSockets;
-using System.Security.Claims;
 
 namespace Pharamcy.Application.Features.Authentication.Signup.Commands.CreateSystemAdminAndAdmin
 {
@@ -46,13 +44,13 @@ namespace Pharamcy.Application.Features.Authentication.Signup.Commands.CreateSys
         {
             var validationResult = _validator.Validate(command);
 
-            if(!validationResult.IsValid) 
+            if (!validationResult.IsValid)
             {
                 var errrors = validationResult.Errors.Select(x => x.ErrorMessage).ToList();
 
                 return await Response.FailureAsync(errrors, _localizer["InvalidRequest"]);
             }
-            
+
             var roleFound = await _roleManager.RoleExistsAsync(command.Role);
 
             if (!roleFound)

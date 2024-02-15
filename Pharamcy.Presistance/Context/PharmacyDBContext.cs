@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Pharamcy.Domain.Identity;
 using Pharamcy.Domain.Models;
-using Pharamcy.Shared;
 
 namespace Pharamcy.Presistance.Context
 {

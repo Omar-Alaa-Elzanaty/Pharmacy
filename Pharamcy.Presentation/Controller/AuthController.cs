@@ -32,7 +32,7 @@ namespace Pharamcy.Presentation.Controller
 
         }
         [HttpPost]
-        [Authorize(Roles =$"{SystemRoles.Admin},{SystemRoles.Moderator}")]
+        [Authorize(Roles = $"{SystemRoles.Admin},{SystemRoles.Moderator}")]
         public async Task<IActionResult> CreateModeratorAndCashier(CreateModeratorAndCashierCommand command)
         {
             return Ok(await _mediator.Send(command));
