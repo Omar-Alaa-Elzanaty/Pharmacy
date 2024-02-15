@@ -12,6 +12,6 @@
 
         public Task UpdateAsync(T input);
 
-        public Task DeleteAsync(int id);
+        public Task DeleteAsync(T input);
     }
 }

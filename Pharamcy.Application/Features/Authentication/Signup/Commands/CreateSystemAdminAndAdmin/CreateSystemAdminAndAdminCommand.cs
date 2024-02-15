@@ -67,7 +67,7 @@ namespace Pharamcy.Application.Features.Authentication.Signup.Commands.CreateSys
 
             var user = _mapper.Map<ApplicationUser>(command);
 
-            var result = await _userManager.CreateAsync(user);
+            var result = await _userManager.CreateAsync(user,command.Password);
 
             if (!result.Succeeded)
             {

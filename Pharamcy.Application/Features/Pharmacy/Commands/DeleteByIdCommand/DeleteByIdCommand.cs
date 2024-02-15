@@ -26,11 +26,12 @@ namespace Pharamcy.Application.Features.Pharmacy.Commands.DeleteByIdCommand
         public async Task<Response> Handle(DeleteByIdCommand command, CancellationToken cancellationToken)
         {
             var response=new Response();
-            if (_unitofWork.Repository<Domain.Models.Pharmacy>().GetAsync(p => p.Id == command.Id) == null)
-                return  await Response.FailureAsync(_localizer["PharmacyNotExist"]);
-            var pharmacy =_mapper.Map<Domain.Models.Pharmacy>(command);
-             await _unitofWork.Repository<Domain.Models.Pharmacy>().DeleteAsync(pharmacy.Id);
-            return await Response.SuccessAsync(_localizer["sucess"]);
+            var pharmacy =await _unitofWork.Repository<Domain.Models.Pharmacy>().GetAsync(p => p.Id == command.Id);
+            if ( pharmacy== null)
+                return  await Response.FailureAsync(_localizer["PharmacyNotExist"].Value);
+
+             await _unitofWork.Repository<Domain.Models.Pharmacy>().DeleteAsync(pharmacy);
+            return await Response.SuccessAsync(_localizer["Success"].Value);
         }
     }
 }

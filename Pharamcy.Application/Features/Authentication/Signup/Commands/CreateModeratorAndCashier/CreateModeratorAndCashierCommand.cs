@@ -13,6 +13,8 @@ namespace Pharamcy.Application.Features.Authentication.Signup.Commands.CreateMod
     {
         public string UserName { get; set; }
         public string UserId { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
         public string Password { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
@@ -80,7 +82,8 @@ namespace Pharamcy.Application.Features.Authentication.Signup.Commands.CreateMod
 
             var user = _mapper.Map<ApplicationUser>(command);
 
-            var result = await _userManager.CreateAsync(user);
+            var result = await _userManager.CreateAsync(user,command.Password);
+           
 
             if (!result.Succeeded)
             {

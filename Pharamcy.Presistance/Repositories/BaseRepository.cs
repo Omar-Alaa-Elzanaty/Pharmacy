@@ -32,9 +32,10 @@ namespace Pharamcy.Presistance.Repositories
             return Task.CompletedTask;
         }
 
-        public Task DeleteAsync(int id)
+        public Task DeleteAsync(T input)
         {
-            dbContext.Remove(id);
+            dbContext.Remove(input);
+            
             dbContext.SaveChanges();
             return Task.CompletedTask;
         }

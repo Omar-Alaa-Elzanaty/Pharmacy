@@ -5,21 +5,16 @@ namespace Pharamcy.Infrastructure.Services.Localization
 {
     public class JsonStringLocalizerFactory : IStringLocalizerFactory
     {
-        private readonly IDistributedCache cache;
-
-        public JsonStringLocalizerFactory(IDistributedCache cache)
-        {
-            this.cache = cache;
-        }
+       
 
         public IStringLocalizer Create(Type resourceSource)
         {
-            return new JsonStringLocalizer(cache);
+            return new JsonStringLocalizer();
         }
 
         public IStringLocalizer Create(string baseName, string location)
         {
-            return new JsonStringLocalizer(cache);
+            return new JsonStringLocalizer();
 
         }
     }

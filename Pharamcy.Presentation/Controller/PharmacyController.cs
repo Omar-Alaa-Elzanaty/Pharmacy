@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Pharamcy.Application.Features.Pharmacy.Commands.CreateCommand;
+using Pharamcy.Application.Features.Pharmacy.Commands.DeleteByIdCommand;
 
 namespace Pharamcy.Presentation.Controller
 {
@@ -20,6 +21,12 @@ namespace Pharamcy.Presentation.Controller
             return Ok(_mediator.Send(command));
 
 
+        }
+        [HttpDelete]
+        public async Task<IActionResult>DeletePharmacy(DeleteByIdCommand command)
+        {
+
+            return Ok(_mediator.Send(command)); 
         }
     }
 }
