@@ -27,15 +27,6 @@ namespace Pharamcy.Presistance.Context
 
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
-            //modelBuilder.Entity<RoleManager<string>>()
-            //    .HasData(new IdentityRole() { Id = Guid.NewGuid().ToString(), Name = SystemRoles.SystemAdmin });
-            //modelBuilder.Entity<RoleManager<string>>()
-            //    .HasData(new IdentityRole() { Id = Guid.NewGuid().ToString(), Name = SystemRoles.Admin });
-            //modelBuilder.Entity<RoleManager<string>>()
-            //    .HasData(new IdentityRole() { Id = Guid.NewGuid().ToString(), Name = SystemRoles.Moderator });
-            //modelBuilder.Entity<RoleManager<string>>()
-            //    .HasData(new IdentityRole() { Id = Guid.NewGuid().ToString(), Name = SystemRoles.Cashier });
-
         }
         public DbSet<Pharmacy> Pharmacies { get; set; }
         public DbSet<Medicine> Medicines { get; set; }

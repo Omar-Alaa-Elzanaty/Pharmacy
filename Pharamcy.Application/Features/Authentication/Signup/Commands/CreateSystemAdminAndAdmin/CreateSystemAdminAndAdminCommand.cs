@@ -24,6 +24,7 @@ namespace Pharamcy.Application.Features.Authentication.Signup.Commands.CreateSys
     internal class CreateSystemAdminAndAdminCommandHandler : IRequestHandler<CreateSystemAdminAndAdminCommand, Response>
     {
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IMapper _mapper;
         private readonly IStringLocalizer<CreateSystemAdminAndAdminCommand> _localizer;
         private readonly IValidator<CreateSystemAdminAndAdminCommand> _validator;
@@ -32,12 +33,14 @@ namespace Pharamcy.Application.Features.Authentication.Signup.Commands.CreateSys
             UserManager<ApplicationUser> userManager,
             IMapper mapper,
             IStringLocalizer<CreateSystemAdminAndAdminCommand> localizer,
-            IValidator<CreateSystemAdminAndAdminCommand> validator)
+            IValidator<CreateSystemAdminAndAdminCommand> validator,
+            RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _mapper = mapper;
             _localizer = localizer;
             _validator = validator;
+            _roleManager = roleManager;
         }
         public async Task<Response> Handle(CreateSystemAdminAndAdminCommand command, CancellationToken cancellationToken)
         {
@@ -48,6 +51,13 @@ namespace Pharamcy.Application.Features.Authentication.Signup.Commands.CreateSys
                 var errrors = validationResult.Errors.Select(x => x.ErrorMessage).ToList();
 
                 return await Response.FailureAsync(errrors, _localizer["InvalidRequest"]);
+            }
+            
+            var roleFound = await _roleManager.RoleExistsAsync(command.Role);
+
+            if (!roleFound)
+            {
+                return await Response.FailureAsync(_localizer["InvalidRequest"]);
             }
 
             if (command.Role == SystemRoles.Cashier || command.Role == SystemRoles.Moderator)
