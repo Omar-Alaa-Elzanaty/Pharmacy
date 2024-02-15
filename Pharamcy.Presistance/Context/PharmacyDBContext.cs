@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Pharamcy.Domain.Identity;
 using Pharamcy.Domain.Models;
-using Pharamcy.Shared;
 
 namespace Pharamcy.Presistance.Context
 {
@@ -26,15 +25,6 @@ namespace Pharamcy.Presistance.Context
             modelBuilder.HasDefaultSchema("Phamracy");
 
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-
-            //modelBuilder.Entity<RoleManager<string>>()
-            //    .HasData(new IdentityRole() { Id = Guid.NewGuid().ToString(), Name = SystemRoles.SystemAdmin });
-            //modelBuilder.Entity<RoleManager<string>>()
-            //    .HasData(new IdentityRole() { Id = Guid.NewGuid().ToString(), Name = SystemRoles.Admin });
-            //modelBuilder.Entity<RoleManager<string>>()
-            //    .HasData(new IdentityRole() { Id = Guid.NewGuid().ToString(), Name = SystemRoles.Moderator });
-            //modelBuilder.Entity<RoleManager<string>>()
-            //    .HasData(new IdentityRole() { Id = Guid.NewGuid().ToString(), Name = SystemRoles.Cashier });
 
         }
         public DbSet<Pharmacy> Pharmacies { get; set; }
