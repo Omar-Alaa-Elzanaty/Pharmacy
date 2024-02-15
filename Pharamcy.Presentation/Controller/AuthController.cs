@@ -19,13 +19,13 @@ namespace Pharamcy.Presentation.Controller
             _mediator = mediator;
         }
 
-        [HttpGet]
+        [HttpPost]
         public async Task<IActionResult> Login(LoginQuery query)
         {
             return Ok(await _mediator.Send(query));
         }
         [HttpPost]
-        [Authorize(Roles = $"{SystemRoles.SystemAdmin}")]
+        [Authorize(Roles = SystemRoles.SystemAdmin)]
         public async Task<IActionResult> CreateSystemAdminAndAdmin(CreateSystemAdminAndAdminCommand command)
         {
             return Ok(await _mediator.Send(command));
