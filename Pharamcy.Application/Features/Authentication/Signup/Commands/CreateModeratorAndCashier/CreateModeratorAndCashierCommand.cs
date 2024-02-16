@@ -25,6 +25,7 @@ namespace Pharamcy.Application.Features.Authentication.Signup.Commands.CreateMod
     internal class CreateModeratorAndCashierCommandHandler : IRequestHandler<CreateModeratorAndCashierCommand, Response>
     {
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IMapper _mapper;
         private readonly IStringLocalizer<CreateModeratorAndCashierCommand> _localizer;
         private readonly IValidator<CreateModeratorAndCashierCommand> _validator;
@@ -33,12 +34,14 @@ namespace Pharamcy.Application.Features.Authentication.Signup.Commands.CreateMod
             UserManager<ApplicationUser> userManager,
             IMapper mapper,
             IStringLocalizer<CreateModeratorAndCashierCommand> localizer,
-            IValidator<CreateModeratorAndCashierCommand> validator)
+            IValidator<CreateModeratorAndCashierCommand> validator,
+            RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _mapper = mapper;
             _localizer = localizer;
             _validator = validator;
+            _roleManager = roleManager;
         }
         public async Task<Response> Handle(CreateModeratorAndCashierCommand command, CancellationToken cancellationToken)
         {
@@ -56,6 +59,13 @@ namespace Pharamcy.Application.Features.Authentication.Signup.Commands.CreateMod
             if (entity is null)
             {
                 return await Response.FailureAsync(_localizer["UnAuthorized"].Value);
+            }
+
+            var roleFound = await _roleManager.RoleExistsAsync(command.Role);
+
+            if (!roleFound)
+            {
+                return await Response.FailureAsync(_localizer["InvalidRequest"]);
             }
 
             var role = _userManager.GetRolesAsync(entity).Result.FirstOrDefault();

@@ -33,7 +33,7 @@ namespace Pharamcy.Presistance.Extention
             services.AddIdentity<ApplicationUser, IdentityRole>()
                     .AddEntityFrameworkStores<PharmacyDBContext>()
                     .AddUserManager<UserManager<ApplicationUser>>()
-                    .AddSignInManager<SignInManager<ApplicationUser>>()
+                    .AddRoleManager<RoleManager<IdentityRole>>()
                     .AddDefaultTokenProviders();
             
 
