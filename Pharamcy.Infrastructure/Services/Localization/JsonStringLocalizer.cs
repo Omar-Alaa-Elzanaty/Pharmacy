@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.Caching.Distributed;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Localization;
 using Newtonsoft.Json;
 
@@ -7,7 +10,16 @@ namespace Pharamcy.Infrastructure.Services.Localization
     public class JsonStringLocalizer : IStringLocalizer
     {
         private readonly JsonSerializer? _serializer = new();
-       
+        private readonly IWebHostEnvironment _host;
+        private readonly IConfiguration _configuration;
+
+        public JsonStringLocalizer(
+            IWebHostEnvironment host,
+            IConfiguration configuration)
+        {
+            _host = host;
+            _configuration = configuration;
+        }
 
         public LocalizedString this[string name]
         {
@@ -55,19 +67,23 @@ namespace Pharamcy.Infrastructure.Services.Localization
         private string GetString(string key)
         {
             //Resources/ar-EG.json
-            var filePath = $"Resources/{Thread.CurrentThread.CurrentCulture.Name}.json";
+            // var filePath = $"{_host.WebRootPath}/{Thread.CurrentThread.CurrentCulture.Name}.json";
 
-            var fullFilePath = Path.GetFullPath(filePath);
+            // var fullFilePath = Path.GetFullPath(filePath);
 
-            if (File.Exists(fullFilePath))
+            //if (File.Exists(fullFilePath))
+            //{
+
+            //    var result = GetValueFromJson(key, fullFilePath);
+
+
+
+            //    return result;
+
+            //}
+            if (_configuration[$"en-US:{key}"] is not null)
             {
-                
-                var result = GetValueFromJson(key, fullFilePath);
-
-               
-
-                return result;
-
+                return _configuration[$"en-US:{key}"];
             }
             return string.Empty;
         }

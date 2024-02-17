@@ -8,13 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Resources\ar-EG.json" />
-    <Content Remove="Resources\en-US.json" />
+    <Content Remove="wwwroot\Resources\ar-EG.json" />
+    <Content Remove="wwwroot\Resources\en-US.json" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Resources\ar-EG.json" />
-    <None Include="Resources\en-US.json" />
+    <None Include="wwwroot\Resources\ar-EG.json" />
+    <None Include="wwwroot\Resources\en-US.json" />
   </ItemGroup>
 
   <ItemGroup>
