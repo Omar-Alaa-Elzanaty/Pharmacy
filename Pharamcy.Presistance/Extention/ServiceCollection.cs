@@ -27,7 +27,7 @@ namespace Pharamcy.Presistance.Extention
             var connectionString = configuration.GetConnectionString("constr");
 
             services.AddDbContext<PharmacyDBContext>(options =>
-               options.UseSqlServer(connectionString,
+               options.UseLazyLoadingProxies().UseSqlServer(connectionString,
                    builder => builder.MigrationsAssembly(typeof(PharmacyDBContext).Assembly.FullName)));
             // Identity configuration
             services.AddIdentity<ApplicationUser, IdentityRole>()

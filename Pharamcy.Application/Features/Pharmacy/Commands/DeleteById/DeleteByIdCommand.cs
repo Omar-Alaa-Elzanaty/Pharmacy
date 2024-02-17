@@ -5,10 +5,15 @@ using Pharamcy.Application.Interfaces.Repositories;
 using Pharamcy.Domain.Models;
 using Pharamcy.Shared;
 
-namespace Pharamcy.Application.Features.Pharmacy.Commands.DeleteByIdCommand
+namespace Pharamcy.Application.Features.Pharmacy.Commands.DeleteById
 {
     public record DeleteByIdCommand:IRequest<Response> {
         public int Id { get; set; }
+
+        public DeleteByIdCommand(int id)
+        {
+            Id = id;
+        }
     };
 
     internal class DeleteByIdCommandHandler : IRequestHandler<DeleteByIdCommand, Response>
@@ -26,7 +31,7 @@ namespace Pharamcy.Application.Features.Pharmacy.Commands.DeleteByIdCommand
         public async Task<Response> Handle(DeleteByIdCommand command, CancellationToken cancellationToken)
         {
             var response=new Response();
-            var pharmacy =await _unitofWork.Repository<Domain.Models.Pharmacy>().GetAsync(p => p.Id == command.Id);
+            var pharmacy =await _unitofWork.Repository<Domain.Models.Pharmacy>().GetItemOnAsync(p => p.Id == command.Id);
             if ( pharmacy== null)
                 return  await Response.FailureAsync(_localizer["PharmacyNotExist"].Value);
 
