@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using System.Diagnostics.SymbolStore;
+using FluentValidation.Resources;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Configuration;
@@ -66,24 +68,11 @@ namespace Pharamcy.Infrastructure.Services.Localization
         }
         private string GetString(string key)
         {
-            //Resources/ar-EG.json
-            // var filePath = $"{_host.WebRootPath}/{Thread.CurrentThread.CurrentCulture.Name}.json";
 
-            // var fullFilePath = Path.GetFullPath(filePath);
-
-            //if (File.Exists(fullFilePath))
-            //{
-
-            //    var result = GetValueFromJson(key, fullFilePath);
-
-
-
-            //    return result;
-
-            //}
-            if (_configuration[$"en-US:{key}"] is not null)
+            var languageType = Thread.CurrentThread.CurrentCulture.Name;
+            if (_configuration[$"{languageType}:{key}"] is not null)
             {
-                return _configuration[$"en-US:{key}"];
+                return _configuration[$"{languageType}:{key}"];
             }
             return string.Empty;
         }
