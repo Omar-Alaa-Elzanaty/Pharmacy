@@ -23,7 +23,6 @@ namespace Pharamcy.Infrastructure.Extention
         {
             LocalizationServiceCollectionExtensions.AddLocalization(services);
 
-            services.AddDistributedMemoryCache();
 
             services.AddSingleton<IStringLocalizerFactory, JsonStringLocalizerFactory>();
 

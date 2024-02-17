@@ -11,6 +11,6 @@ namespace Pharamcy.Domain.Models
     {
         [ForeignKey("pharmacy")]
         public int MedicineId { get; set; }
-        public Medicine Medicine { get; set; }
+        public virtual Medicine Medicine { get; set; }
     }
 }

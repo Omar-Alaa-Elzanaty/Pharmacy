@@ -40,7 +40,8 @@ namespace Pharamcy.Shared
         {
             Response response = new Response()
             {
-                IsSuccess = true
+                IsSuccess = true,
+                Message = message
             };
 
             return response;

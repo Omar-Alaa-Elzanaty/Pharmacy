@@ -7,12 +7,7 @@ namespace Pharamcy.Infrastructure.Services.Localization
     public class JsonStringLocalizer : IStringLocalizer
     {
         private readonly JsonSerializer? _serializer = new();
-        private readonly IDistributedCache cache;
-
-        public JsonStringLocalizer(IDistributedCache cache)
-        {
-            this.cache = cache;
-        }
+       
 
         public LocalizedString this[string name]
         {
@@ -66,19 +61,10 @@ namespace Pharamcy.Infrastructure.Services.Localization
 
             if (File.Exists(fullFilePath))
             {
-                var cacheKey = $"local_{Thread.CurrentThread.CurrentCulture.Name}_{key}";
-                var cacheValue = cache.GetString(cacheKey);
-                if (!string.IsNullOrEmpty(cacheValue))
-                {
-                    return cacheValue;
-                }
+                
                 var result = GetValueFromJson(key, fullFilePath);
 
-                if (!string.IsNullOrEmpty(result))
-                {
-                    cache.SetString(cacheKey, result);
-                }
-
+               
 
                 return result;
 

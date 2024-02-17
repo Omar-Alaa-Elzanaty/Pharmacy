@@ -3,7 +3,7 @@ using MediatR;
 using Microsoft.Extensions.Localization;
 using Pharamcy.Application.Interfaces.Repositories;
 using Pharamcy.Shared;
-namespace Pharamcy.Application.Features.Pharmacy.Commands.CreateCommand
+namespace Pharamcy.Application.Features.Pharmacy.Commands.Create
 {
     public record CreatePharmacyCommand : IRequest<Response>
     {
@@ -33,16 +33,16 @@ namespace Pharamcy.Application.Features.Pharmacy.Commands.CreateCommand
         public async Task<Response> Handle(CreatePharmacyCommand command, CancellationToken cancellationToken)
         {
 
-            var oldpharmacy = await _unitofWork.Repository<Domain.Models.Pharmacy>().GetAsync(p => p.Name == command.Name);
+            var oldpharmacy = await _unitofWork.Repository<Domain.Models.Pharmacy>().GetItemOnAsync(p => p.Name == command.Name);
             if (oldpharmacy != null)
-                return new Response { IsSuccess = false, Message = _localizer["PharmacyExist"] };
+                return await  Response.FailureAsync(_localizer["PharmacyExist"].Value);
 
             var pharmacy = _mapper.Map<Domain.Models.Pharmacy>(command);
 
             await _unitofWork.Repository<Domain.Models.Pharmacy>().AddAsync(pharmacy);
 
 
-            return new Response { IsSuccess = true, Data = pharmacy.Id };
+            return await Response.SuccessAsync(_localizer["Success"].Value); 
         }
 
     }

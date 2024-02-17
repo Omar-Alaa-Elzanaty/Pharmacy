@@ -5,6 +5,7 @@ using Pharamcy.Application.Features.Authentication.Login.Queries;
 using Pharamcy.Application.Features.Authentication.Signup.Commands.CreateModeratorAndCashierCommandValidator;
 using Pharamcy.Application.Features.Authentication.Signup.Commands.CreateSystemAdminAndAdmin;
 using Pharamcy.Shared;
+using System.Security.Claims;
 
 namespace Pharamcy.Presentation.Controller
 {
@@ -23,6 +24,7 @@ namespace Pharamcy.Presentation.Controller
         public async Task<IActionResult> Login(LoginQuery query)
         {
             return Ok(await _mediator.Send(query));
+            
         }
         [HttpPost]
         [Authorize(Roles = SystemRoles.SystemAdmin)]

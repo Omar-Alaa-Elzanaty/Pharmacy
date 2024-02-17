@@ -1,6 +1,7 @@
 ﻿using Mapster;
-using Pharamcy.Application.Features.Pharmacy.Commands.CreateCommand;
-using Pharamcy.Application.Features.Pharmacy.Commands.DeleteByIdCommand;
+using Pharamcy.Application.Features.Pharmacy.Commands.Create;
+using Pharamcy.Application.Features.Pharmacy.Commands.DeleteById;
+using Pharamcy.Application.Features.Pharmacy.Queries.GetAll;
 using Pharamcy.Domain.Models;
 
 namespace Pharamcy.Application.Common.Mapping
@@ -12,6 +13,7 @@ namespace Pharamcy.Application.Common.Mapping
 
             config.NewConfig<CreatePharmacyCommand, Pharmacy>();
             config.NewConfig<DeleteByIdCommand, Pharmacy>();
+            config.NewConfig<Pharmacy,GetAllPharmacyQuery>();
         }
     }
 }
