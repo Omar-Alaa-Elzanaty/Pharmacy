@@ -21,10 +21,10 @@ namespace Pharamcy.Presentation.Controller
             _mediator = mediator;
         }
 
-        [HttpGet("role")]
-        public async Task<IActionResult> GetAll(string role)
+        [HttpGet]
+        public async Task<ActionResult<GetAllSystemAdminOrAdminDto>> GetAll(string id, string role)
         {
-            return Ok(await _mediator.Send(new GetAllSystemAdminOrAdmin(role)));
+            return Ok(await _mediator.Send(new GetAllSystemAdminOrAdmin(role,id)));
         }
     }
 }

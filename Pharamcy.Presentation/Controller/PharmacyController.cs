@@ -8,9 +8,9 @@ using Pharamcy.Shared;
 
 namespace Pharamcy.Presentation.Controller
 {
-    [Authorize(Roles = SystemRoles.Admin)]
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = SystemRoles.Admin)]
     public class PharmacyController : ApiControllerBase
     {
         private IMediator _mediator;

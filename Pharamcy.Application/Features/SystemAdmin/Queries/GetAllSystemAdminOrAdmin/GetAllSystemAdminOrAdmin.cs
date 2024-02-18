@@ -1,24 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MapsterMapper;
+﻿using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
-using Pharamcy.Application.Interfaces.Repositories;
 using Pharamcy.Domain.Identity;
 using Pharamcy.Shared;
 
 namespace Pharamcy.Application.Features.SystemAdmin.Queries.GetAllSystemAdminAndAdmin
 {
-    public record GetAllSystemAdminOrAdmin:IRequest<Response>
+    public record GetAllSystemAdminOrAdmin : IRequest<Response>
     {
         public string Role { get; set; }
+        public string Id { get; set; }
 
-        public GetAllSystemAdminOrAdmin(string role)
+        public GetAllSystemAdminOrAdmin(string role, string id)
         {
             Role = role;
+            Id = id;
         }
     }
     internal class GetAllSystemAdminAndAdminHandler : IRequestHandler<GetAllSystemAdminOrAdmin, Response>
@@ -35,18 +31,19 @@ namespace Pharamcy.Application.Features.SystemAdmin.Queries.GetAllSystemAdminAnd
 
         public async Task<Response> Handle(GetAllSystemAdminOrAdmin query, CancellationToken cancellationToken)
         {
-            IList<ApplicationUser> entities;
-            if(query.Role==SystemRoles.SystemAdmin)
+            IEnumerable<ApplicationUser> entities;
+            if (query.Role == SystemRoles.SystemAdmin)
             {
-                entities = await _userManager.GetUsersInRoleAsync(SystemRoles.SystemAdmin);
+                entities = _userManager.GetUsersInRoleAsync(SystemRoles.SystemAdmin)
+                           .Result.Where(x => x.Id != query.Id).ToList();
             }
             else
             {
-                entities = await _userManager.GetUsersInRoleAsync(SystemRoles.Admin);
+                entities = _userManager.GetUsersInRoleAsync(SystemRoles.Admin).Result.ToList();
 
             }
 
-            var systemAdminsAndAdmins = _mapper.Map<GetAllSystemAdminOrAdminDto>(entities);
+            var systemAdminsAndAdmins = _mapper.Map<List<GetAllSystemAdminOrAdminDto>>(entities);
 
             return await Response.SuccessAsync(systemAdminsAndAdmins);
         }
