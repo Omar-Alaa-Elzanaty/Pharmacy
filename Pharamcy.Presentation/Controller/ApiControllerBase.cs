@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Pharamcy.Presentation.Controller
 {
-    public class ApiController:ControllerBase
+    public class ApiControllerBase:ControllerBase
     {
     }
 }

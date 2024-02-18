@@ -23,4 +23,8 @@
     <ProjectReference Include="..\Pharamcy.Shared\Pharamcy.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\SystemAdmin\Commands\" />
+  </ItemGroup>
+
 </Project>

@@ -7,24 +7,21 @@ namespace Pharamcy.Infrastructure.Services.Localization
 {
     public class JsonStringLocalizerFactory : IStringLocalizerFactory
     {
-        private readonly IWebHostEnvironment _host;
         private readonly IConfiguration _configuration;
         public JsonStringLocalizerFactory(
-            IWebHostEnvironment host,
             IConfiguration configuration)
         {
-            _host = host;
             _configuration = configuration;
         }
 
         public IStringLocalizer Create(Type resourceSource)
         {
-            return new JsonStringLocalizer(_host,_configuration);
+            return new JsonStringLocalizer(_configuration);
         }
 
         public IStringLocalizer Create(string baseName, string location)
         {
-            return new JsonStringLocalizer(_host, _configuration);
+            return new JsonStringLocalizer(_configuration);
 
         }
     }

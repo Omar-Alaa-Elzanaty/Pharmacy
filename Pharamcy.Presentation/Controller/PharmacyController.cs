@@ -11,7 +11,7 @@ namespace Pharamcy.Presentation.Controller
     [Authorize(Roles = SystemRoles.Admin)]
     [Route("api/[controller]")]
     [ApiController]
-    public class PharmacyController : ApiController
+    public class PharmacyController : ApiControllerBase
     {
         private IMediator _mediator;
 
