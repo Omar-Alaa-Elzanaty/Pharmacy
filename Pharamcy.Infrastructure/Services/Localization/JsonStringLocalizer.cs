@@ -12,14 +12,11 @@ namespace Pharamcy.Infrastructure.Services.Localization
     public class JsonStringLocalizer : IStringLocalizer
     {
         private readonly JsonSerializer? _serializer = new();
-        private readonly IWebHostEnvironment _host;
         private readonly IConfiguration _configuration;
 
         public JsonStringLocalizer(
-            IWebHostEnvironment host,
             IConfiguration configuration)
         {
-            _host = host;
             _configuration = configuration;
         }
 
@@ -61,7 +58,7 @@ namespace Pharamcy.Infrastructure.Services.Localization
                 reader.Read();
 
                 var value = _serializer?.Deserialize<string>(reader);
-                yield return new LocalizedString(key, value);
+                yield return new LocalizedString(key, value!);
 
             }
 
@@ -72,7 +69,7 @@ namespace Pharamcy.Infrastructure.Services.Localization
             var languageType = Thread.CurrentThread.CurrentCulture.Name;
             if (_configuration[$"{languageType}:{key}"] is not null)
             {
-                return _configuration[$"{languageType}:{key}"];
+                return _configuration[$"{languageType}:{key}"]!;
             }
             return string.Empty;
         }

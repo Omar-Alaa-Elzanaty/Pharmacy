@@ -11,7 +11,7 @@ namespace Pharamcy.Presentation.Controller
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class AuthController : ApiController
+    public class AuthController : ApiControllerBase
     {
         private IMediator _mediator;
 
