@@ -13,11 +13,13 @@ namespace Pharamcy.Infrastructure.Services.Localization
     {
         private readonly JsonSerializer? _serializer = new();
         private readonly IConfiguration _configuration;
+        private readonly IWebHostEnvironment _host;
 
         public JsonStringLocalizer(
-            IConfiguration configuration)
+            IConfiguration configuration, IWebHostEnvironment host)
         {
             _configuration = configuration;
+            _host = host;
         }
 
         public LocalizedString this[string name]
@@ -65,12 +67,15 @@ namespace Pharamcy.Infrastructure.Services.Localization
         }
         private string GetString(string key)
         {
+            var filePath = $"{_host.WebRootPath}/Resources/{Thread.CurrentThread.CurrentCulture.Name}.json";
+            var fullFilePath = Path.GetFullPath(filePath);
 
-            var languageType = Thread.CurrentThread.CurrentCulture.Name;
-            if (_configuration[$"{languageType}:{key}"] is not null)
+            if (File.Exists(fullFilePath))
             {
-                return _configuration[$"{languageType}:{key}"]!;
+                var result = GetValueFromJson(key, fullFilePath);
+                return result;
             }
+
             return string.Empty;
         }
 

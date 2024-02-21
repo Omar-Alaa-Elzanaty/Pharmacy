@@ -8,20 +8,23 @@ namespace Pharamcy.Infrastructure.Services.Localization
     public class JsonStringLocalizerFactory : IStringLocalizerFactory
     {
         private readonly IConfiguration _configuration;
+        private readonly IWebHostEnvironment _host;
         public JsonStringLocalizerFactory(
-            IConfiguration configuration)
+            IConfiguration configuration,
+            IWebHostEnvironment host)
         {
             _configuration = configuration;
+            _host = host;
         }
 
         public IStringLocalizer Create(Type resourceSource)
         {
-            return new JsonStringLocalizer(_configuration);
+            return new JsonStringLocalizer(_configuration,_host);
         }
 
         public IStringLocalizer Create(string baseName, string location)
         {
-            return new JsonStringLocalizer(_configuration);
+            return new JsonStringLocalizer(_configuration, _host);
 
         }
     }

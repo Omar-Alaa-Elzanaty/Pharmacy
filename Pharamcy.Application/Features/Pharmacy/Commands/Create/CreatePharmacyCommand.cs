@@ -40,7 +40,7 @@ namespace Pharamcy.Application.Features.Pharmacy.Commands.Create
             var pharmacy = _mapper.Map<Domain.Models.Pharmacy>(command);
 
             await _unitofWork.Repository<Domain.Models.Pharmacy>().AddAsync(pharmacy);
-
+            await _unitofWork.SaveAsync();
 
             return await Response.SuccessAsync(_localizer["Success"].Value); 
         }
