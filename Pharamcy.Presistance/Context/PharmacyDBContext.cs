@@ -22,7 +22,7 @@ namespace Pharamcy.Presistance.Context
             modelBuilder.Entity<IdentityRoleClaim<string>>().ToTable("RoleClaims", "Account");
             modelBuilder.Entity<IdentityUserToken<string>>().ToTable("UserTokens", "Account");
 
-            modelBuilder.HasDefaultSchema("Phamracy");
+            modelBuilder.HasDefaultSchema("Pharmacy");
 
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
