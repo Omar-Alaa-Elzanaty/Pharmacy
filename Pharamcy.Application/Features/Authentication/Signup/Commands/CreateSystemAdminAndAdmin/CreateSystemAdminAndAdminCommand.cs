@@ -19,7 +19,7 @@ namespace Pharamcy.Application.Features.Authentication.Signup.Commands.CreateSys
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
         public string NationalId { get; set; }
-        public IFormFile ImageProfile { get; set; }
+        public IFormFile? ImageProfile { get; set; }
         public string Role { get; set; }
     };
     internal class CreateSystemAdminAndAdminCommandHandler : IRequestHandler<CreateSystemAdminAndAdminCommand, Response>
