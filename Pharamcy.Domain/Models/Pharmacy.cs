@@ -11,8 +11,8 @@ namespace Pharamcy.Domain.Models
         public string ArabicFooter { get; set; }
         public string EnglishFooter { get; set; }
         public string AdminId { get; set; }
+        public string? PharmacyLogo { get; set; }
         public virtual ApplicationUser Admin { get; set; }
-        public virtual List<Medicine> Medicines { get; set; } = new();
         public virtual List<PurchaseInvoice> PurchaseInvoices { get; set; } = new();
         public virtual List<SalesInvoice> SalesInvoices { get; set; } = new();
         public virtual List<Client> Clients { get; set; } = new();

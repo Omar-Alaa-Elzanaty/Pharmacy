@@ -45,7 +45,8 @@ namespace Pharamcy.Application.Features.Authentication.Login.Queries
                 Id = user.Id,
                 UserName = query.UserName,
                 Token = token,
-                Role = userRole
+                Role = userRole,
+                ImageUrl = user.ImageUrl
             };
 
             return await Response.SuccessAsync(response);

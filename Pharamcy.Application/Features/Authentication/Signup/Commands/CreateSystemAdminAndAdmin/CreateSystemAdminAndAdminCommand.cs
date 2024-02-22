@@ -1,8 +1,10 @@
 ﻿using FluentValidation;
 using MapsterMapper;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Localization;
+using Pharamcy.Application.Interfaces.Media;
 using Pharamcy.Domain.Identity;
 using Pharamcy.Shared;
 
@@ -17,6 +19,7 @@ namespace Pharamcy.Application.Features.Authentication.Signup.Commands.CreateSys
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
         public string NationalId { get; set; }
+        public IFormFile? ImageProfile { get; set; }
         public string Role { get; set; }
     };
     internal class CreateSystemAdminAndAdminCommandHandler : IRequestHandler<CreateSystemAdminAndAdminCommand, Response>
@@ -24,6 +27,7 @@ namespace Pharamcy.Application.Features.Authentication.Signup.Commands.CreateSys
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IMapper _mapper;
+        private readonly IMediaService _mediaService;
         private readonly IStringLocalizer<CreateSystemAdminAndAdminCommand> _localizer;
         private readonly IValidator<CreateSystemAdminAndAdminCommand> _validator;
 
@@ -32,13 +36,15 @@ namespace Pharamcy.Application.Features.Authentication.Signup.Commands.CreateSys
             IMapper mapper,
             IStringLocalizer<CreateSystemAdminAndAdminCommand> localizer,
             IValidator<CreateSystemAdminAndAdminCommand> validator,
-            RoleManager<IdentityRole> roleManager)
+            RoleManager<IdentityRole> roleManager,
+            IMediaService mediaService)
         {
             _userManager = userManager;
             _mapper = mapper;
             _localizer = localizer;
             _validator = validator;
             _roleManager = roleManager;
+            _mediaService = mediaService;
         }
         public async Task<Response> Handle(CreateSystemAdminAndAdminCommand command, CancellationToken cancellationToken)
         {
@@ -75,6 +81,7 @@ namespace Pharamcy.Application.Features.Authentication.Signup.Commands.CreateSys
 
             var user = _mapper.Map<ApplicationUser>(command);
 
+            user.ImageUrl = command.ImageProfile != null ?await _mediaService.SaveAsync(command.ImageProfile) : null;
             var result = await _userManager.CreateAsync(user,command.Password);
 
             if (!result.Succeeded)

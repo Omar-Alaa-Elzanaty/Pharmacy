@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
 using Pharamcy.Application.Interfaces.Auth;
+using Pharamcy.Application.Interfaces.Media;
+using Pharamcy.Infrastructure.Media;
 using Pharamcy.Infrastructure.Services.Auth;
 using Pharamcy.Infrastructure.Services.Localization;
 
@@ -48,7 +50,7 @@ namespace Pharamcy.Infrastructure.Extention
         private static IServiceCollection AddCollections(this IServiceCollection services)
         {
             services.AddTransient<IAuthServices, AuthServices>();
-
+            services.AddTransient<IMediaService, MediaServices>();
             return services;
         }
     }

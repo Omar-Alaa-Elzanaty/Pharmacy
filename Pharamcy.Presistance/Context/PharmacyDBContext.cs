@@ -34,7 +34,6 @@ namespace Pharamcy.Presistance.Context
         public DbSet<PurchaseInvoice> PurchaseInvoices { get; set; }
         public DbSet<SalesInvoice> SalesInvoices { get; set; }
         public DbSet<Store> Stores { get; set; }
-        public DbSet<MedicineReference> MedicinesReference { get; set; }
 
     }
 }

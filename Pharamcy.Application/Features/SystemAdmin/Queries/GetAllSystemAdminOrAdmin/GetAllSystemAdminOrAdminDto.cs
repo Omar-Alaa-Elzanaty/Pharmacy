@@ -14,5 +14,6 @@ namespace Pharamcy.Application.Features.SystemAdmin.Queries.GetAllSystemAdminAnd
         public string NationalId { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
+        public string? ImageUrl { get; set; }
     }
 }

@@ -21,7 +21,7 @@ namespace Pharamcy.Presentation.Controller
         }
         [HttpPost]
 
-        public async Task<IActionResult> AddPharmacy(CreatePharmacyCommand command)
+        public async Task<IActionResult> AddPharmacy([FromForm]CreatePharmacyCommand command)
         {
             return Ok( await _mediator.Send(command));
 
