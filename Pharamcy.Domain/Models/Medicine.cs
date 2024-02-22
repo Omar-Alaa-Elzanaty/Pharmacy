@@ -8,7 +8,7 @@ namespace Pharamcy.Domain.Models
 {
     public class Medicine : BaseEntity  
     {
-        public int PharmacyId { get; set; }
-        public virtual Pharmacy pharmacy { get; set; }
+        public string Name { get; set; }
+        public int NationalCode { get; set; }
     }
 }

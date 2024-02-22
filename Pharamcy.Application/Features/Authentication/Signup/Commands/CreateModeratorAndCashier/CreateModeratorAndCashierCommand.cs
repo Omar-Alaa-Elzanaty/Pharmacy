@@ -2,8 +2,10 @@
 using FluentValidation;
 using MapsterMapper;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Localization;
+using Pharamcy.Application.Interfaces.Media;
 using Pharamcy.Domain.Identity;
 using Pharamcy.Shared;
 
@@ -20,6 +22,7 @@ namespace Pharamcy.Application.Features.Authentication.Signup.Commands.CreateMod
         public string PhoneNumber { get; set; }
         public string NationalId { get; set; }
         public string Role { get; set; }
+        public IFormFile? ImageProfile { get; set; }
         public int PharmacyId { get; set; }
     };
     internal class CreateModeratorAndCashierCommandHandler : IRequestHandler<CreateModeratorAndCashierCommand, Response>
@@ -27,6 +30,7 @@ namespace Pharamcy.Application.Features.Authentication.Signup.Commands.CreateMod
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IMapper _mapper;
+        private readonly IMediaService _mediaService;
         private readonly IStringLocalizer<CreateModeratorAndCashierCommand> _localizer;
         private readonly IValidator<CreateModeratorAndCashierCommand> _validator;
 
@@ -35,13 +39,15 @@ namespace Pharamcy.Application.Features.Authentication.Signup.Commands.CreateMod
             IMapper mapper,
             IStringLocalizer<CreateModeratorAndCashierCommand> localizer,
             IValidator<CreateModeratorAndCashierCommand> validator,
-            RoleManager<IdentityRole> roleManager)
+            RoleManager<IdentityRole> roleManager,
+            IMediaService mediaService)
         {
             _userManager = userManager;
             _mapper = mapper;
             _localizer = localizer;
             _validator = validator;
             _roleManager = roleManager;
+            _mediaService = mediaService;
         }
         public async Task<Response> Handle(CreateModeratorAndCashierCommand command, CancellationToken cancellationToken)
         {
@@ -92,8 +98,8 @@ namespace Pharamcy.Application.Features.Authentication.Signup.Commands.CreateMod
 
             var user = _mapper.Map<ApplicationUser>(command);
 
+            user.ImageUrl = command.ImageProfile != null ? await _mediaService.SaveAsync(command.ImageProfile) : null;
             var result = await _userManager.CreateAsync(user,command.Password);
-           
 
             if (!result.Succeeded)
             {
