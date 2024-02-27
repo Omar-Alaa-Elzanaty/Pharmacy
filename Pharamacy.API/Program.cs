@@ -84,6 +84,7 @@ if (app.Environment.IsDevelopment())
 app.UseMiddleware<GlobalExceptionHanlderMiddleware>();
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
 
 var supportedCultures = new[] { "en-US", "ar-EG" };
 

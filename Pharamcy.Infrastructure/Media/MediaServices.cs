@@ -8,51 +8,53 @@ namespace Pharamcy.Infrastructure.Media
     public class MediaServices : IMediaService
     {
         private readonly IWebHostEnvironment _host;
-
-        //private readonly IHttpContextAccessor _contextAccessor;
-        //private readonly StringBuilder _defaultPath;
+        private readonly HttpContext _httpContext;
 
         public MediaServices(
             IWebHostEnvironment host,
-            IConfiguration configuration)
+            IConfiguration configuration,
+            IHttpContextAccessor contextAccessor)
         {
             _host = host;
-            //_contextAccessor = contextAccessor;
-            //_defaultPath = new StringBuilder(@$"{contextAccessor.HttpContext?.Request.Scheme}://{contextAccessor?.HttpContext?.Request.Host}/FOLDER/");
+            _httpContext = contextAccessor.HttpContext!;
         }
 
         public async Task DeleteAsync(string url)
         {
-            string rootPath = $"{_host.WebRootPath}\\Images";
-
-            var mediaNameToDelete = Path.GetFileNameWithoutExtension(url);
-            var ext = Path.GetExtension(url);
-            string oldPath = $@"{rootPath}\{mediaNameToDelete + ext}";
-
-            if (File.Exists(oldPath))
+            string RootPath = _host.WebRootPath.Replace("\\\\", "\\");
+            var imageNameToDelete = Path.GetFileNameWithoutExtension(url);
+            var EXT = Path.GetExtension(url);
+            var oldImagePath = $@"{RootPath}\Images\{imageNameToDelete}{EXT}";
+            if (File.Exists(oldImagePath))
             {
-                File.Delete(oldPath);
+                File.Delete(oldImagePath);
             }
-
             await Task.CompletedTask;
         }
 
         public async Task<string> SaveAsync(IFormFile media)
         {
-            string rootPath = $"{_host.WebRootPath}\\Images";
+            var extension = Path.GetExtension(media.FileName).ToLower();
 
-            string file = Guid.NewGuid().ToString();
-            string extension = Path.GetExtension(media.FileName);
-            string mediaFolderPath = Path.Combine(rootPath, file + extension);
+            var uniqueFileName = Guid.NewGuid().ToString() + extension;
 
-            using (Stream fileStreams = new FileStream(mediaFolderPath, FileMode.Create))
+            var uploadsFolder = Path.Combine("wwwroot", "Images");
+
+            if (!Directory.Exists(uploadsFolder))
             {
-                media.CopyTo(fileStreams);
-                fileStreams.Flush();
-                fileStreams.Dispose();
+                Directory.CreateDirectory(uploadsFolder);
             }
-            await Task.CompletedTask;
-            return mediaFolderPath;
+
+            var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+            using (var stream = new FileStream(filePath, FileMode.OpenOrCreate))
+            {
+                media.CopyTo(stream);
+                stream.Dispose();
+            }
+
+            var baseUrl = @$"{_httpContext.Request.Scheme}://{_httpContext.Request.Host}/Images/";
+
+            return baseUrl + uniqueFileName;
         }
 
         public async Task<string> UpdateAsync(string oldUrl, IFormFile newMedia)
