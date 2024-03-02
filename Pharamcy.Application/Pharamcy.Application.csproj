@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Common\Mapping\" />
+    <Folder Include="Features\SystemAdmin\Commands\" />
   </ItemGroup>
 
 </Project>

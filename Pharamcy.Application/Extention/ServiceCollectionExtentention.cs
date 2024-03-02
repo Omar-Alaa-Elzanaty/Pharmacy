@@ -1,4 +1,5 @@
-﻿using Mapster;
+﻿using FluentValidation;
+using Mapster;
 using MapsterMapper;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
@@ -9,7 +10,10 @@ namespace Pharamcy.Application.extention
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
-            services.AddMapping().AddMediator();
+            services
+                .AddMapping()
+                .AddMediator()
+                .AddValidators();
 
             return services;
         }
@@ -23,10 +27,13 @@ namespace Pharamcy.Application.extention
 
             return services;
         }
-        private static void AddMediator(this IServiceCollection services)
+        private static IServiceCollection AddMediator(this IServiceCollection services)
         {
-            services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+           return services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
         }
-
+        private static IServiceCollection AddValidators(this IServiceCollection services)
+        {
+           return services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+        }
     }
 }

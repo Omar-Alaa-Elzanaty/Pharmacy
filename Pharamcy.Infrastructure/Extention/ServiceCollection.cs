@@ -1,8 +1,13 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System.Globalization;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
-using System.Globalization;
+using Pharamcy.Application.Interfaces.Auth;
+using Pharamcy.Application.Interfaces.Media;
+using Pharamcy.Infrastructure.Media;
+using Pharamcy.Infrastructure.Services.Auth;
+using Pharamcy.Infrastructure.Services.Localization;
 
 namespace Pharamcy.Infrastructure.Extention
 {
@@ -10,17 +15,16 @@ namespace Pharamcy.Infrastructure.Extention
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {
-            services.Localization();
-              
+            services.AddLocalization()
+                    .AddCollections();
 
-            return services;    
+            return services;
         }
-       
-        private static IServiceCollection Localization(this IServiceCollection services)
-        {
-            services.AddLocalization();
 
-            services.AddDistributedMemoryCache();
+        private static IServiceCollection AddLocalization(this IServiceCollection services)
+        {
+            LocalizationServiceCollectionExtensions.AddLocalization(services);
+
 
             services.AddSingleton<IStringLocalizerFactory, JsonStringLocalizerFactory>();
 
@@ -35,13 +39,18 @@ namespace Pharamcy.Infrastructure.Extention
                 var supportedCultures = new[] {
                   new CultureInfo("en-US"),
                   new CultureInfo("ar-EG"),
-                  new CultureInfo("de-DE")
                  };
                 op.DefaultRequestCulture = new RequestCulture(culture: supportedCultures[0]);
 
                 op.SupportedCultures = supportedCultures;
             });
 
+            return services;
+        }
+        private static IServiceCollection AddCollections(this IServiceCollection services)
+        {
+            services.AddTransient<IAuthServices, AuthServices>();
+            services.AddTransient<IMediaService, MediaServices>();
             return services;
         }
     }

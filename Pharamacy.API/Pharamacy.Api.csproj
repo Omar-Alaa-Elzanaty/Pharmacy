@@ -8,6 +8,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\Resources\ar-EG.json" />
+    <Content Remove="wwwroot\Resources\en-US.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\Resources\ar-EG.json" />
+    <None Include="wwwroot\Resources\en-US.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="MediatR" Version="12.2.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.1" />
@@ -36,7 +46,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <Folder Include="wwwroot\Images\" />
   </ItemGroup>
 
 </Project>

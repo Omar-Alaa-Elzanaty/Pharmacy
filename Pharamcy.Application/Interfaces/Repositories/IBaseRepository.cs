@@ -4,12 +4,18 @@
     {
         //add-delete-update-getbyid
 
-        T GetById(int id);
+        public  Task<T> GetByIdAsync(int id);
+        public  Task<T> GetItemOnAsync(Func<T,bool>match);
+        //public  Task<IEnumerable<T>> GetAllByIdAsync(Func<T,bool>match);
+        public  Task<IEnumerable<TResult>> GetOnCriteriaAsync<TResult>(Func<T,bool>match,Func<T,TResult>selector);
 
-        void Add(T input);
+        public  Task<IEnumerable<T>> GetAllAsync(Func<T, bool> match);
 
-        void Update(T input);
 
-        void Delete(int id);
+        public Task AddAsync(T input);
+
+        public Task UpdateAsync(T input);
+
+        public Task DeleteAsync(T input);
     }
 }
