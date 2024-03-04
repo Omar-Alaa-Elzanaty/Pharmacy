@@ -10,12 +10,10 @@ using Pharamcy.Domain.Models;
 
 namespace Pharamcy.Presistance.EntityConfiguration
 {
-    internal class TabletMedicineConfig : IEntityTypeConfiguration<TabletMedicine>
+    internal class TabletMedicineConfig : IEntityTypeConfiguration<PartitionMedicine>
     {
-        public void Configure(EntityTypeBuilder<TabletMedicine> builder)
+        public void Configure(EntityTypeBuilder<PartitionMedicine> builder)
         {
-            builder.Property(x => x.TabletPrice).HasColumnType("money");
-            builder.Property(x => x.TapePrice).HasColumnType("money");
         }
     }
 }

@@ -10,7 +10,7 @@ namespace Pharamcy.Domain.Models
         public string EnglishHeader { get; set; }
         public string ArabicFooter { get; set; }
         public string EnglishFooter { get; set; }
-        public string AdminId { get; set; }
+        public string OwnerId { get; set; }
         public string? PharmacyLogo { get; set; }
         public virtual ApplicationUser Owner { get; set; }
         public virtual List<PurchaseInvoice> PurchaseInvoices { get; set; } = new();
