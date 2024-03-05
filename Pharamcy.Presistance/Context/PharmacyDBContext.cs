@@ -30,7 +30,7 @@ namespace Pharamcy.Presistance.Context
         }
         public DbSet<Pharmacy> Pharmacies { get; set; }
         public DbSet<Medicine> Medicines { get; set; }
-        public DbSet<TabletMedicine> Tablets { get; set; }
+        public DbSet<PartitionMedicine> Tablets { get; set; }
         public DbSet<Client> Clients { get; set; }
         public DbSet<Lost> Losts { get; set; }
         public DbSet<PurchaseInvoice> PurchaseInvoices { get; set; }
@@ -40,7 +40,8 @@ namespace Pharamcy.Presistance.Context
         public DbSet<MedicineDefinition> MedicalCompaniesDefinition { get; set; }
         public DbSet<MedicalType> MedicalTypes { get; set; }
         public DbSet<MedicalEffectiveMaterial> MedicalEffectiveMaterials { get; set; }
-
-
+        public DbSet<PartitionMedicine> PartitionMedicines { get; set; }
+        public DbSet<PartitionMedicineTracking> PartitionMedicineTrackings { get; set; }
+        public DbSet<MedicineTracking> MedicineTrackings { get; set; }
     }
 }

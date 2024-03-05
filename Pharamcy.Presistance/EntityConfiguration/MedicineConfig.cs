@@ -9,7 +9,6 @@ namespace Pharamcy.Presistance.EntityConfiguration
         public void Configure(EntityTypeBuilder<Medicine> builder)
         {
             builder.Property(x => x.PurchasePrice).HasColumnType("money");
-            builder.Property(x => x.SalePrice).HasColumnType("money");
         }
     }
 }

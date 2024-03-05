@@ -29,7 +29,7 @@ namespace Pharamcy.Application.Features.Pharmacy.Queries.GetAll
         }
         public async Task<Response> Handle(GetAllPharmacyQuery query, CancellationToken cancellationToken)
         {
-            var pharmacies = await _unitofWork.Repository<Domain.Models.Pharmacy>().GetAllAsync(i=>i.AdminId==query.Id);
+            var pharmacies = await _unitofWork.Repository<Domain.Models.Pharmacy>().GetAllAsync(i=>i.OwnerId==query.Id);
             var output = _mapper.Map<List<GetAllPharmacyQueryDto>>(pharmacies);
             return await Response.SuccessAsync(output, _localizer["Success"].Value);
         }
