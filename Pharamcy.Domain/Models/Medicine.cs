@@ -4,6 +4,12 @@ namespace Pharamcy.Domain.Models
 {
     public class Medicine : BaseEntity
     {
+        public string EnglishName { get; set; }
+        public string ArabicName { get; set; }
+        public string Pharmacology { get; set; }
+        public string CompanyName { get; set; }
+        public string Type { get; set; }
+        public int NationalCode { get; set; }
         public int? ShortCode { get; set; }
         public double PurchasePrice { get; set; }
         public bool AllowToPrint { get; set; }
@@ -21,7 +27,6 @@ namespace Pharamcy.Domain.Models
         public int PharmacyId { get; set; }
         public virtual Pharmacy Pharmacy { get; set; }
         public int MedicinDefinitionId { get; set; }
-        public virtual MedicineDefinition Information { get; set; } = new();
         public virtual List<MedicineTracking> Tracking { get; set; } = [];
     }
 }
