@@ -12,6 +12,7 @@
         public string CreatorName { get; set; }
         public int serialNumber { get; set; }
         public bool IsClosed { get; set; }
+        public string? InvoiceImage { get; set; }
         public virtual List<PruchaseInvoiceItem> Items { get; set; }
     }
 }

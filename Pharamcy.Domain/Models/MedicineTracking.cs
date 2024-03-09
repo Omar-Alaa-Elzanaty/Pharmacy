@@ -10,3 +10,4 @@
         public virtual Medicine Medicine { get; set; }
     }
 }
+

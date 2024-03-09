@@ -20,12 +20,12 @@ namespace Pharamcy.Domain.Models
         public double BuyDiscount { get; set; }
         public int Reflux { get; set; }
         public int OfferCount { get; set; }
-        public double Offer { get; set; }
+        public int Offer { get; set; }
         public int DefaultSale { get; set; }
         public string MessageDuringSale { get; set; }
         public int PharmacyId { get; set; }
         public virtual Pharmacy Pharmacy { get; set; }
         public virtual List<MedicalEffectiveMaterial> EffectiveMaterials { get; set; }
-        public virtual List<MedicineTracking> Tracking { get; set; } = [];
+        public virtual List<MedicineTracking> Tracking { get; set; } 
     }
 }
