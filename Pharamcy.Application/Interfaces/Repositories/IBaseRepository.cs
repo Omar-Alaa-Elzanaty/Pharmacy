@@ -10,6 +10,7 @@
         public  Task<IEnumerable<TResult>> GetOnCriteriaAsync<TResult>(Func<T,bool>match,Func<T,TResult>selector);
 
         public  Task<IEnumerable<T>> GetAllAsync(Func<T, bool> match);
+        public Task<IEnumerable<TResult>> GetAllAsync<TResult>(Func<T, TResult> selector);
 
 
         public Task AddAsync(T input);
