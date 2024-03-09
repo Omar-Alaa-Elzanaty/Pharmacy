@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Company\Commands\" />
+    <Folder Include="Features\Suppliers\Commands\" />
     <Folder Include="Features\SystemAdmin\Commands\" />
   </ItemGroup>
 

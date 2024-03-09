@@ -10,26 +10,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Pharamcy.Application.Features.Company.Queries.GetAllCompanies
+namespace Pharamcy.Application.Features.Suppliers.Queries.GetAllSuppliers
 {
-    public record GetAllCompaniesQuery():IRequest<Response>;
-    public record GetAllCompaniesResponse(string Name, double FinancialDues) : IRequest<Response>;
+    public record GetAllSuppliersQuery():IRequest<Response>;
+    public record GetAllSuppliersResponse(string Name, double FinancialDues) : IRequest<Response>;
 
-    public class GetAllCompaniesQueryHandler : IRequestHandler<GetAllCompaniesQuery, Response>
+    public class GetAllSuppliersQueryHandler : IRequestHandler<GetAllSuppliersQuery, Response>
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public GetAllCompaniesQueryHandler(IUnitOfWork unitOfWork)
+        public GetAllSuppliersQueryHandler(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<Response> Handle(GetAllCompaniesQuery request, CancellationToken cancellationToken)
+        public async Task<Response> Handle(GetAllSuppliersQuery request, CancellationToken cancellationToken)
         {
             var companies =await _unitOfWork.Repository<SystemMedicalCompany>().GetAllAsync();
 
             
-            var response = companies.Adapt<IEnumerable<GetAllCompaniesResponse>>();
+            var response = companies.Adapt<IEnumerable<GetAllSuppliersResponse>>();
 
             return await Response.SuccessAsync(response);  
         }

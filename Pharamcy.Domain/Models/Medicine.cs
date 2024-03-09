@@ -13,11 +13,11 @@ namespace Pharamcy.Domain.Models
         public int? ShortCode { get; set; }
         public bool AllowToPrint { get; set; }
         public bool AllowToSale { get; set; }
-        public string StroageRack { get; set; }
+        public string StorageRack { get; set; }
         public double StorageTemperature { get; set; } = 25;
         public int MinimumAmount { get; set; }
         public int MaximumAmount { get; set; }
-        public double BuyDiscount { get; set; }
+        public int BuyDiscount { get; set; }
         public int Reflux { get; set; }
         public int OfferCount { get; set; }
         public double Offer { get; set; }
