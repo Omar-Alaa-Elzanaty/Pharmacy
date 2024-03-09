@@ -11,8 +11,10 @@ namespace Pharamcy.Domain.Models
         public string BarCode { get; set; }
         public int Amount { get; set; }
         public double SalePrice { get; set; }
+        public int TapesCount { get; set; }
+        public int TabletsCount { get; set; }
         public double TabletSalePrice { get; set; }
-        public double? TapeSalePrice { get; set; }
         public int PartitionMedicineId { get; set; }
+        public virtual PartitionMedicine PartitionMedicine { get; set; }
     }
 }

@@ -18,17 +18,15 @@ namespace Pharamcy.Application.Features.Company.Queries.GetAllCompanies
     public class GetAllCompaniesQueryHandler : IRequestHandler<GetAllCompaniesQuery, Response>
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapper _mapper;
 
-        public GetAllCompaniesQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        public GetAllCompaniesQueryHandler(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-            _mapper = mapper;
         }
 
         public async Task<Response> Handle(GetAllCompaniesQuery request, CancellationToken cancellationToken)
         {
-            var companies =await _unitOfWork.Repository<MedicalCompany>().GetAllAsync(i => i);
+            var companies =await _unitOfWork.Repository<SystemMedicalCompany>().GetAllAsync();
 
             
             var response = companies.Adapt<IEnumerable<GetAllCompaniesResponse>>();

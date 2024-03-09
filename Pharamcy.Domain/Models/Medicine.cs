@@ -11,7 +11,6 @@ namespace Pharamcy.Domain.Models
         public string Type { get; set; }
         public int NationalCode { get; set; }
         public int? ShortCode { get; set; }
-        public double PurchasePrice { get; set; }
         public bool AllowToPrint { get; set; }
         public bool AllowToSale { get; set; }
         public string StroageRack { get; set; }
@@ -26,7 +25,7 @@ namespace Pharamcy.Domain.Models
         public string MessageDuringSale { get; set; }
         public int PharmacyId { get; set; }
         public virtual Pharmacy Pharmacy { get; set; }
-        public int MedicinDefinitionId { get; set; }
+        public virtual List<MedicalEffectiveMaterial> EffectiveMaterials { get; set; }
         public virtual List<MedicineTracking> Tracking { get; set; } = [];
     }
 }

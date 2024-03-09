@@ -1,58 +1,59 @@
-﻿using Pharamcy.Application.Interfaces.Repositories;
+﻿using Microsoft.EntityFrameworkCore;
+using Pharamcy.Application.Interfaces.Repositories;
 using Pharamcy.Presistance.Context;
 
 namespace Pharamcy.Presistance.Repositories
 {
     public class BaseRepository<T> : IBaseRepository<T> where T : class
     {
-        protected PharmacyDBContext dbContext;
+        private readonly PharmacyDBContext _dbContext;
 
         public BaseRepository(PharmacyDBContext dbContext)
         {
-            this.dbContext = dbContext;
+            _dbContext = dbContext;
         }
 
         public async Task<T> GetByIdAsync(int id)
         {
 
-            return dbContext.Set<T>().Find(id);
+            return _dbContext.Set<T>().Find(id);
         }
 
         public Task AddAsync(T input)
         {
-            dbContext.Set<T>().Add(input);
-            dbContext.SaveChanges();
+            _dbContext.Set<T>().Add(input);
+            _dbContext.SaveChanges();
             return Task.CompletedTask;
         }
 
         public Task UpdateAsync(T input)
         {
-            dbContext.Update(input);
-            dbContext.SaveChanges();
+            _dbContext.Update(input);
+            _dbContext.SaveChanges();
             return Task.CompletedTask;
         }
 
         public Task DeleteAsync(T input)
         {
-            dbContext.Remove(input);
+            _dbContext.Remove(input);
             
-            dbContext.SaveChanges();
+            _dbContext.SaveChanges();
             return Task.CompletedTask;
         }
 
         public async Task<T> GetItemOnAsync(Func<T, bool> match)
         {
-            return dbContext.Set<T>().FirstOrDefault(match);
+            return _dbContext.Set<T>().FirstOrDefault(match);
         }
         public async Task<IEnumerable<T>> GetAllAsync(Func<T, bool> match)
         {
-            return dbContext.Set<T>().Where(match);
+            return _dbContext.Set<T>().Where(match);
         }
 
         public async Task<IEnumerable<TResult>> GetOnCriteriaAsync<TResult>(Func<T, bool> match, Func<T, TResult> selector)
         {
           
-            return dbContext.Set<T>().Where(match).Select(selector);
+            return _dbContext.Set<T>().Where(match).Select(selector);
            
 
         }
@@ -60,7 +61,17 @@ namespace Pharamcy.Presistance.Repositories
         public async Task<IEnumerable<TResult>?> Get<TResult>(Func<T, TResult> selector)
         {
 
-            return dbContext.Set<T>().Select(selector).ToList();
+            return _dbContext.Set<T>().Select(selector).ToList();
+        }
+
+        public async Task<IEnumerable<T>> GetAllAsync()
+        {
+            return await _dbContext.Set<T>().ToListAsync();
+        }
+
+        public IQueryable<T> Entities()
+        {
+            return _dbContext.Set<T>();
         }
     }
 }

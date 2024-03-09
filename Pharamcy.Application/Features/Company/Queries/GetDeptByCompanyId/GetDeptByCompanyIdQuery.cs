@@ -25,7 +25,7 @@ namespace Pharamcy.Application.Features.Company.Queries.GetDeptByCompanyId
 
         public async Task<Response> Handle(GetDeptByCompanyIdQuery request, CancellationToken cancellationToken)
         {
-            var dept = await _unitOfWork.Repository<MedicalCompany>().GetByIdAsync(request.Id);
+            var dept = await _unitOfWork.Repository<Suppliers>().GetByIdAsync(request.Id);
 
             return await Response.SuccessAsync(dept, _localizer["Success"]);
         }

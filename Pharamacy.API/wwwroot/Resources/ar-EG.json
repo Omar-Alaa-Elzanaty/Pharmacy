@@ -1,5 +1,6 @@
 ﻿{
   "PharmacyNotExist": ".الصيدلية المطلوبة غير موجودة",
+  "MedicineNotFound": ".لم يتم العثور على دواء",
   "Success": ".عملية ناجحة",
   "Failed": ".عملية فاشلة",
   "PharmacyExist": ".الصيدلية موجودة بالفعل",
@@ -7,5 +8,6 @@
   "NameExist": ".الاسم موجود بالفعل",
   "InvalidLogin": ".اسم المستخدم أو كلمة المرور غير صحيح",
   "UnAuthorized": ".انت لا تملك الصلاحية",
-  "InvalidRequest": ".طلب غير صحيح"
+  "InvalidRequest": ".طلب غير صحيح",
+  "MedicineExist": ".الدواء موجود مسبقا"
 }

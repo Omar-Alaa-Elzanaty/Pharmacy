@@ -9,11 +9,11 @@ using Pharamcy.Domain.Models;
 
 namespace Pharamcy.Presistance.EntityConfiguration
 {
-    internal class MedicalComapnyConfig : IEntityTypeConfiguration<MedicalCompany>
+    internal class SystemCompanyConfig : IEntityTypeConfiguration<SystemMedicalCompany>
     {
-        public void Configure(EntityTypeBuilder<MedicalCompany> builder)
+        public void Configure(EntityTypeBuilder<SystemMedicalCompany> builder)
         {
-            builder.HasIndex(x => x.Name).IsUnique();
+            builder.HasKey(x => x.Name);
         }
     }
 }
