@@ -1,9 +1,11 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Pharamcy.Application.Features.Company.GetDeptByCompanyId;
 using Pharamcy.Application.Features.Pharmacy.Commands.Create;
 using Pharamcy.Application.Features.Pharmacy.Commands.DeleteById;
 using Pharamcy.Application.Features.Pharmacy.Queries.GetAll;
+using Pharamcy.Application.Features.Pharmacy.Queries.GetDeptByCompanyId;
 using Pharamcy.Shared;
 
 namespace Pharamcy.Presentation.Controller
@@ -39,5 +41,6 @@ namespace Pharamcy.Presentation.Controller
 
             return Ok(await _mediator.Send(new GetAllPharmacyQuery(id)));
         }
+        
     }
 }
