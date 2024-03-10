@@ -2,11 +2,12 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Pharamcy.Application.Features.Medicines.Commands.CreateFromPurchaseInvoice;
+using Pharamcy.Application.Features.Medicines.Queries.GetMedicineByBarCode;
 
 namespace Pharamcy.Presentation.Controller
 {
-    [Route("api/[controller]/[action]")]
-    [Authorize()]
+    [Route("api/[controller]")]
+    //[Authorize()]
     public class MedicineController : ApiControllerBase
     {
         private readonly IMediator _mediator;
@@ -15,10 +16,15 @@ namespace Pharamcy.Presentation.Controller
         {
             _mediator = mediator;
         }
-
+        [HttpPost]
         public async Task<ActionResult<string>>CreateMedicineFromSupplyInovice(CreateFromPurchaseInoviceCommand command)
         {
             return Ok(await _mediator.Send(command));
+        }
+        [HttpGet("barCode")]
+        public async Task<ActionResult<GetMedicineByBarCodeQueryDto>> GetByBarCode(GetMedicineByBarCodeQuery query)
+        {
+            return Ok(await _mediator.Send(query));
         }
     }
 }
