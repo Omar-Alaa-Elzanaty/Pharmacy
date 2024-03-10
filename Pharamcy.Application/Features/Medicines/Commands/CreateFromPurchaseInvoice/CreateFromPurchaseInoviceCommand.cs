@@ -11,8 +11,9 @@ namespace Pharamcy.Application.Features.Medicines.Commands.CreateFromPurchaseInv
     {
         public string EnglishName { get; set; }
         public string ArabicName { get; set; }
-        public double PurchasePrice { get; set; }
-        public double SellingPrice { get; set; }
+        public decimal PurchasePrice { get; set; }
+        public decimal SellingPrice { get; set; }
+
         public string Type { get; set; }
         public int? NationalCode { get; set; }
         public CreateFromPurchaseInoviceCommandPartitionInfo? Partation { get; set; }
@@ -21,7 +22,7 @@ namespace Pharamcy.Application.Features.Medicines.Commands.CreateFromPurchaseInv
     }
     public record CreateFromPurchaseInoviceCommandPartitionInfo
     {
-        public double? TabletPrice { get; set; }
+        public decimal? TabletPrice { get; set; }
         public int? TabletCount { get; set; }
         public int TapesCount { get; set; }
     }
@@ -50,7 +51,7 @@ namespace Pharamcy.Application.Features.Medicines.Commands.CreateFromPurchaseInv
 
             if (command.IsPartationing && command.Partation is not null)
             {
-                var paritionMedicine = entity.Adapt<PartitionMedicine>();
+                var paritionMedicine = command.Adapt<PartitionMedicine>();
 
                 await _unitOfWork.Repository<PartitionMedicine>().AddAsync(paritionMedicine);
                 await _unitOfWork.SaveAsync();
@@ -59,10 +60,9 @@ namespace Pharamcy.Application.Features.Medicines.Commands.CreateFromPurchaseInv
                 {
                     SalePrice = command.SellingPrice,
                     PartitionMedicineId = paritionMedicine.Id,
-                    TabletSalePrice = (double)command.Partation.TabletPrice!,
-                    TabletsCount = command.Partation.TapesCount,
-                    TapesCount = command.Partation.TapesCount,
-                    Amount = 0,
+                    TabletSalePrice = command.Partation.TabletPrice??0,
+                    Tablets = command.Partation.TapesCount,
+                    Taps = command.Partation.TapesCount,
                     BarCode = "",
                 });
 
@@ -71,7 +71,7 @@ namespace Pharamcy.Application.Features.Medicines.Commands.CreateFromPurchaseInv
             }
             else
             {
-                var medicine = entity.Adapt<Medicine>();
+                var medicine = command.Adapt<Medicine>();
 
                 await _unitOfWork.Repository<Medicine>().AddAsync(medicine);
                 await _unitOfWork.SaveAsync();
@@ -81,8 +81,9 @@ namespace Pharamcy.Application.Features.Medicines.Commands.CreateFromPurchaseInv
                     SalePrice = command.SellingPrice,
                     PurchasePrice = command.PurchasePrice,
                     Amount = 0,
-                    MedicineId = medicine.Id
-                });
+                    MedicineId = medicine.Id,
+                    BarCode = ""
+                }) ;
 
                 await _unitOfWork.Repository<Medicine>().UpdateAsync(medicine);
                 await _unitOfWork.SaveAsync();

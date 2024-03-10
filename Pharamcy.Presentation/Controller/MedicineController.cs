@@ -8,7 +8,7 @@ using Pharamcy.Application.Features.Medicines.Queries.GetMedicineByName;
 namespace Pharamcy.Presentation.Controller
 {
     [Route("api/[controller]")]
-    [Authorize()]
+    //[Authorize()]
     public class MedicineController : ApiControllerBase
     {
         private readonly IMediator _mediator;

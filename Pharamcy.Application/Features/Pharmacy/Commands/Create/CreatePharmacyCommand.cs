@@ -15,8 +15,9 @@ namespace Pharamcy.Application.Features.Pharmacy.Commands.Create
         public string EnglishHeader { get; set; }
         public string ArabicFooter { get; set; }
         public string EnglishFooter { get; set; }
+        public string PhoneNumber { get; set; }
         public IFormFile? Logo { get; set; }
-        public string AdminId { get; set; }
+        public string OwnerId { get; set; }
 
     };
     internal class CreatePharmacyCommandHandler : IRequestHandler<CreatePharmacyCommand, Response>

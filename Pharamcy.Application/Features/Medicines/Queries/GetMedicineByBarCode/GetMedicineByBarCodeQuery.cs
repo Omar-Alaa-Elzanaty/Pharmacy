@@ -61,7 +61,7 @@ namespace Pharamcy.Application.Features.Medicines.Queries.GetMedicineByBarCode
                 Amount = trackingInfo.Amount,
                 EnglishName = medicine.EnglishName,
                 PurchasePrice = trackingInfo.PurchasePrice,
-                BaseDiscount = medicine.BuyDiscount,
+                BaseDiscount = medicine.BuyDiscount??0,
                 AdditionalTaxes = 14,
                 SellingPrice = trackingInfo.SalePrice
             };
@@ -76,10 +76,10 @@ namespace Pharamcy.Application.Features.Medicines.Queries.GetMedicineByBarCode
                 Amount = trackingInfo.Amount,
                 EnglishName = medicine.EnglishName,
                 PurchasePrice = trackingInfo.PurchasePrice,
-                BaseDiscount = medicine.BuyDiscount,
+                BaseDiscount = medicine.BuyDiscount ?? 0,
                 AdditionalTaxes = 14,
                 SellingPrice = trackingInfo.SalePrice,
-                TabletsAmount=trackingInfo.TabletsCount,
+                TabletsAmount=trackingInfo.Tablets,
             };
         }
     }
