@@ -1,18 +1,16 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Pharamcy.Application.Features.Company.GetDeptByCompanyId;
 using Pharamcy.Application.Features.Pharmacy.Commands.Create;
 using Pharamcy.Application.Features.Pharmacy.Commands.DeleteById;
 using Pharamcy.Application.Features.Pharmacy.Queries.GetAll;
-using Pharamcy.Application.Features.Pharmacy.Queries.GetDeptByCompanyId;
 using Pharamcy.Shared;
 
 namespace Pharamcy.Presentation.Controller
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = SystemRoles.Admin)]
+    //[Authorize(Roles = SystemRoles.Admin)]
     public class PharmacyController : ApiControllerBase
     {
         private IMediator _mediator;
@@ -23,9 +21,9 @@ namespace Pharamcy.Presentation.Controller
         }
         [HttpPost]
 
-        public async Task<IActionResult> AddPharmacy([FromForm]CreatePharmacyCommand command)
+        public async Task<IActionResult> AddPharmacy([FromForm] CreatePharmacyCommand command)
         {
-            return Ok( await _mediator.Send(command));
+            return Ok(await _mediator.Send(command));
 
 
         }
@@ -33,7 +31,7 @@ namespace Pharamcy.Presentation.Controller
         public async Task<IActionResult> DeletePharmacy(int id)
         {
 
-            return Ok(await _mediator.Send(new DeleteByIdCommand(id))); 
+            return Ok(await _mediator.Send(new DeleteByIdCommand(id)));
         }
         [HttpGet("{id}")]
         public async Task<IActionResult> GetPharmacy(string id)
@@ -41,6 +39,6 @@ namespace Pharamcy.Presentation.Controller
 
             return Ok(await _mediator.Send(new GetAllPharmacyQuery(id)));
         }
-        
+
     }
 }

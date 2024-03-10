@@ -9,19 +9,20 @@ namespace Pharamcy.Domain.Models
     public class PruchaseInvoiceItem
     {
         public int Id { get; set; }
-        public int Quantity { get; set; }
-        public int PurchaseInvoiceId { get; set; }
-        public int shelf { get; set; }
-        public double UnitPrice { get; set; }
-        public string? InvoiceImage { get; set; }
-        public int StripsCount { get; set; }
-        public virtual PurchaseInvoice PurchaseInvoice { get; set; }
-        public int TaxiPrecent { get; set; }
-        public int Bonus { get; set; }
+        public string Name { get; set; }
+        public int Amount { get; set; }
+        public int Bonse { get; set; }
+        public int Shelf { get; set; } = 0;
+        public decimal UnitPrice { get; set; }
+        public int Taps { get; set; }
+        public int Tablets { get; set; }
+        public int Taxis { get; set; }
         public int AdditionalDiscount { get; set; }
-        public int pharmaceuticalDiscount { get; set; }
-        public double BuyPrice { get; set; }
-        public double SalePrice => Quantity * UnitPrice;
+        public int BaseDiscount { get; set; }
+        public decimal PurchasePrice { get; set; }
+        public decimal SalePrice { get; set; }
         public DateOnly ExpireDate { get; set; }
+        public int PurchaseInvoiceId { get; set; }
+        public virtual PurchaseInvoice PurchaseInvoice { get; set; }
     }
 }

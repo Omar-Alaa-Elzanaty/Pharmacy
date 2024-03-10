@@ -22,6 +22,7 @@ namespace Pharamcy.Presistance.Context
             modelBuilder.Entity<IdentityUserLogin<string>>().ToTable("UserLogins", "Account");
             modelBuilder.Entity<IdentityRoleClaim<string>>().ToTable("RoleClaims", "Account");
             modelBuilder.Entity<IdentityUserToken<string>>().ToTable("UserTokens", "Account");
+            modelBuilder.Entity<PartitionMedicine>().ToTable("PartitionMedicine");
 
             modelBuilder.HasDefaultSchema("Pharmacy");
 
@@ -36,7 +37,9 @@ namespace Pharamcy.Presistance.Context
         public DbSet<PurchaseInvoice> PurchaseInvoices { get; set; }
         public DbSet<SalesInvoice> SalesInvoices { get; set; }
         public DbSet<Store> Stores { get; set; }
-        public DbSet<MedicalCompany> MedicalCompanies { get; set; }
+        public DbSet<Supplier> Suppliers { get; set; }
+        public DbSet<FinancialDues> PharmacyFinanicalDues { get;set; }
+        public DbSet<SystemMedicalCompany> systemMedicalCompanies { get; set; }
         public DbSet<MedicineDefinition> MedicalCompaniesDefinition { get; set; }
         public DbSet<MedicalType> MedicalTypes { get; set; }
         public DbSet<MedicalEffectiveMaterial> MedicalEffectiveMaterials { get; set; }

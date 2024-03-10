@@ -28,7 +28,7 @@ namespace Pharamcy.Presentation.Controller
         }
         [HttpPost]
         [Authorize(Roles = SystemRoles.SystemAdmin)]
-        public async Task<IActionResult> CreateSystemAdminAndAdmin([FromForm]CreateSystemAdminAndAdminCommand command)
+        public async Task<ActionResult<int>> CreateSystemAdminAndAdmin([FromForm]CreateSystemAdminAndAdminCommand command)
         {
             return Ok(await _mediator.Send(command));
 
@@ -38,7 +38,6 @@ namespace Pharamcy.Presentation.Controller
         public async Task<IActionResult> CreateModeratorAndCashier([FromForm] CreateModeratorAndCashierCommand command)
         {
             return Ok(await _mediator.Send(command));
-
         }
     }
 }
