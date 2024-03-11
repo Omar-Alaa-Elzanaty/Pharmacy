@@ -11,8 +11,8 @@ namespace Pharamcy.Application.Features.Medicines.Commands.CreateFromPurchaseInv
     {
         public string EnglishName { get; set; }
         public string ArabicName { get; set; }
-        public decimal PurchasePrice { get; set; }
-        public decimal SellingPrice { get; set; }
+        public double PurchasePrice { get; set; }
+        public double SellingPrice { get; set; }
 
         public string Type { get; set; }
         public int? NationalCode { get; set; }
@@ -22,7 +22,7 @@ namespace Pharamcy.Application.Features.Medicines.Commands.CreateFromPurchaseInv
     }
     public record CreateFromPurchaseInoviceCommandPartitionInfo
     {
-        public decimal? TabletPrice { get; set; }
+        public double? TabletPrice { get; set; }
         public int? TabletCount { get; set; }
         public int TapesCount { get; set; }
     }

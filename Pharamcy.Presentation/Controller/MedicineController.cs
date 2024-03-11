@@ -17,8 +17,8 @@ namespace Pharamcy.Presentation.Controller
         {
             _mediator = mediator;
         }
-        [HttpPost]
-        public async Task<ActionResult<string>>CreateMedicineFromSupplyInovice(CreateFromPurchaseInoviceCommand command)
+        [HttpPost("createFromPurchaseInvoice")]
+        public async Task<ActionResult<string>>CreateMedicineFromSupplyInovice([FromBody]CreateFromPurchaseInoviceCommand command)
         {
             return Ok(await _mediator.Send(command));
         }

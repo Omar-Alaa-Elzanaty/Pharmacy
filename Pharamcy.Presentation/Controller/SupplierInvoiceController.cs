@@ -1,12 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using Pharamcy.Application.Features.SupplierPurchases.Commands.SavePurchaseCommand;
+using Pharamcy.Application.Features.SupplierPurchases.Queries.GetAllUnClosedPurchaseInvoice;
+using Pharamcy.Application.Features.SupplierPurchases.Queries.GetSupplierInvoiceById;
+using Pharamcy.Application.Features.Suppliers.Queries.GetAllSuppliers;
 
 namespace Pharamcy.Presentation.Controller
 {
-    internal class SupplierInvoiceController
+    [Route("api/[controller]")]
+    public class SupplierInvoiceController : ApiControllerBase
     {
+        private readonly IMediator _mediator;
+
+        public SupplierInvoiceController(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
+
+        [HttpGet("UnClosed/{pharmacyId}")]
+        public async Task<ActionResult<GetAllUnClosedPurchaseInvoiceQueryDto>> GetAllUnClosed(int pharmacyId)
+        {
+            return Ok(await _mediator.Send(new GetAllUnClosedPurchaseInvoiceQuery(pharmacyId)));
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<GetSupplierInvoiceByIdQueryDto>> GetById(int id)
+        {
+            return Ok(await _mediator.Send(new GetSupplierInvoiceByIdQuery(id)));
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<GetAllSuppliersResponse>> SavePurchaseInvoice([FromForm] SavePurchaseCommand command)
+        {
+            return Ok(await _mediator.Send(command));
+        }
     }
 }

@@ -1,9 +1,16 @@
-﻿namespace Pharamcy.Domain.Models
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Pharamcy.Application.Features.SupplierPurchases.Queries.GetSupplierInvoiceById
 {
-    public class PurchaseInvoice : BaseEntity
+    public class GetSupplierInvoiceByIdQueryDto
     {
+        public int Id { get; set; }
         public string CompanyName { get; set; }
-        public double TotalCost { get;set; }
+        public double TotalCost { get; set; }
         public string ImportInvoiceNumber { get; set; }
         public string Notes { get; set; }
         public int DiscountCostPrecent { get; set; }
@@ -12,8 +19,5 @@
         public string CreatorName { get; set; }
         public bool IsClosed { get; set; }
         public string? InvoiceImageUrl { get; set; }
-        public int PharmacyId { get; set;}
-        public virtual Pharmacy Pharmacy { get; set; }
-        public virtual List<PruchaseInvoiceItem> Items { get; set; } = new(); 
     }
 }
