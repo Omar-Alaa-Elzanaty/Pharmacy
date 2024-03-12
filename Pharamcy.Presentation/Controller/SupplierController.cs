@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Pharamcy.Application.Features.SupplierPurchases.Commands.SavePurchaseCommand;
+using Pharamcy.Application.Features.Suppliers.Commands.Create;
 using Pharamcy.Application.Features.Suppliers.Queries.GetAllSupplierByPharamcyId;
 using Pharamcy.Application.Features.Suppliers.Queries.GetAllSuppliers;
 using Pharamcy.Application.Features.Suppliers.Queries.GetDeptBySupplierd;
@@ -27,11 +28,11 @@ namespace Pharamcy.Presentation.Controller
         [HttpGet("getAllByPhamracyId")]
         public async Task<ActionResult<GetAllSuppliersResponse>> GetAllSuppliersbyPharmacyId(int id)
         {
-            GetAllSupplierByPharamcyIdQuery query = new(id);
-            return Ok(await _mediator.Send(query));
+            return Ok(await _mediator.Send(new GetAllSupplierByPharamcyIdQuery(id)));
         }
+
         [HttpPost]
-        public async Task<ActionResult<GetAllSuppliersResponse>> SavePurchaseInvoice([FromForm]SavePurchaseCommand command)
+        public async Task<ActionResult<int>> Create(CreateSupplierCommand command)
         {
             return Ok(await _mediator.Send(command));
         }

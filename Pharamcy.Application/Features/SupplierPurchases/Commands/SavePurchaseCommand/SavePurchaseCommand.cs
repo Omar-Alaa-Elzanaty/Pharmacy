@@ -20,14 +20,14 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Commands.SavePurchaseC
         public int Bonse { get; set; }
         public int Shelf { get; set; } = 0;
 
-        public decimal UnitPrice { get; set; }
+        public double UnitPrice { get; set; }
         public int Taxis { get; set; }
         public int BaseDiscount { get; set; }
         public int AdditionalDiscount { get; set; }
-        public decimal PurchasePriceForUnit => PurchasePrice / Amount;
-        public decimal PurchasePrice { get; set; }
-        public decimal SalePrice { get; set; }
-        public decimal SalePriceForUnit => SalePrice / Amount;
+        public double PurchasePriceForUnit => PurchasePrice / Amount;
+        public double PurchasePrice { get; set; }
+        public double SalePrice { get; set; }
+        public double SalePriceForUnit => SalePrice / Amount;
         public DateOnly ExpireDate { get; set; }
     }
     public class PartitionProduct
@@ -45,12 +45,12 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Commands.SavePurchaseC
         public int Taxis { get; set; }
         public int BaseDiscount { get; set; }
         public int AdditionalDiscount { get; set; }
-        public decimal PurchasePrice { get; set; }
-        public decimal PurchasePriceForUnit => PurchasePrice / Amount;
-        public decimal SalePriceForUnit => SalePrice / Amount;
-        public decimal SalePrice { get; set; }
+        public double PurchasePrice { get; set; }
+        public double PurchasePriceForUnit => PurchasePrice / Amount;
+        public double SalePriceForUnit => SalePrice / Amount;
+        public double SalePrice { get; set; }
         public int TabletsAvailableAmount => RealAmount * Taps * Tablets;
-        public decimal TabletSalePrice { get; set; }
+        public double TabletSalePrice { get; set; }
         public DateOnly ExpireDate { get; set; }
     }
     public class SavePurchaseCommand : IRequest<Response>
@@ -58,11 +58,11 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Commands.SavePurchaseC
         public List<Product> Products { get; set; }
         public List<PartitionProduct> PartitionProducts { get; set; }
         public bool IsClosed { get; set; }
-        public decimal TermAmount { get; set; }
+        public double TermAmount { get; set; }
         public int DiscountCostPrecent { get; set; }
         public string CreatorName { get; set; }
         public string CompanyName { get; set; }
-        public decimal TotalCost { get; set; }
+        public double TotalCost { get; set; }
         public string ImportInvoiceNumber { get; set; }
         public string Notes { get; set; }
         public IFormFile InvoiceImage { get; set; }
@@ -95,7 +95,7 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Commands.SavePurchaseC
             purchaseinvoice.Items.AddRange(command.Products.Adapt<IEnumerable<PruchaseInvoiceItem>>());
             
             purchaseinvoice.Items.AddRange(command.PartitionProducts.Adapt<IEnumerable<PruchaseInvoiceItem>>());
-            purchaseinvoice.InvoiceImage=await _mediaService.SaveAsync(command.InvoiceImage);
+            purchaseinvoice.InvoiceImageUrl=await _mediaService.SaveAsync(command.InvoiceImage);
             
             foreach (var item in command.Products)
             {
