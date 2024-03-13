@@ -1,5 +1,7 @@
 ﻿using Mapster;
 using Pharamcy.Application.Features.SupplierPurchases.Commands.SavePurchaseCommand;
+using Pharamcy.Application.Features.SupplierPurchases.Queries.GetNextSupplierInvoiceByPharmacyId;
+using Pharamcy.Application.Features.SupplierPurchases.Queries.GetPrevioudInvoiceByPharmacyId;
 using Pharamcy.Domain.Models;
 
 namespace Pharamcy.Application.Common.Mapping
@@ -19,6 +21,12 @@ namespace Pharamcy.Application.Common.Mapping
              Map(i=>i.TabletsAvailableAmount,i=>i.TabletsAvailableAmount);
 
             config.NewConfig<SavePurchaseCommand, PurchaseInvoice>();
+
+            config.NewConfig<PurchaseInvoice, GetPreviousInvoiceByPharmacyIdQueryDto>();
+            config.NewConfig<PurchaseInvoiceItem, GetPreviousInvoiceItemsByPharmacyIdQueryDto>();
+
+            config.NewConfig<PurchaseInvoice, GetNextInvoiceByPharmacyIdQueryDto>();
+            config.NewConfig<PurchaseInvoiceItem, GetNextInvoiceItemsByPharmacyIdQueryDto>();
         }
     }
 }

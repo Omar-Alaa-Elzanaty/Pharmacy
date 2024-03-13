@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Pharamcy.Application.Features.SupplierPurchases.Commands.SavePurchaseCommand;
 using Pharamcy.Application.Features.SupplierPurchases.Queries.GetAllUnClosedPurchaseInvoice;
+using Pharamcy.Application.Features.SupplierPurchases.Queries.GetNextSupplierInvoiceByPharmacyId;
+using Pharamcy.Application.Features.SupplierPurchases.Queries.GetPrevioudInvoiceByPharmacyId;
 using Pharamcy.Application.Features.SupplierPurchases.Queries.GetSupplierInvoiceById;
 using Pharamcy.Application.Features.Suppliers.Queries.GetAllSuppliers;
 
@@ -33,6 +35,18 @@ namespace Pharamcy.Presentation.Controller
         public async Task<ActionResult<GetAllSuppliersResponse>> SavePurchaseInvoice([FromForm] SavePurchaseCommand command)
         {
             return Ok(await _mediator.Send(command));
+        }
+
+        [HttpGet("nextInvoice")]
+        public async Task<ActionResult<GetNextInvoiceByPharmacyIdQueryDto>> NextInvoice([FromBody]GetNextInvoiceByPharmacyIdQuery query)
+        {
+            return Ok(await _mediator.Send(query));
+        }
+
+        [HttpGet("previousInvoice")]
+        public async Task<ActionResult<GetPreviousInvoiceByPharmacyIdQueryDto>> PreviousInvoice([FromBody]GetPreviousInvoiceByPharmacyIdQuery query)
+        {
+            return Ok(await _mediator.Send(query));
         }
     }
 }
