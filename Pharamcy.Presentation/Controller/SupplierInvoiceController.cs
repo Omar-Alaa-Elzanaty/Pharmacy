@@ -38,13 +38,13 @@ namespace Pharamcy.Presentation.Controller
         }
 
         [HttpGet("nextInvoice")]
-        public async Task<ActionResult<GetNextInvoiceByPharmacyIdQueryDto>> NextInvoice([FromBody]GetNextInvoiceByPharmacyIdQuery query)
+        public async Task<ActionResult<GetNextInvoiceByPharmacyIdQueryDto>> NextInvoice(GetNextInvoiceByPharmacyIdQuery query)
         {
             return Ok(await _mediator.Send(query));
         }
 
         [HttpGet("previousInvoice")]
-        public async Task<ActionResult<GetPreviousInvoiceByPharmacyIdQueryDto>> PreviousInvoice([FromBody]GetPreviousInvoiceByPharmacyIdQuery query)
+        public async Task<ActionResult<GetPreviousInvoiceByPharmacyIdQueryDto>> PreviousInvoice(GetPreviousInvoiceByPharmacyIdQuery query)
         {
             return Ok(await _mediator.Send(query));
         }

@@ -7,6 +7,7 @@ using Mapster;
 using MapsterMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 using Pharamcy.Application.Interfaces.Repositories;
 using Pharamcy.Domain.Models;
 using Pharamcy.Shared;
@@ -23,17 +24,25 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Queries.GetPrevioudInv
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IStringLocalizer<GetNextInvoiceByPharmacyIdQueryHandler> _localization;
 
         public GetNextInvoiceByPharmacyIdQueryHandler(
             IUnitOfWork unitOfWork,
-            IMapper mapper)
+            IMapper mapper,
+            IStringLocalizer<GetNextInvoiceByPharmacyIdQueryHandler> localization)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _localization = localization;
         }
 
         public async Task<Response> Handle(GetPreviousInvoiceByPharmacyIdQuery query, CancellationToken cancellationToken)
         {
+            if (query.Order == 0)
+            {
+                return await Response.FailureAsync(_localization["InvalidRequest"]);
+            }
+
             PurchaseInvoice? entity;
             if (query.IsLast)
             {
