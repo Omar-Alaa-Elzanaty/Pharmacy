@@ -92,9 +92,9 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Commands.SavePurchaseC
             await _unitOfWork.Repository<PurchaseInvoice>().AddAsync(purchaseinvoice);
 
 
-            purchaseinvoice.Items.AddRange(command.Products.Adapt<IEnumerable<PruchaseInvoiceItem>>());
+            purchaseinvoice.Items.AddRange(command.Products.Adapt<IEnumerable<PurchaseInvoiceItem>>());
             
-            purchaseinvoice.Items.AddRange(command.PartitionProducts.Adapt<IEnumerable<PruchaseInvoiceItem>>());
+            purchaseinvoice.Items.AddRange(command.PartitionProducts.Adapt<IEnumerable<PurchaseInvoiceItem>>());
             purchaseinvoice.InvoiceImageUrl=await _mediaService.SaveAsync(command.InvoiceImage);
             
             foreach (var item in command.Products)

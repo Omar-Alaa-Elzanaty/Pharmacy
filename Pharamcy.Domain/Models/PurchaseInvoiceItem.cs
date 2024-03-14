@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Pharamcy.Domain.Models
 {
-    public class PruchaseInvoiceItem
+    public class PurchaseInvoiceItem
     {
         public int Id { get; set; }
         public string Name { get; set; }

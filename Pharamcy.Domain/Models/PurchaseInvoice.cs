@@ -14,6 +14,6 @@
         public string? InvoiceImageUrl { get; set; }
         public int PharmacyId { get; set;}
         public virtual Pharmacy Pharmacy { get; set; }
-        public virtual List<PruchaseInvoiceItem> Items { get; set; } = new(); 
+        public virtual List<PurchaseInvoiceItem> Items { get; set; } = new(); 
     }
 }
