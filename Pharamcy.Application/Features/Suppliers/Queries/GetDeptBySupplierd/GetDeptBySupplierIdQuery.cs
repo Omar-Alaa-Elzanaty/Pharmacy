@@ -31,9 +31,9 @@ namespace Pharamcy.Application.Features.Suppliers.Queries.GetDeptBySupplierd
 
         public async Task<Response> Handle(GetDeptBySupplierIdQuery query, CancellationToken cancellationToken)
         {
-            var dept = await _unitOfWork.Repository<Supplier>().GetAllAsync(x => x.PharamcyId == query.PharmacyId && x.Id == query.Id);
+            var dept = await _unitOfWork.Repository<Supplier>().GetAllAsync(x => x.PharmacyId == query.PharmacyId && x.Id == query.Id);
 
-            return await Response.SuccessAsync(dept, _localizer["Success"]);
+            return await Response.SuccessAsync(dept.Select(i=>i.Name), _localizer["Success"]);
         }
     }
 }

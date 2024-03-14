@@ -1,7 +1,5 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Identity.Client;
-using Pharamcy.Application.Features.SupplierPurchases.Commands.SavePurchaseCommand;
 using Pharamcy.Application.Features.Suppliers.Commands.Create;
 using Pharamcy.Application.Features.Suppliers.Queries.GetAllSupplierByPharamcyId;
 using Pharamcy.Application.Features.Suppliers.Queries.GetAllSuppliers;
@@ -20,11 +18,11 @@ namespace Pharamcy.Presentation.Controller
             _mediator = mediator;
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetSupplierDues(GetDeptBySupplierIdQuery query)
+        [HttpGet]
+        public async Task<IActionResult> GetSupplierDues(int id)
         {
 
-            return Ok(await _mediator.Send(query));
+            return Ok(await _mediator.Send(new GetDeptBySupplierIdQuery() {Id=id,PharmacyId=1 }));
         }
         [HttpGet("getAllByPhamracyId")]
         public async Task<ActionResult<GetAllSuppliersResponse>> GetAllSuppliersbyPharmacyId(int id)

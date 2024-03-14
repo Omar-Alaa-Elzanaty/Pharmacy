@@ -35,7 +35,7 @@ namespace Pharamcy.Application.Features.Suppliers.Queries.GetAllSupplierByPharam
         {
             var entities = await _unitOfWork.Repository<Supplier>()
                                 .Entities()
-                                .Where(x => x.PharamcyId == query.PharmacyId).ToListAsync();
+                                .Where(x => x.PharmacyId == query.PharmacyId).ToListAsync();
 
             var suppliers = entities.Adapt<List<GetAllSupplierByPharamcyIdQueryDto>>();
 
