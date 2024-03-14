@@ -5,10 +5,15 @@
   "Failed": "Failed Operation",
   "PharmacyExist": "The pharmacy Already Exsist.",
   "EmailExist": "The Email Already Exist.",
+  "EmailNotExist": "The Email Is Not Exist.",
   "NameExist": "The Name Already Exist.",
   "SupplierExist": "Supplier Already Exist.",
   "InvalidLogin": "Username or password isn't correct.",
   "UnAuthorized": "You Aren't Authorized.",
   "InvalidRequest": "Invalid Request",
-  "MedicineExist": "Medicine Already Exist."
+  "MedicineExist": "Medicine Already Exist.",
+  "SendOtpFail": "Fail To Send OTP verification Email.",
+  "SentOtp": "OTP Sent To Your Email.",
+  "InCorrectOtp": "Incorrect OTP Number.",
+  "SuccessChangePassword": "Password Change Successfully."
 }

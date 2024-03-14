@@ -5,10 +5,15 @@
   "Failed": ".عملية فاشلة",
   "PharmacyExist": ".الصيدلية موجودة بالفعل",
   "EmailExist": ".البريد الإلكتروني موجود بالفعل",
+  "EmailNotExist": ".البريد الالكترونى غير مسجل",
   "NameExist": ".الاسم موجود بالفعل",
   "SupplierExist": ".المورد موجود مسبقا",
   "InvalidLogin": ".اسم المستخدم أو كلمة المرور غير صحيح",
   "UnAuthorized": ".انت لا تملك الصلاحية",
   "InvalidRequest": ".طلب غير صحيح",
-  "MedicineExist": ".الدواء موجود مسبقا"
+  "MedicineExist": ".الدواء موجود مسبقا",
+  "SendOtpFail": "فشل ارسال رمز otp.",
+  "SentOtp": ".تم ارسال رمز التحقق الى الايميل",
+  "InCorrectOtp": ".رقم تحقق غير صحيح",
+  "SuccessChangePassword": ".تم تغير الرقم السرى بنجاح"
 }
