@@ -52,7 +52,7 @@ namespace Pharamcy.Presentation.Controller
         }
 
         [HttpGet]
-        public async Task<ActionResult<string>> VerifyOtp(VerifiyOtpCommand query)
+        public async Task<ActionResult<string>> VerifyOtp([FromQuery]VerifiyOtpCommand query)
         {
             return Ok(await _mediator.Send(query));
         }
