@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Pharamcy.Application.Features.Medicines.Queries.GetMedicineByKeyCode
+﻿namespace Pharamcy.Application.Features.Medicines.Queries.GetMedicineByKeyCode
 {
     public class GetMedicineByKeyQueryDto
     {
@@ -15,5 +9,6 @@ namespace Pharamcy.Application.Features.Medicines.Queries.GetMedicineByKeyCode
         public int BaseDiscount { get; set; }
         public double SellingPrice { get; set; }
         public int AdditionalTaxes { get; set; }
+        public bool IsPartition { get; set; }
     }
 }
