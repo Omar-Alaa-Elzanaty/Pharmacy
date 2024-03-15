@@ -17,7 +17,7 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Queries.GetPrevioudInv
     public record GetPreviousInvoiceByPharmacyIdQuery:IRequest<Response>
     {
         public int PharmacyId { get; set; }
-        public int Order { get; set; }
+        public int? Order { get; set; }
         public bool IsLast { get; set;  }
     }
     internal class GetNextInvoiceByPharmacyIdQueryHandler : IRequestHandler<GetPreviousInvoiceByPharmacyIdQuery, Response>
@@ -38,26 +38,35 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Queries.GetPrevioudInv
 
         public async Task<Response> Handle(GetPreviousInvoiceByPharmacyIdQuery query, CancellationToken cancellationToken)
         {
-            if (query.Order == 0)
+            if (query.Order < 2)
             {
                 return await Response.FailureAsync(_localization["InvalidRequest"]);
             }
 
             PurchaseInvoice? entity;
+            int? order = 0;
             if (query.IsLast)
             {
                 entity = await _unitOfWork.Repository<PurchaseInvoice>().Entities().Where(x => x.PharmacyId == query.PharmacyId)
                             .LastAsync();
+                order = await _unitOfWork.Repository<PurchaseInvoice>().Entities().CountAsync();
+            }
+            else if(query.Order is not null)
+            {
+                entity = await _unitOfWork.Repository<PurchaseInvoice>().Entities().Where(x => x.PharmacyId == query.PharmacyId)
+                         .Skip((int)query.Order - 2).Take(1).FirstOrDefaultAsync();
+                order = query.Order - 1;
             }
             else
             {
-                entity = await _unitOfWork.Repository<PurchaseInvoice>().Entities().Where(x => x.PharmacyId == query.PharmacyId)
-                         .Skip(query.Order - 1).Take(1).FirstOrDefaultAsync();
+                return await Response.FailureAsync(_localization["InvalidRequest"].Value);
             }
 
-            var invoice = _mapper.Map<GetPreviousInvoiceByPharmacyIdQueryDto>(entity);
+            var invoice = _mapper.Map<GetPreviousInvoiceByPharmacyIdQueryDto>(entity!);
 
-            return await Response.SuccessAsync(entity);
+            invoice.Order = (int)order;
+
+            return await Response.SuccessAsync(invoice);
         }
     }
 }

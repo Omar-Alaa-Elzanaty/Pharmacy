@@ -18,7 +18,6 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Commands.SavePurchaseC
         public int Amount { get; set; }
         public int RealAmount => Amount + Bonse;
         public int Bonse { get; set; }
-        public int Shelf { get; set; } = 0;
 
         public double UnitPrice { get; set; }
         public int Taxis { get; set; }
@@ -37,7 +36,6 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Commands.SavePurchaseC
         public int Amount { get; set; }
         public int RealAmount => Amount + Bonse;
         public int Bonse { get; set; }
-        public int Shelf { get; set; } = 0;
 
         public decimal UnitPrice { get; set; }
         public int Taps { get; set; }
@@ -61,11 +59,16 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Commands.SavePurchaseC
         public double TermAmount { get; set; }
         public int DiscountCostPrecent { get; set; }
         public string CreatorName { get; set; }
-        public string CompanyName { get; set; }
+        public string SupplierName { get; set; }
+        public int SupplierId { get; set; }
+
+
         public double TotalCost { get; set; }
+        public double Paied { get; set; }
         public string ImportInvoiceNumber { get; set; }
         public string Notes { get; set; }
         public IFormFile InvoiceImage { get; set; }
+        public int PharmacyId { get; set; }
     }
 
 
@@ -88,15 +91,29 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Commands.SavePurchaseC
         {
 
             var purchaseinvoice = _mapper.Map<PurchaseInvoice>(command);
-            
+
+            purchaseinvoice.InvoiceImageUrl = await _mediaService.SaveAsync(command.InvoiceImage);
+
             await _unitOfWork.Repository<PurchaseInvoice>().AddAsync(purchaseinvoice);
 
 
+
             purchaseinvoice.Items.AddRange(command.Products.Adapt<IEnumerable<PurchaseInvoiceItem>>());
-            
+
             purchaseinvoice.Items.AddRange(command.PartitionProducts.Adapt<IEnumerable<PurchaseInvoiceItem>>());
-            purchaseinvoice.InvoiceImageUrl=await _mediaService.SaveAsync(command.InvoiceImage);
-            
+
+            var supplier = await _unitOfWork.Repository<Supplier>().GetItemOnAsync(i => i.Id == command.SupplierId);
+
+            if (supplier == null)
+            {
+
+                return await Response.FailureAsync("SupplierNotExist");
+            }
+
+            supplier.FinancialDue = command.TermAmount;
+
+
+
             foreach (var item in command.Products)
             {
                 var medicine = await _unitOfWork.Repository<Medicine>().GetItemOnAsync(i => i.Id == item.MedicineId);
@@ -105,7 +122,7 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Commands.SavePurchaseC
                     return await Response.FailureAsync(_localizer["Faild"]);
                 }
 
-                if (medicine.Tracking.Any(x => x.PurchasePrice == item.PurchasePriceForUnit))
+                if (medicine.Tracking.AsReadOnly().Any(x => x.PurchasePrice == item.PurchasePriceForUnit))
                 {
 
                     medicine.Tracking.FirstOrDefault(i => i.PurchasePrice == item.PurchasePriceForUnit)!.Amount += item.RealAmount;
@@ -126,7 +143,7 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Commands.SavePurchaseC
                 {
                     return await Response.FailureAsync(_localizer["Faild"]);
                 }
-                if ( medicine.PartitionMedicineTrackings.Any(i => i.PurchasePrice == item.PurchasePriceForUnit && i.Taps == item.Taps && i.Tablets == item.Tablets))
+                if (medicine.PartitionMedicineTrackings.Any(i => i.PurchasePrice == item.PurchasePriceForUnit && i.Taps == item.Taps && i.Tablets == item.Tablets))
                 {
                     medicine.PartitionMedicineTrackings.
                         FirstOrDefault(i => i.PurchasePrice == item.PurchasePriceForUnit)!.TabletsAvailableAmount += item.TabletsAvailableAmount;
@@ -138,7 +155,7 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Commands.SavePurchaseC
 
             }
 
-           await  _unitOfWork.SaveAsync();
+            await  _unitOfWork.SaveAsync();
             return await Response.SuccessAsync(_localizer["Success"]);
 
         }

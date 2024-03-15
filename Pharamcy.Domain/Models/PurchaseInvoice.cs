@@ -2,7 +2,8 @@
 {
     public class PurchaseInvoice : BaseEntity
     {
-        public string CompanyName { get; set; }
+        public string SupplierName { get; set; }
+        public int SupplierId { get; set; }
         public double TotalCost { get;set; }
         public string ImportInvoiceNumber { get; set; }
         public string Notes { get; set; }
@@ -14,6 +15,6 @@
         public string? InvoiceImageUrl { get; set; }
         public int PharmacyId { get; set;}
         public virtual Pharmacy Pharmacy { get; set; }
-        public virtual List<PurchaseInvoiceItem> Items { get; set; } = new(); 
+        public virtual List<PurchaseInvoiceItem> Items { get; set; } = new();  
     }
 }

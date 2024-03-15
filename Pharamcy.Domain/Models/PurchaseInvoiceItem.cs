@@ -22,6 +22,10 @@ namespace Pharamcy.Domain.Models
         public double PurchasePrice { get; set; }
         public double SalePrice { get; set; }
         public DateOnly ExpireDate { get; set; }
+
+        public double TabletSalePrice { get; set; }
+
+        public bool IsPartition { get; set; }
         public int PurchaseInvoiceId { get; set; }
         public virtual PurchaseInvoice PurchaseInvoice { get; set; }
     }

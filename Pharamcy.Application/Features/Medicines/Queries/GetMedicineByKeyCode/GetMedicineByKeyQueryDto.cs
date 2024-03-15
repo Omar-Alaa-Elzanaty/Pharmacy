@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Pharamcy.Application.Features.Medicines.Queries.GetMedicineByBarCode
+namespace Pharamcy.Application.Features.Medicines.Queries.GetMedicineByKeyCode
 {
-    public class GetMedicineByBarCodeQueryDto
+    public class GetMedicineByKeyQueryDto
     {
         public int Id { get; set; }
         public string EnglishName { get; set; }
