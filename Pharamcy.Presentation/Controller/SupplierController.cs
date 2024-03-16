@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Pharamcy.Application.Features.Suppliers.Commands.Create;
 using Pharamcy.Application.Features.Suppliers.Queries.GetAllSupplierByPharamcyIdPagination;
-using Pharamcy.Application.Features.Suppliers.Queries.GetAllSuppliers;
+using Pharamcy.Application.Features.Suppliers.Queries.GetAllSupplierByPharamcyIdPagination;
 using Pharamcy.Application.Features.Suppliers.Queries.GetAllDeptsBySupplierId;
 
 namespace Pharamcy.Presentation.Controller
@@ -25,7 +25,7 @@ namespace Pharamcy.Presentation.Controller
             return Ok(await _mediator.Send(query));
         }
         [HttpGet("getAllByPhamracyId")]
-        public async Task<ActionResult<GetAllSuppliersResponse>> GetAllSuppliersbyPharmacyId(GetAllSupplierByPharamcyIdPaginationQuery query)
+        public async Task<ActionResult<GetAllSupplierByPharamcyIdPaginationQueryDto>> GetAllSuppliersbyPharmacyId(GetAllSupplierByPharamcyIdPaginationQuery query)
         {
             return Ok(await _mediator.Send(query));
         }
