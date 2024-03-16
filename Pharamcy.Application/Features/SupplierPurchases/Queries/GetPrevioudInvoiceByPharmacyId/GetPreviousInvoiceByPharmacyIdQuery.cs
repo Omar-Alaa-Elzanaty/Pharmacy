@@ -40,7 +40,7 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Queries.GetPrevioudInv
         {
             if (query.Order < 2)
             {
-                return await Response.FailureAsync(_localization["InvalidRequest"]);
+                return await Response.FailureAsync(_localization["InvalidRequest"].Value);
             }
 
             PurchaseInvoice? entity;
@@ -48,13 +48,15 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Queries.GetPrevioudInv
             if (query.IsLast)
             {
                 entity = await _unitOfWork.Repository<PurchaseInvoice>().Entities().Where(x => x.PharmacyId == query.PharmacyId)
-                            .LastAsync();
+                    .Skip(1).Take(1).FirstOrDefaultAsync();    
+  
                 order = await _unitOfWork.Repository<PurchaseInvoice>().Entities().CountAsync();
             }
             else if(query.Order is not null)
             {
                 entity = await _unitOfWork.Repository<PurchaseInvoice>().Entities().Where(x => x.PharmacyId == query.PharmacyId)
                          .Skip((int)query.Order - 2).Take(1).FirstOrDefaultAsync();
+
                 order = query.Order - 1;
             }
             else
@@ -64,7 +66,9 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Queries.GetPrevioudInv
 
             var invoice = _mapper.Map<GetPreviousInvoiceByPharmacyIdQueryDto>(entity!);
 
-            invoice.Order = (int)order;
+            //var invoice = entity.Adapt<GetPreviousInvoiceByPharmacyIdQueryDto>();
+            
+                invoice.Order = (int)order;
 
             return await Response.SuccessAsync(invoice);
         }

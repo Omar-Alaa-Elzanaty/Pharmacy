@@ -20,6 +20,11 @@ namespace Pharamcy.Presentation.Controller
         {
             return Ok(await _mediator.Send(command));
         }
+        [HttpGet("BarCode")]
+        public async Task<ActionResult<GetMedicineByBarCodeQueryDto>> GetByBarCode(GetMedicineByBarCodeQuery query)
+        {
+            return Ok(await _mediator.Send(query));
+        }
         [HttpGet("getByName")]
         public async Task<ActionResult<GetMedicineByNameQueryDto>> GetByName(GetMedicineByNameQuery query)
         {

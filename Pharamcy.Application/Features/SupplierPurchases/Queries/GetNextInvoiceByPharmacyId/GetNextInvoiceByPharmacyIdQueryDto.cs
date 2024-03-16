@@ -9,11 +9,12 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Queries.GetNextSupplie
     public class GetNextInvoiceByPharmacyIdQueryDto
     {
         public int Id { get; set; }
-        public string CompanyName { get; set; }
+        public string SupplierName { get; set; }
         public double TotalCost { get; set; }
         public string ImportInvoiceNumber { get; set; }
         public string Notes { get; set; }
         public int DiscountCostPrecent { get; set; }
+        public int Order { get; set; }
         public double TermAmount { get; set; }
         public double Paied { get; set; }
         public string CreatorName { get; set; }

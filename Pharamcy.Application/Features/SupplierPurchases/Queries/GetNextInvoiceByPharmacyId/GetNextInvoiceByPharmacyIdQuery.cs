@@ -38,15 +38,17 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Queries.GetNextSupplie
 
         public async Task<Response> Handle(GetNextInvoiceByPharmacyIdQuery query, CancellationToken cancellationToken)
         {
-            if (query.Order == 0)
+            if (query.Order == 0||query.Order>= await _unitOfWork.Repository<PurchaseInvoice>().Entities().CountAsync())
             {
                 return await Response.FailureAsync(_localization["InvalidRequest"]);
             }
 
             var entity = await _unitOfWork.Repository<PurchaseInvoice>().Entities().Where(x => x.PharmacyId == query.PharamcyId)
-                            .Skip(query.Order - 1).Take(query.Order).FirstOrDefaultAsync();
+                            .Skip(query.Order).Take(1).FirstOrDefaultAsync();
 
             var invoice = _mapper.Map<GetNextInvoiceByPharmacyIdQueryDto>(entity);
+            
+            invoice.Order = query.Order+1;    
 
             return await Response.SuccessAsync(invoice);
         }
