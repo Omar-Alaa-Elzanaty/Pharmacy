@@ -695,9 +695,6 @@ namespace Pharamcy.Presistance.Migrations
                     b.Property<DateOnly>("ExpireDate")
                         .HasColumnType("date");
 
-                    b.Property<bool>("IsPartition")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
