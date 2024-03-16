@@ -1,26 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Mapster;
+﻿using Mapster;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using Pharamcy.Application.Interfaces.Repositories;
 using Pharamcy.Domain.Models;
 using Pharamcy.Shared;
 
 namespace Pharamcy.Application.Features.Suppliers.Queries.GetAllSupplierByPharamcyId
 {
-    public record GetAllSupplierByPharamcyIdQuery:IRequest<Response>
+    public record GetAllSupplierByPharamcyIdQuery : PaginationRequest, IRequest<Response>
     {
         public int PharmacyId { get; set; }
-
-        public GetAllSupplierByPharamcyIdQuery(int pharmacyId)
-        {
-            PharmacyId = pharmacyId;
-        }
     }
     internal class GetAllSupplierByPharamcyIdQueryHandler : IRequestHandler<GetAllSupplierByPharamcyIdQuery, Response>
     {
@@ -33,11 +22,19 @@ namespace Pharamcy.Application.Features.Suppliers.Queries.GetAllSupplierByPharam
 
         public async Task<Response> Handle(GetAllSupplierByPharamcyIdQuery query, CancellationToken cancellationToken)
         {
-            var entities = await _unitOfWork.Repository<Supplier>()
+            var entities = _unitOfWork.Repository<Supplier>()
                                 .Entities()
-                                .Where(x => x.PharmacyId == query.PharmacyId).ToListAsync();
+                                .Where(x => x.PharmacyId == query.PharmacyId);
 
-            var suppliers = entities.Adapt<List<GetAllSupplierByPharamcyIdQueryDto>>();
+            if (query.KeyWord is not null)
+            {
+                entities = entities.Where(x => x.Name == query.KeyWord);
+            }
+
+            var result = await entities.Skip((query.PageNumber - 1) * query.PageSize).Take(query.PageSize)
+                                       .ToListAsync(cancellationToken: cancellationToken);
+
+            var suppliers = result.Adapt<List<GetAllSupplierByPharamcyIdQueryDto>>();
 
             return await Response.SuccessAsync(suppliers);
         }
