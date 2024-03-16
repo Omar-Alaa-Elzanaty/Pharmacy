@@ -12,7 +12,12 @@ namespace Pharamcy.Application.Features.Authentication.Signup.Commands.CreateMod
     {
         public CreateModeratorAndCashierCommandValidatorValidator()
         {
-            
+            RuleFor(x => x.Email).EmailAddress();
+            RuleFor(x => x.NationalId).Length(14);
+            RuleFor(x => x.FirstName).MaximumLength(20);
+            RuleFor(x=>x.LastName).MaximumLength(20);
+            RuleFor(x=>x.PhoneNumber).MaximumLength(12);
+            RuleFor(x=>x.UserName).MaximumLength(20);
         }
     }
 }

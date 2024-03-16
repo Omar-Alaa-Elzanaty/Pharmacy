@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Pharamcy.Application.Features.Medicines.Commands.CreateFromPurchaseInvoice;
+using Pharamcy.Application.Features.Medicines.Queries.GetMedicineByBarCode;
 using Pharamcy.Application.Features.Medicines.Queries.GetMedicineByName;
 
 namespace Pharamcy.Presentation.Controller
