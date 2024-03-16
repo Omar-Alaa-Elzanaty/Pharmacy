@@ -9,7 +9,7 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Queries.GetPrevioudInv
     public class GetPreviousInvoiceByPharmacyIdQueryDto
     {
         public int Id { get; set; }
-        public string CompanyName { get; set; }
+        public string SupplierName { get; set; }
         public double TotalCost { get; set; }
         public string ImportInvoiceNumber { get; set; }
         public string Notes { get; set; }

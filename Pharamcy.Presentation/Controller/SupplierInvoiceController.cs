@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Pharamcy.Application.Features.Medicines.Queries.GetMedicineByName;
 using Pharamcy.Application.Features.SupplierPurchases.Commands.SavePurchaseCommand;
 using Pharamcy.Application.Features.SupplierPurchases.Queries.GetAllSupplierInvoicePagination;
 using Pharamcy.Application.Features.SupplierPurchases.Queries.GetAllUnClosedPurchaseInvoice;

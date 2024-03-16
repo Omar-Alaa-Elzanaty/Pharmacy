@@ -36,9 +36,7 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Queries.GetAllUnClosed
             var entities = await _unitOfWork.Repository<PurchaseInvoice>().Entities()
                            .Where(x => !x.IsClosed && x.PharmacyId == query.PharmacyId).Select(x => x.Id).ToListAsync();
 
-            var invoices = entities.Adapt<List<GetAllUnClosedPurchaseInvoiceQueryDto>>();
-
-            return await Response.SuccessAsync(invoices);
+            return await Response.SuccessAsync(entities);
         }
     }
 }
