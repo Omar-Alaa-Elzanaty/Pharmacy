@@ -47,11 +47,11 @@ namespace Pharamcy.Application.Features.Medicines.Queries.GetMedicineByName
 
 
 
-            var medicines = _mapper.Map<List<GetMedicineByNameQueryDto>>(entities);
+            var  medicines = _mapper.Map<List<GetMedicineByNameQueryDto>>(entities);
+           
+            medicines.ForEach(i=>i.IsPartition = false);    
 
-            medicines.ForEach(i => i.IsPartition = false);
-
-            List<GetMedicineByNameQueryDto> response = [.. partitionMedicines];
+            List<GetMedicineByNameQueryDto> response = [.. medicines,.. partitionMedicines];
             
 
             return await Response.SuccessAsync(response, _localization["Success"].Value);
