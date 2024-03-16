@@ -1,8 +1,7 @@
-﻿namespace Pharamcy.Application.Features.SystemAdmin.Queries.GetSystemAdminOrAdminById
+﻿namespace Pharamcy.Application.Features.SystemAdmin.Queries.GetAllSystemAdminOrAdminPagination
 {
-    public class GetSystemAdminOrAdminByIdDto
+    public class GetAllSystemAdminOrAdminPaginationDto
     {
-
         public string Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }

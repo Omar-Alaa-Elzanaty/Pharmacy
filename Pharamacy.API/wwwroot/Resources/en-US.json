@@ -15,5 +15,6 @@
   "SendOtpFail": "Fail To Send OTP verification Email.",
   "SentOtp": "OTP Sent To Your Email.",
   "InCorrectOtp": "Incorrect OTP Number.",
-  "SuccessChangePassword": "Password Change Successfully."
+  "SuccessChangePassword": "Password Change Successfully.",
+  "RoleNotExist": "This Role Is Not Exist."
 }

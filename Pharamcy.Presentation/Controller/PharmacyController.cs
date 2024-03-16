@@ -33,11 +33,11 @@ namespace Pharamcy.Presentation.Controller
 
             return Ok(await _mediator.Send(new DeleteByIdCommand(id)));
         }
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetPharmacy(string id)
+        [HttpGet("getAllByOwner/{ownerId}")]
+        public async Task<IActionResult> GetPharmacy(string ownerId)
         {
 
-            return Ok(await _mediator.Send(new GetAllPharmacyQuery(id)));
+            return Ok(await _mediator.Send(new GetAllPharmacyQuery(ownerId)));
         }
 
     }

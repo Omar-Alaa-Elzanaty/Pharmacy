@@ -36,7 +36,7 @@ namespace Pharamcy.Presentation.Controller
         }
 
         [HttpPost]
-        public async Task<ActionResult<GetAllSuppliersResponse>> SavePurchaseInvoice([FromForm] SavePurchaseCommand command)
+        public async Task<ActionResult<string>> SavePurchaseInvoice([FromForm] SavePurchaseCommand command)
         {
             return Ok(await _mediator.Send(command));
         }
