@@ -25,7 +25,7 @@ namespace Pharamcy.Presentation.Controller
             return Ok(await _mediator.Send(query));
         }
         [HttpGet("getAllByPhamracyId")]
-        public async Task<ActionResult<GetAllSuppliersResponse>> GetAllSuppliersbyPharmacyId(GetAllSupplierByPharamcyIdQuery query)
+        public async Task<ActionResult<GetAllSuppliersResponse>> GetAllSuppliersbyPharmacyId(GetAllSupplierByPharamcyIdPaginationQuery query)
         {
             return Ok(await _mediator.Send(query));
         }
