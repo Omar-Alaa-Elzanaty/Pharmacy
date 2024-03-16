@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata;
-using System.Text;
-using System.Threading.Tasks;
-using Mapster;
+﻿using MapsterMapper;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using Pharamcy.Application.Interfaces.Repositories;
 using Pharamcy.Domain.Models;
@@ -16,35 +9,51 @@ namespace Pharamcy.Application.Features.Medicines.Queries.GetMedicineByName
 {
     public record GetMedicineByNameQuery:IRequest<Response>
     {
-        public string EnglishName { get; set; }
+        public string Name { get; set; }
         public int PharmacyId { get; set; }
     }
     public class GetMedicineByNamequeryHandler : IRequestHandler<GetMedicineByNameQuery, Response>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IStringLocalizer<GetMedicineByNamequeryHandler> _localization;
+        private readonly IMapper _mapper;
 
         public GetMedicineByNamequeryHandler(
             IUnitOfWork unitOfWork,
-            IStringLocalizer<GetMedicineByNamequeryHandler> localization)
+            IStringLocalizer<GetMedicineByNamequeryHandler> localization,
+            IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _localization = localization;
+            _mapper = mapper;
         }
 
         public async Task<Response> Handle(GetMedicineByNameQuery query, CancellationToken cancellationToken)
         {
-            var entity = await _unitOfWork.Repository<Medicine>().Entities()
-                        .SingleOrDefaultAsync(x => x.EnglishName == query.EnglishName || x.ArabicName == query.EnglishName);
+           
+            var entities =  _unitOfWork.Repository<Medicine>().GetAllAsync( x => x.EnglishName.Contains( query.Name) || x.ArabicName.Contains(query.Name)).Result.ToList();
+           
 
-            if (entity == null)
-            {
-                return await Response.FailureAsync(_localization["MedicineNotFound"].Value);
-            }
+            var partitionEntities=  _unitOfWork.Repository<PartitionMedicine>().GetAllAsync(x => x.EnglishName.Contains(query.Name) || x.ArabicName.Contains(query.Name)).Result.ToList();
+               
+            if(entities==null&&partitionEntities==null) 
+            return await Response.FailureAsync(_localization["MedicineNotFound"].Value);
 
-            var medicine = entity.Adapt<GetMedicineByNameQuery>();
+                var partitionMedicines =  _mapper.Map <List<GetMedicineByNameQueryDto>>(partitionEntities);
 
-            return await Response.SuccessAsync(medicine, _localization["Success"].Value);
+                  partitionMedicines.ForEach(i => i.IsPartition = true);
+
+
+
+
+
+            var  medicines = _mapper.Map<List<GetMedicineByNameQueryDto>>(entities);
+            medicines.ForEach(i=>i.IsPartition = false);    
+
+            List<GetMedicineByNameQueryDto> response = [.. medicines,.. partitionMedicines];
+            
+
+            return await Response.SuccessAsync(response, _localization["Success"].Value);
         }
     }
 }

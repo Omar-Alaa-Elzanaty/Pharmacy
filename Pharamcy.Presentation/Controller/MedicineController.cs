@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Pharamcy.Application.Features.Medicines.Commands.CreateFromPurchaseInvoice;
-using Pharamcy.Application.Features.Medicines.Queries.GetMedicineByKeyCode;
+using Pharamcy.Application.Features.Medicines.Queries.GetMedicineByBarCode;
 using Pharamcy.Application.Features.Medicines.Queries.GetMedicineByName;
 
 namespace Pharamcy.Presentation.Controller
@@ -21,8 +21,8 @@ namespace Pharamcy.Presentation.Controller
         {
             return Ok(await _mediator.Send(command));
         }
-        [HttpGet("KeyWord")]
-        public async Task<ActionResult<GetMedicineByKeyQueryDto>> GetByBarCode(GetMedicineByKeyQuery query)
+        [HttpGet("BarCode")]
+        public async Task<ActionResult<GetMedicineByBarCodeQueryDto>> GetByBarCode(GetMedicineByBarCodeQuery query)
         {
             return Ok(await _mediator.Send(query));
         }

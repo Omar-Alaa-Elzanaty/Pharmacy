@@ -1,6 +1,6 @@
-﻿namespace Pharamcy.Application.Features.Medicines.Queries.GetMedicineByKeyCode
+﻿namespace Pharamcy.Application.Features.Medicines.Queries.GetMedicineByBarCode
 {
-    public class GetMedicineByKeyQueryDto
+    public class GetMedicineByBarCodeQueryDto
     {
         public int Id { get; set; }
         public string EnglishName { get; set; }
