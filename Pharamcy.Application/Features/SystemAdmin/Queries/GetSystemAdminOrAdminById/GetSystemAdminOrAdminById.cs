@@ -39,18 +39,18 @@ namespace Pharamcy.Application.Features.SystemAdmin.Queries.GetSystemAdminOrAdmi
 
         public async Task<Response> Handle(GetSystemAdminOrAdminByIdQuery query, CancellationToken cancellationToken)
         {
-            
-             ApplicationUser? user;  
-            
-              user=await _userManager.FindByIdAsync(query.Id);
+
+            var entity = await _userManager.FindByIdAsync(query.Id);
                 
 
-            if (user == null)
+            if (entity == null)
             {
                 return await Response.FailureAsync(_localizer["UserNotExist"].Value);
             }
-            var userdto=_mapper.Map<GetSystemAdminOrAdminByIdDto>(user); 
-            return await Response.SuccessAsync(userdto, _localizer["Success"].Value);   
+
+            var user = _mapper.Map<GetSystemAdminOrAdminByIdDto>(entity);
+
+            return await Response.SuccessAsync(user, _localizer["Success"].Value);   
         }
     }
 }
