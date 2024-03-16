@@ -2,6 +2,7 @@
 using Pharamcy.Application.Features.SupplierPurchases.Commands.SavePurchaseCommand;
 using Pharamcy.Application.Features.SupplierPurchases.Queries.GetNextSupplierInvoiceByPharmacyId;
 using Pharamcy.Application.Features.SupplierPurchases.Queries.GetPrevioudInvoiceByPharmacyId;
+using Pharamcy.Application.Features.SupplierPurchases.Queries.GetPurchaseInvoiceByImportInvoiceNumber;
 using Pharamcy.Domain.Models;
 
 namespace Pharamcy.Application.Common.Mapping
@@ -27,6 +28,9 @@ namespace Pharamcy.Application.Common.Mapping
 
             config.NewConfig<PurchaseInvoice, GetNextInvoiceByPharmacyIdQueryDto>();
             config.NewConfig<PurchaseInvoiceItem, GetNextInvoiceItemsByPharmacyIdQueryDto>();
+
+            config.NewConfig<PurchaseInvoice, GetPurchaseInvoiceByImportInvoiceNumberQueryDto>();
+            config.NewConfig<PurchaseInvoiceItem, GetPurchaseInvoiceItemsByImportInvoiceNumberQueryDto>();
         }
     }
 }
