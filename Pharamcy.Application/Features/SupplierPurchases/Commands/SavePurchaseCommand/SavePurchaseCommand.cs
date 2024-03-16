@@ -102,6 +102,8 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Commands.SavePurchaseC
 
             purchaseinvoice.Items.AddRange(command.PartitionProducts.Adapt<IEnumerable<PurchaseInvoiceItem>>());
 
+           
+            
             var supplier = await _unitOfWork.Repository<Supplier>().GetItemOnAsync(i => i.Id == command.SupplierId);
 
             if (supplier == null)

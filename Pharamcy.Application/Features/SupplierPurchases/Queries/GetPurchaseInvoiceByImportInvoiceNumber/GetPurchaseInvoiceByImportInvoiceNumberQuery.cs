@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Mapster;
 using MapsterMapper;
 using MediatR;
 using Pharamcy.Application.Interfaces.Repositories;
@@ -32,10 +33,10 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Queries.GetPurchaseInv
 
         public async Task<Response> Handle(GetPurchaseInvoiceByImportInvoiceNumberQuery query, CancellationToken cancellationToken)
         {
-            var entities = _unitOfWork.Repository<PurchaseInvoice>().Entities()
-                            .Where(x=>x.ImportInvoiceNumber==query.ImportInvoiceNumber&&x.PharmacyId==query.PharmacyId);
+            var invoice =  _unitOfWork.Repository<PurchaseInvoice>()
+                .GetItemOnAsync(x=>x.ImportInvoiceNumber==query.ImportInvoiceNumber&&x.PharmacyId==query.PharmacyId).Result.Adapt<GetPurchaseInvoiceByImportInvoiceNumberQueryDto>();
 
-            var invoice = _mapper.Map<List<GetPurchaseInvoiceByImportInvoiceNumberQueryDto>>(entities);
+           // var invoice = _mapper.Map<>(entities);
             
 
             return await Response.SuccessAsync(invoice);

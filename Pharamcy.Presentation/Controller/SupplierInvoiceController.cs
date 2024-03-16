@@ -1,7 +1,5 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Pharamcy.Application.Features.Medicines.Queries.GetMedicineByName;
 using Pharamcy.Application.Features.SupplierPurchases.Commands.SavePurchaseCommand;
 using Pharamcy.Application.Features.SupplierPurchases.Queries.GetAllSupplierInvoicePagination;
 using Pharamcy.Application.Features.SupplierPurchases.Queries.GetAllUnClosedPurchaseInvoice;
@@ -9,12 +7,11 @@ using Pharamcy.Application.Features.SupplierPurchases.Queries.GetNextSupplierInv
 using Pharamcy.Application.Features.SupplierPurchases.Queries.GetPrevioudInvoiceByPharmacyId;
 using Pharamcy.Application.Features.SupplierPurchases.Queries.GetPurchaseInvoiceByImportInvoiceNumber;
 using Pharamcy.Application.Features.SupplierPurchases.Queries.GetSupplierInvoiceById;
-using Pharamcy.Application.Features.Suppliers.Queries.GetAllSuppliers;
 
 namespace Pharamcy.Presentation.Controller
 {
     [Route("api/[controller]")]
-    [Authorize]
+   // [Authorize]
     public class SupplierInvoiceController : ApiControllerBase
     {
         private readonly IMediator _mediator;
@@ -65,5 +62,12 @@ namespace Pharamcy.Presentation.Controller
         {
             return Ok(await _mediator.Send(query));
         }
+        [HttpGet("GetPurchaseInvoiceByImportInvoiceNumber")]
+        public async Task<ActionResult<GetPurchaseInvoiceByImportInvoiceNumberQueryDto>> GetPurchaseInvoiceByImportInvoiceNumber(GetPurchaseInvoiceByImportInvoiceNumberQuery query)
+        {
+            return Ok(await _mediator.Send(query));
+        }
+
+
     }
 }

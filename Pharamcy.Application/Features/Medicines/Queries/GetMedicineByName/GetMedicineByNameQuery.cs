@@ -37,7 +37,7 @@ namespace Pharamcy.Application.Features.Medicines.Queries.GetMedicineByName
             var partitionEntities=  _unitOfWork.Repository<PartitionMedicine>().GetAllAsync(x => x.EnglishName.Contains(query.Name) || x.ArabicName.Contains(query.Name)).Result.ToList();
                
             if(entities==null&&partitionEntities==null) 
-            return await Response.FailureAsync(_localization["MedicineNotFound"].Value);
+                  return await Response.FailureAsync(_localization["MedicineNotFound"].Value);
 
                 var partitionMedicines =  _mapper.Map <List<GetMedicineByNameQueryDto>>(partitionEntities);
 
@@ -47,10 +47,11 @@ namespace Pharamcy.Application.Features.Medicines.Queries.GetMedicineByName
 
 
 
-            var  medicines = _mapper.Map<List<GetMedicineByNameQueryDto>>(entities);
-            medicines.ForEach(i=>i.IsPartition = false);    
+            var medicines = _mapper.Map<List<GetMedicineByNameQueryDto>>(entities);
 
-            List<GetMedicineByNameQueryDto> response = [.. medicines,.. partitionMedicines];
+            medicines.ForEach(i => i.IsPartition = false);
+
+            List<GetMedicineByNameQueryDto> response = [.. partitionMedicines];
             
 
             return await Response.SuccessAsync(response, _localization["Success"].Value);

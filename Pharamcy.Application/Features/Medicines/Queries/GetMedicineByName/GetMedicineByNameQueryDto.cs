@@ -8,7 +8,7 @@ namespace Pharamcy.Application.Features.Medicines.Queries.GetMedicineByName
 {
     public class GetMedicineByNameQueryDto
     {
-        public int MedicineId { get; set; }
+        public int Id { get; set; }
         public string EnglishName { get; set; }
         public int Amount { get; set; }
         public double SalePrice { get; set; }

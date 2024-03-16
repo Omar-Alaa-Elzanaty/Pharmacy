@@ -44,7 +44,7 @@ namespace Pharamcy.Application.Features.Authentication.VerifiyOtp
 
             var otp = _memoryCache.Get(user.Id) as int?;
 
-            if(otp is  null || otp != command.Otp)
+            if (otp is null || otp != command.Otp)
             {
                 return await Response.FailureAsync(_localization["InCorrectOtp"].Value);
             }
