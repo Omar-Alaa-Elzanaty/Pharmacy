@@ -7,7 +7,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
-using Pharamcy.Application.Features.SystemAdmin.Queries.GetAllSystemAdminAndAdmin;
+using Pharamcy.Application.Features.SystemAdmin.Queries.GetAllSystemAdminOrAdminPagination;
 using Pharamcy.Application.Features.SystemAdmin.Queries.GetSystemAdminOrAdminById;
 using Pharamcy.Shared;
 
@@ -26,9 +26,9 @@ namespace Pharamcy.Presentation.Controller
         }
 
         [HttpGet]
-        public async Task<ActionResult<GetAllSystemAdminOrAdminDto>> GetAll(string id, string role)
+        public async Task<ActionResult<GetAllSystemAdminOrAdminPaginationDto>> GetAll([FromQuery]GetAllSystemAdminOrAdminPagination query)
         {
-            return Ok(await _mediator.Send(new GetAllSystemAdminOrAdmin(role,id)));
+            return Ok(await _mediator.Send(query));
         }
         [HttpGet]
         public async Task<ActionResult<GetSystemAdminOrAdminByIdDto>> GetById(string id)

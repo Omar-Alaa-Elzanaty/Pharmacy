@@ -15,5 +15,6 @@
   "SendOtpFail": "فشل ارسال رمز otp.",
   "SentOtp": ".تم ارسال رمز التحقق الى الايميل",
   "InCorrectOtp": ".رقم تحقق غير صحيح",
-  "SuccessChangePassword": ".تم تغير الرقم السرى بنجاح"
+  "SuccessChangePassword": ".تم تغير الرقم السرى بنجاح",
+  "RoleNotExist": ".هذا الدور ليس موجود"
 }
