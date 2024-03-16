@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Pharamcy.Application.Features.Suppliers.Commands.Create;
-using Pharamcy.Application.Features.Suppliers.Queries.GetAllSupplierByPharamcyId;
+using Pharamcy.Application.Features.Suppliers.Queries.GetAllSupplierByPharamcyIdPagination;
 using Pharamcy.Application.Features.Suppliers.Queries.GetAllSuppliers;
 using Pharamcy.Application.Features.Suppliers.Queries.GetAllDeptsBySupplierId;
 
