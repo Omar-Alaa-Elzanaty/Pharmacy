@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Pharamcy.Application.Features.SupplierPurchases.Commands.SavePurchaseCommand;
 using Pharamcy.Application.Features.SupplierPurchases.Queries.GetAllUnClosedPurchaseInvoice;
@@ -10,8 +9,8 @@ using Pharamcy.Application.Features.Suppliers.Queries.GetAllSuppliers;
 
 namespace Pharamcy.Presentation.Controller
 {
-    [Route("api/[controller]")]
-    [Authorize]
+    [Route("api/[controller]/[action]")]
+   // [Authorize]
     public class SupplierInvoiceController : ApiControllerBase
     {
         private readonly IMediator _mediator;

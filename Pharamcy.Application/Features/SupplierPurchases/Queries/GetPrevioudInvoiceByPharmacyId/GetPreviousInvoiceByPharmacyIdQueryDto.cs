@@ -13,6 +13,9 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Queries.GetPrevioudInv
         public double TotalCost { get; set; }
         public string ImportInvoiceNumber { get; set; }
         public string Notes { get; set; }
+
+
+        public int Order { get; set; }
         public int DiscountCostPrecent { get; set; }
         public double TermAmount { get; set; }
         public double Paied { get; set; }

@@ -11,7 +11,7 @@ namespace Pharamcy.Application.Features.Suppliers.Commands.Create
     public record CreateSupplierCommand : IRequest<Response>
     {
         public string Name { get; set; }
-        public int PharamcyId { get; set; }
+        public int PharmacyId { get; set; }
     }
     internal class CreateSupplierCommandHandler : IRequestHandler<CreateSupplierCommand, Response>
     {
@@ -26,9 +26,10 @@ namespace Pharamcy.Application.Features.Suppliers.Commands.Create
         }
 
         public async Task<Response> Handle(CreateSupplierCommand command, CancellationToken cancellationToken)
+        
         {
             var entity = await _unitOfWork.Repository<Supplier>().Entities()
-                        .Where(x => x.Name == command.Name && x.PharamcyId == command.PharamcyId).SingleOrDefaultAsync();
+                        .Where(x => x.Name == command.Name && x.PharmacyId == command.PharmacyId).SingleOrDefaultAsync();
 
             if (entity is not null)
             {

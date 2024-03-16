@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Pharamcy.Presistance.Context;
 
@@ -11,9 +12,11 @@ using Pharamcy.Presistance.Context;
 namespace Pharamcy.Presistance.Migrations
 {
     [DbContext(typeof(PharmacyDBContext))]
-    partial class PharmacyDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240314204934_DropPharamcyId")]
+    partial class DropPharamcyId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -303,6 +306,30 @@ namespace Pharamcy.Presistance.Migrations
                     b.HasIndex("PharmacyId");
 
                     b.ToTable("Clients", "Pharmacy");
+                });
+
+            modelBuilder.Entity("Pharamcy.Domain.Models.FinancialDues", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("FinancialDue")
+                        .HasColumnType("float");
+
+                    b.Property<int>("SupplierId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SupplierId");
+
+                    b.ToTable("PharmacyFinanicalDues", "Pharmacy");
                 });
 
             modelBuilder.Entity("Pharamcy.Domain.Models.Lost", b =>
@@ -622,6 +649,10 @@ namespace Pharamcy.Presistance.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("CompanyName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
@@ -651,13 +682,6 @@ namespace Pharamcy.Presistance.Migrations
 
                     b.Property<int>("PharmacyId")
                         .HasColumnType("int");
-
-                    b.Property<int>("SupplierId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("SupplierName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("TermAmount")
                         .HasColumnType("float");
@@ -695,9 +719,6 @@ namespace Pharamcy.Presistance.Migrations
                     b.Property<DateOnly>("ExpireDate")
                         .HasColumnType("date");
 
-                    b.Property<bool>("IsPartition")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -713,9 +734,6 @@ namespace Pharamcy.Presistance.Migrations
 
                     b.Property<int>("Shelf")
                         .HasColumnType("int");
-
-                    b.Property<double>("TabletSalePrice")
-                        .HasColumnType("float");
 
                     b.Property<int>("Tablets")
                         .HasColumnType("int");
@@ -788,9 +806,6 @@ namespace Pharamcy.Presistance.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<double>("FinancialDue")
-                        .HasColumnType("float");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -896,6 +911,17 @@ namespace Pharamcy.Presistance.Migrations
                         .HasForeignKey("PharmacyId");
                 });
 
+            modelBuilder.Entity("Pharamcy.Domain.Models.FinancialDues", b =>
+                {
+                    b.HasOne("Pharamcy.Domain.Models.Supplier", "Supplier")
+                        .WithMany()
+                        .HasForeignKey("SupplierId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Supplier");
+                });
+
             modelBuilder.Entity("Pharamcy.Domain.Models.Lost", b =>
                 {
                     b.HasOne("Pharamcy.Domain.Models.Pharmacy", null)
@@ -997,7 +1023,7 @@ namespace Pharamcy.Presistance.Migrations
             modelBuilder.Entity("Pharamcy.Domain.Models.Supplier", b =>
                 {
                     b.HasOne("Pharamcy.Domain.Models.Pharmacy", "Pharmacy")
-                        .WithMany()
+                        .WithMany("Suppliers")
                         .HasForeignKey("PharmacyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1030,6 +1056,8 @@ namespace Pharamcy.Presistance.Migrations
                     b.Navigation("PurchaseInvoices");
 
                     b.Navigation("SalesInvoices");
+
+                    b.Navigation("Suppliers");
                 });
 
             modelBuilder.Entity("Pharamcy.Domain.Models.PurchaseInvoice", b =>

@@ -16,7 +16,7 @@ namespace Pharamcy.Application.Features.Medicines.Queries.GetMedicineByName
 {
     public record GetMedicineByNameQuery:IRequest<Response>
     {
-        public string Name { get; set; }
+        public string EnglishName { get; set; }
         public int PharmacyId { get; set; }
     }
     public class GetMedicineByNamequeryHandler : IRequestHandler<GetMedicineByNameQuery, Response>
@@ -35,7 +35,7 @@ namespace Pharamcy.Application.Features.Medicines.Queries.GetMedicineByName
         public async Task<Response> Handle(GetMedicineByNameQuery query, CancellationToken cancellationToken)
         {
             var entity = await _unitOfWork.Repository<Medicine>().Entities()
-                        .SingleOrDefaultAsync(x => x.EnglishName == query.Name || x.ArabicName == query.Name);
+                        .SingleOrDefaultAsync(x => x.EnglishName == query.EnglishName || x.ArabicName == query.EnglishName);
 
             if (entity == null)
             {
