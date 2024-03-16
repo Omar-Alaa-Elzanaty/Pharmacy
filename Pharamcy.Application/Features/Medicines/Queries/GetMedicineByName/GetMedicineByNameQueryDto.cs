@@ -12,7 +12,7 @@ namespace Pharamcy.Application.Features.Medicines.Queries.GetMedicineByName
         public string EnglishName { get; set; }
         public int Amount { get; set; }
         public double SalePrice { get; set; }
-        public bool IsPartition { get; set; }
+        public bool IsPartationing { get; set; }
 
 
 

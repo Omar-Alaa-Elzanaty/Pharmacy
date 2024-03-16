@@ -24,6 +24,7 @@ namespace Pharamcy.Domain.Models
         public int? DefaultSale { get; set; }
         public string? MessageDuringSale { get; set; }
         public int PharmacyId { get; set; }
+        public bool IsPartationing { get; set; }
         public virtual Pharmacy Pharmacy { get; set; }
         public virtual List<MedicalEffectiveMaterial> EffectiveMaterials { get; set; }
         public virtual List<MedicineTracking> Tracking { get; set; } = new(); 
