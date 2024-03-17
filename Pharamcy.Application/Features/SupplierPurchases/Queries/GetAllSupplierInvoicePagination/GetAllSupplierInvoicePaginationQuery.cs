@@ -12,6 +12,7 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Queries.GetAllSupplier
     public record GetAllSupplierInvoicePaginationQuery : IRequest<PaginatedResponse<GetAllSupplierInvoicePaginationQueryDto>>
     {
         public int PharmacyId { get; set; }
+        public int SupplierId { get; set; }
         public int PageNumber { get; set; }
         public int PageSize { get; set; }
         public DateTime? StartDate { get; set; }
@@ -30,7 +31,7 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Queries.GetAllSupplier
 
         public async Task<PaginatedResponse<GetAllSupplierInvoicePaginationQueryDto>> Handle(GetAllSupplierInvoicePaginationQuery query, CancellationToken cancellationToken)
         {
-            var entities = _unitOfWork.Repository<PurchaseInvoice>().Entities();
+            var entities = _unitOfWork.Repository<PurchaseInvoice>().Entities().Where(i=>i.SupplierId==query.SupplierId);
 
             if (query.StartDate is not null && query.EndDate is not null)
             {

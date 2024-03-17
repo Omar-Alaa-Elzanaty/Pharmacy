@@ -12,8 +12,8 @@ using Pharamcy.Presistance.Context;
 namespace Pharamcy.Presistance.Migrations
 {
     [DbContext(typeof(PharmacyDBContext))]
-    [Migration("20240317053132_initialCreation")]
-    partial class initialCreation
+    [Migration("20240317073049_RolesSeeding")]
+    partial class RolesSeeding
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -508,10 +508,10 @@ namespace Pharamcy.Presistance.Migrations
             modelBuilder.Entity("Pharamcy.Domain.Models.MedicineTracking", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("MedicineId")
-                        .HasColumnType("int");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("Amount")
                         .HasColumnType("int");
@@ -522,13 +522,16 @@ namespace Pharamcy.Presistance.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("MedicineId")
+                        .HasColumnType("int");
+
                     b.Property<double>("PurchasePrice")
                         .HasColumnType("float");
 
                     b.Property<double>("SalePrice")
                         .HasColumnType("float");
 
-                    b.HasKey("Id", "MedicineId");
+                    b.HasKey("Id");
 
                     b.HasIndex("MedicineId");
 
@@ -622,16 +625,19 @@ namespace Pharamcy.Presistance.Migrations
             modelBuilder.Entity("Pharamcy.Domain.Models.PartitionMedicineTracking", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("PartitionMedicineId")
-                        .HasColumnType("int");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("BarCode")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("PartitionMedicineId")
+                        .HasColumnType("int");
 
                     b.Property<double>("PurchasePrice")
                         .HasColumnType("float");
@@ -651,7 +657,7 @@ namespace Pharamcy.Presistance.Migrations
                     b.Property<int>("Taps")
                         .HasColumnType("int");
 
-                    b.HasKey("Id", "PartitionMedicineId");
+                    b.HasKey("Id");
 
                     b.HasIndex("PartitionMedicineId");
 
@@ -1037,7 +1043,7 @@ namespace Pharamcy.Presistance.Migrations
             modelBuilder.Entity("Pharamcy.Domain.Models.PartitionMedicineTracking", b =>
                 {
                     b.HasOne("Pharamcy.Domain.Models.PartitionMedicine", "PartitionMedicine")
-                        .WithMany("PartitionMedicineTrackings")
+                        .WithMany("Tracking")
                         .HasForeignKey("PartitionMedicineId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1118,7 +1124,7 @@ namespace Pharamcy.Presistance.Migrations
                 {
                     b.Navigation("EffectiveMaterials");
 
-                    b.Navigation("PartitionMedicineTrackings");
+                    b.Navigation("Tracking");
                 });
 
             modelBuilder.Entity("Pharamcy.Domain.Models.Pharmacy", b =>

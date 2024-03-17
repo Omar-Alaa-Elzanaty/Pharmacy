@@ -4,6 +4,7 @@ using Pharamcy.Application.Features.Suppliers.Commands.Create;
 using Pharamcy.Application.Features.Suppliers.Queries.GetAllSupplierByPharamcyIdPagination;
 using Pharamcy.Application.Features.Suppliers.Queries.GetAllSupplierByPharamcyIdPagination;
 using Pharamcy.Application.Features.Suppliers.Queries.GetAllDeptsBySupplierId;
+using Pharamcy.Application.Features.Suppliers.Queries.GetAllSuppliersByPharmacyId;
 
 namespace Pharamcy.Presentation.Controller
 {
@@ -24,8 +25,13 @@ namespace Pharamcy.Presentation.Controller
 
             return Ok(await _mediator.Send(query));
         }
+        [HttpGet("getAllByPhamracyIdPagination")]
+        public async Task<ActionResult<GetAllSupplierByPharamcyIdPaginationQueryDto>> GetAllSuppliersbyPharmacyIdPAgination(GetAllSupplierByPharamcyIdPaginationQuery query)
+        {
+            return Ok(await _mediator.Send(query));
+        }
         [HttpGet("getAllByPhamracyId")]
-        public async Task<ActionResult<GetAllSupplierByPharamcyIdPaginationQueryDto>> GetAllSuppliersbyPharmacyId(GetAllSupplierByPharamcyIdPaginationQuery query)
+        public async Task<ActionResult<GetAllSuppliersByPharmacyIdQueryDto>> GetAllSuppliersbyPharmacyId(GetAllSuppliersByPharmacyIdQuery query)
         {
             return Ok(await _mediator.Send(query));
         }

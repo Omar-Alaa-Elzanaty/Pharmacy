@@ -4,6 +4,7 @@ using Microsoft.Extensions.Localization;
 using Pharamcy.Application.Interfaces.Repositories;
 using Pharamcy.Domain.Models;
 using Pharamcy.Shared;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Pharamcy.Application.Features.Medicines.Commands.CreateFromPurchaseInvoice
 {
@@ -41,55 +42,59 @@ namespace Pharamcy.Application.Features.Medicines.Commands.CreateFromPurchaseInv
 
         public async Task<Response> Handle(CreateFromPurchaseInoviceCommand command, CancellationToken cancellationToken)
         {
-            var entity = await _unitOfWork.Repository<Medicine>()
-                .GetItemOnAsync(x => x.EnglishName == command.EnglishName || x.NationalCode == command.NationalCode);
+            return command.IsPartationing ? await AddMedicine<PartitionMedicine>(command) : await AddMedicine<Medicine>(command);
 
-            if (entity is not null)
-            {
-                return await Response.FailureAsync(_localization["MedicineExist"].Value);
+
+        }
+        private async Task<Response> AddMedicine<T>(CreateFromPurchaseInoviceCommand command ) where T : BaseMedicine
+        {
+            BaseMedicine? entity =await _unitOfWork.Repository<T>().
+                GetItemOnAsync(x => x.PharmacyId==command.PharmacyId&&
+                (x.NormalizedEnglishName.Contains(command.EnglishName.ToUpper()) || x.NationalCode == command.NationalCode||x.ArabicName.Contains(command.ArabicName)));
+
+
+            if(entity != null) { 
+                  return await Response.FailureAsync(_localization["MedicineExist"].Value);
             }
 
-            if (command.IsPartationing && command.Partation is not null)
-            {
-                var paritionMedicine = command.Adapt<PartitionMedicine>();
+            var medicine = command.Adapt<T>();
 
-                await _unitOfWork.Repository<PartitionMedicine>().AddAsync(paritionMedicine);
-                await _unitOfWork.SaveAsync();
+            await _unitOfWork.Repository<T>().AddAsync(medicine);
 
-                paritionMedicine.PartitionMedicineTrackings.Add(new()
+            await _unitOfWork.SaveAsync();
+            
+            await AddTracking(medicine, command.Partation);
+             
+           return await Response.SuccessAsync(_localization["Success"].Value);
+
+        }
+        private async Task AddTracking(BaseMedicine medicine, CreateFromPurchaseInoviceCommandPartitionInfo? info)
+        {
+            if(!medicine.IsPartationing) {
+                var input = (Medicine)medicine;
+                input.Tracking.Add(new()
                 {
-                    SalePrice = command.SellingPrice,
-                    PartitionMedicineId = paritionMedicine.Id,
-                    TabletSalePrice = command.Partation.TabletPrice??0,
-                    Tablets = command.Partation.TapesCount,
-                    Taps = command.Partation.TapesCount,
-                    BarCode = "",
-                });
-
-                await _unitOfWork.Repository<PartitionMedicine>().UpdateAsync(paritionMedicine);
-                await _unitOfWork.SaveAsync();
-            }
-            else
-            {
-                var medicine = command.Adapt<Medicine>();
-
-                await _unitOfWork.Repository<Medicine>().AddAsync(medicine);
-                await _unitOfWork.SaveAsync();
-
-                medicine.Tracking.Add(new()
-                {
-                    SalePrice = command.SellingPrice,
-                    PurchasePrice = command.PurchasePrice,
                     Amount = 0,
                     MedicineId = medicine.Id,
                     BarCode = ""
-                }) ;
+                });
+            }
+            else
+            {
+                var input = (PartitionMedicine)medicine;
+                input.Tracking.Add(new()
+                {
+                    PartitionMedicineId = medicine.Id,
+                    TabletSalePrice = info.TabletPrice ?? 0,
+                    Tablets = info.TapesCount,
+                    Taps = info.TapesCount,
+                    BarCode = "",
+                });
 
-                await _unitOfWork.Repository<Medicine>().UpdateAsync(medicine);
-                await _unitOfWork.SaveAsync();
             }
 
-            return await Response.SuccessAsync(_localization["Success"].Value);
+            await _unitOfWork.SaveAsync();
+
         }
     }
 }

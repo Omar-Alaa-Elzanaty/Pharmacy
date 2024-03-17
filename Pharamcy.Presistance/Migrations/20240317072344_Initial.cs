@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Pharamcy.Presistance.Migrations
 {
     /// <inheritdoc />
-    public partial class initialCreation : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -474,17 +474,18 @@ namespace Pharamcy.Presistance.Migrations
                 schema: "Pharmacy",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false),
-                    MedicineId = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     BarCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Amount = table.Column<int>(type: "int", nullable: false),
                     PurchasePrice = table.Column<double>(type: "float", nullable: false),
                     SalePrice = table.Column<double>(type: "float", nullable: false),
+                    MedicineId = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MedicineTrackings", x => new { x.Id, x.MedicineId });
+                    table.PrimaryKey("PK_MedicineTrackings", x => x.Id);
                     table.ForeignKey(
                         name: "FK_MedicineTrackings_Medicines_MedicineId",
                         column: x => x.MedicineId,
@@ -528,8 +529,8 @@ namespace Pharamcy.Presistance.Migrations
                 schema: "Pharmacy",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false),
-                    PartitionMedicineId = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     BarCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PurchasePrice = table.Column<double>(type: "float", nullable: false),
                     SalePrice = table.Column<double>(type: "float", nullable: false),
@@ -537,11 +538,12 @@ namespace Pharamcy.Presistance.Migrations
                     Tablets = table.Column<int>(type: "int", nullable: false),
                     TabletsAvailableAmount = table.Column<int>(type: "int", nullable: false),
                     TabletSalePrice = table.Column<double>(type: "float", nullable: false),
+                    PartitionMedicineId = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PartitionMedicineTrackings", x => new { x.Id, x.PartitionMedicineId });
+                    table.PrimaryKey("PK_PartitionMedicineTrackings", x => x.Id);
                     table.ForeignKey(
                         name: "FK_PartitionMedicineTrackings_PartitionMedicine_PartitionMedicineId",
                         column: x => x.PartitionMedicineId,

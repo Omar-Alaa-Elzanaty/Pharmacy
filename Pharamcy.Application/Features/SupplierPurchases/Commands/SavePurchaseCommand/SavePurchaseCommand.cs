@@ -52,8 +52,8 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Commands.SavePurchaseC
     }
     public class SavePurchaseCommand : IRequest<Response>
     {
-        public List<Product>? Products { get; set; }
-        public List<PartitionProduct>? PartitionProducts { get; set; }
+        public List<Product>? Products { get; set; }=[];
+        public List<PartitionProduct>? PartitionProducts { get; set; } = [];
         public bool IsClosed { get; set; }
         public double TermAmount { get; set; }
         public int DiscountCostPrecent { get; set; }
@@ -104,12 +104,13 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Commands.SavePurchaseC
 
 
 
-            if (command.Products != null)
-                purchaseinvoice.Items.AddRange(command.Products.Adapt<IEnumerable<PurchaseInvoiceItem>>());
 
 
-            if (command.PartitionProducts != null)
-                purchaseinvoice.Items.AddRange(command.PartitionProducts.Adapt<IEnumerable<PurchaseInvoiceItem>>());
+
+                purchaseinvoice.Items.AddRange(command?.Products.Adapt<List<PurchaseInvoiceItem>>()??new List<PurchaseInvoiceItem>());
+
+
+                purchaseinvoice.Items.AddRange(command?.PartitionProducts.Adapt<List<PurchaseInvoiceItem>>() ?? new List<PurchaseInvoiceItem>());
 
 
 
@@ -121,11 +122,9 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Commands.SavePurchaseC
                 return await Response.FailureAsync("SupplierNotExist");
             }
 
-            supplier.FinancialDue = command.TermAmount;
+            supplier.FinancialDue += command.TermAmount;
 
-            if (command.Products is not null)
-            {
-                foreach (var item in command.Products)
+                foreach (var item in command?.Products)
                 {
                     var medicine = await _unitOfWork.Repository<Medicine>().GetItemOnAsync(i => i.Id == item.MedicineId);
                     if (medicine == null)
@@ -142,11 +141,11 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Commands.SavePurchaseC
                        medicine.Tracking.Add(_mapper.Map<MedicineTracking>(item));
                     }
                 }
-            }
+            //if (command.Products is not null)
+            //{
+            //}
             
-            if(command.PartitionProducts is not null)
-            {
-                foreach (var item in command.PartitionProducts)
+                foreach (var item in command?.PartitionProducts)
                 {
                     var medicine = await _unitOfWork.Repository<PartitionMedicine>().GetItemOnAsync(i => i.Id == item.MedicineId);
                     if (medicine == null)
@@ -154,17 +153,19 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Commands.SavePurchaseC
                         return await Response.FailureAsync(_localizer["MedicineNotFound"].Value);
                     }
 
-                    if (medicine.PartitionMedicineTrackings.Any(i => i.PurchasePrice == item.PurchasePriceForUnit && i.Taps == item.Taps && i.Tablets == item.Tablets))
+                    if (medicine.Tracking.Any(i => i.PurchasePrice == item.PurchasePriceForUnit && i.Taps == item.Taps && i.Tablets == item.Tablets))
                     {
-                        medicine.PartitionMedicineTrackings.
-                            FirstOrDefault(i => i.PurchasePrice == item.PurchasePriceForUnit)!.TabletsAvailableAmount += item.TabletsAvailableAmount;
+                        medicine.Tracking.
+                            FirstOrDefault(i => i.PurchasePrice == item.PurchasePriceForUnit && i.Taps == item.Taps && i.Tablets == item.Tablets)!.TabletsAvailableAmount += item.TabletsAvailableAmount;
                     }
                     else
                     {
-                        medicine.PartitionMedicineTrackings.Add(_mapper.Map<PartitionMedicineTracking>(item));
+                        medicine.Tracking.Add(_mapper.Map<PartitionMedicineTracking>(item));
                     }
                 }
-            }
+            //if(command.PartitionProducts is not null)
+            //{
+            //}
            
             await _unitOfWork.SaveAsync();
             return await Response.SuccessAsync(_localizer["Success"]);
