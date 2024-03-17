@@ -41,6 +41,6 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Queries.GetPurchaseInv
         public double SalePrice { get; set; }
         public DateOnly ExpireDate { get; set; }
         public double TabletSalePrice { get; set; }
-        public bool IsPartition { get; set; }
+        public bool IsPartationing { get; set; }
     }
 }

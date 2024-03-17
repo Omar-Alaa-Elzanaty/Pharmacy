@@ -112,7 +112,9 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Commands.SavePurchaseC
 
                 purchaseinvoice.Items.AddRange(command?.PartitionProducts.Adapt<List<PurchaseInvoiceItem>>() ?? new List<PurchaseInvoiceItem>());
 
-
+            if(!command.IsClosed) {
+                return await Response.SuccessAsync(_localizer["Success"]);
+            }
 
             var supplier = await _unitOfWork.Repository<Supplier>().GetItemOnAsync(i => i.Id == command.SupplierId);
 
@@ -129,7 +131,7 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Commands.SavePurchaseC
                     var medicine = await _unitOfWork.Repository<Medicine>().GetItemOnAsync(i => i.Id == item.MedicineId);
                     if (medicine == null)
                     {
-                        return await Response.FailureAsync(_localizer["Faild"]);
+                        return await Response.FailureAsync(_localizer["Failed"]);
                     }
 
                     if (medicine.Tracking.AsReadOnly().Any(x => x.PurchasePrice == item.PurchasePriceForUnit))

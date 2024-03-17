@@ -70,7 +70,8 @@ namespace Pharamcy.Application.Features.Authentication.Login.Queries
                 Token = token,
                 Role = userRole,
                 ImageUrl = user.ImageUrl,
-                PharmacyName = pharmacy.Name ?? ""
+                PharmacyName = pharmacy.Name ?? "",
+                PharmacyId= userRole==SystemRoles.Moderator||userRole==SystemRoles.Cashier? int.Parse(usercliam.Value):null,   
             };
 
             return await Response.SuccessAsync(response);
