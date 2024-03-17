@@ -122,7 +122,7 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Commands.SavePurchaseC
                 return await Response.FailureAsync("SupplierNotExist");
             }
 
-            supplier.FinancialDue = command.TermAmount;
+            supplier.FinancialDue += command.TermAmount;
 
                 foreach (var item in command?.Products)
                 {

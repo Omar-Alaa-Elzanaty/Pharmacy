@@ -13,7 +13,7 @@ namespace Pharamcy.Application.Common.Mapping
 
             config.NewConfig<CreatePharmacyCommand, Pharmacy>();
             config.NewConfig<DeleteByIdCommand, Pharmacy>();
-            config.NewConfig<Pharmacy,GetAllPharmacyQuery>();
+            config.NewConfig<Pharmacy,GetAllPharmacyQueryDto>().Map(i=>i.AdminId,i=>i.OwnerId);
         }
     }
 }
