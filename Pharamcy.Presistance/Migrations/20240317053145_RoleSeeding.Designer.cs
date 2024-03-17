@@ -12,8 +12,8 @@ using Pharamcy.Presistance.Context;
 namespace Pharamcy.Presistance.Migrations
 {
     [DbContext(typeof(PharmacyDBContext))]
-    [Migration("20240309160112_EditingModels7")]
-    partial class EditingModels7
+    [Migration("20240317053145_RoleSeeding")]
+    partial class RoleSeeding
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -308,30 +308,6 @@ namespace Pharamcy.Presistance.Migrations
                     b.ToTable("Clients", "Pharmacy");
                 });
 
-            modelBuilder.Entity("Pharamcy.Domain.Models.FinancialDues", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<double>("FinancialDue")
-                        .HasColumnType("float");
-
-                    b.Property<int>("SupplierId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SupplierId");
-
-                    b.ToTable("PharmacyFinanicalDues", "Pharmacy");
-                });
-
             modelBuilder.Entity("Pharamcy.Domain.Models.Lost", b =>
                 {
                     b.Property<int>("Id")
@@ -367,9 +343,18 @@ namespace Pharamcy.Presistance.Migrations
                     b.Property<int?>("MedicineId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("PartitionMedicineId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("MedicineId");
+
+                    b.HasIndex("PartitionMedicineId");
 
                     b.ToTable("MedicalEffectiveMaterials", "Pharmacy");
                 });
@@ -427,14 +412,12 @@ namespace Pharamcy.Presistance.Migrations
                     b.Property<int?>("DefaultSale")
                         .HasColumnType("int");
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasMaxLength(21)
-                        .HasColumnType("nvarchar(21)");
-
                     b.Property<string>("EnglishName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsPartationing")
+                        .HasColumnType("bit");
 
                     b.Property<int?>("MaximumAmount")
                         .HasColumnType("int");
@@ -481,10 +464,6 @@ namespace Pharamcy.Presistance.Migrations
                     b.HasIndex("PharmacyId");
 
                     b.ToTable("Medicines", "Pharmacy");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("Medicine");
-
-                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("Pharamcy.Domain.Models.MedicineDefinition", b =>
@@ -523,7 +502,7 @@ namespace Pharamcy.Presistance.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MedicalCompaniesDefinition", "Pharmacy");
+                    b.ToTable("MedicineDefinitions", "Pharmacy");
                 });
 
             modelBuilder.Entity("Pharamcy.Domain.Models.MedicineTracking", b =>
@@ -538,23 +517,106 @@ namespace Pharamcy.Presistance.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("BarCode")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<decimal>("PurchasePrice")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("PurchasePrice")
+                        .HasColumnType("float");
 
-                    b.Property<decimal>("SalePrice")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("SalePrice")
+                        .HasColumnType("float");
 
                     b.HasKey("Id", "MedicineId");
 
                     b.HasIndex("MedicineId");
 
                     b.ToTable("MedicineTrackings", "Pharmacy");
+                });
+
+            modelBuilder.Entity("Pharamcy.Domain.Models.PartitionMedicine", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("AllowToPrint")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("AllowToSale")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ArabicName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("BuyDiscount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CompanyName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("DefaultSale")
+                        .HasColumnType("int");
+
+                    b.Property<string>("EnglishName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsPartationing")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("MaximumAmount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("MessageDuringSale")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("MinimumAmount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NationalCode")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Offer")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("OfferCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Pharmacology")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PharmacyId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Reflux")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Shelf")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ShortCode")
+                        .HasColumnType("int");
+
+                    b.Property<double>("StorageTemperature")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PharmacyId");
+
+                    b.ToTable("PartitionMedicine", "Pharmacy");
                 });
 
             modelBuilder.Entity("Pharamcy.Domain.Models.PartitionMedicineTracking", b =>
@@ -566,20 +628,19 @@ namespace Pharamcy.Presistance.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("BarCode")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<decimal>("PurchasePrice")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("PurchasePrice")
+                        .HasColumnType("float");
 
-                    b.Property<decimal>("SalePrice")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("SalePrice")
+                        .HasColumnType("float");
 
-                    b.Property<decimal>("TabletSalePrice")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("TabletSalePrice")
+                        .HasColumnType("float");
 
                     b.Property<int>("Tablets")
                         .HasColumnType("int");
@@ -650,7 +711,65 @@ namespace Pharamcy.Presistance.Migrations
                     b.ToTable("Pharmacies", "Pharmacy");
                 });
 
-            modelBuilder.Entity("Pharamcy.Domain.Models.PruchaseInvoiceItem", b =>
+            modelBuilder.Entity("Pharamcy.Domain.Models.PurchaseInvoice", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatorName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("DiscountCostPrecent")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ImportInvoiceNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("InvoiceImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsClosed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Notes")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Paied")
+                        .HasColumnType("float");
+
+                    b.Property<int>("PharmacyId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SupplierId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SupplierName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("TermAmount")
+                        .HasColumnType("float");
+
+                    b.Property<double>("TotalCost")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PharmacyId");
+
+                    b.ToTable("PurchaseInvoices", "Pharmacy");
+                });
+
+            modelBuilder.Entity("Pharamcy.Domain.Models.PurchaseInvoiceItem", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -680,14 +799,17 @@ namespace Pharamcy.Presistance.Migrations
                     b.Property<int>("PurchaseInvoiceId")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("PurchasePrice")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("PurchasePrice")
+                        .HasColumnType("float");
 
-                    b.Property<decimal>("SalePrice")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("SalePrice")
+                        .HasColumnType("float");
 
                     b.Property<int>("Shelf")
                         .HasColumnType("int");
+
+                    b.Property<double>("TabletSalePrice")
+                        .HasColumnType("float");
 
                     b.Property<int>("Tablets")
                         .HasColumnType("int");
@@ -698,69 +820,14 @@ namespace Pharamcy.Presistance.Migrations
                     b.Property<int>("Taxis")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("UnitPrice")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("UnitPrice")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
                     b.HasIndex("PurchaseInvoiceId");
 
-                    b.ToTable("PruchaseInvoiceItem", "Pharmacy");
-                });
-
-            modelBuilder.Entity("Pharamcy.Domain.Models.PurchaseInvoice", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("CompanyName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatorName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("DiscountCostPrecent")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ImportInvoiceNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("InvoiceImage")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsClosed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Notes")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("Paied")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int?>("PharmacyId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("TermAmount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<double>("TotalCost")
-                        .HasColumnType("float");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PharmacyId");
-
-                    b.ToTable("PurchaseInvoices", "Pharmacy");
+                    b.ToTable("PurchaseInvoiceItem", "Pharmacy");
                 });
 
             modelBuilder.Entity("Pharamcy.Domain.Models.SalesInvoice", b =>
@@ -784,7 +851,7 @@ namespace Pharamcy.Presistance.Migrations
                     b.ToTable("SalesInvoices", "Pharmacy");
                 });
 
-            modelBuilder.Entity("Pharamcy.Domain.Models.Store", b =>
+            modelBuilder.Entity("Pharamcy.Domain.Models.SalesInvoiceItem", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -795,14 +862,14 @@ namespace Pharamcy.Presistance.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("MedicineId")
+                    b.Property<int>("SalesInvoiceId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MedicineId");
+                    b.HasIndex("SalesInvoiceId");
 
-                    b.ToTable("Stores", "Pharmacy");
+                    b.ToTable("SalesInvoiceItems", "Pharmacy");
                 });
 
             modelBuilder.Entity("Pharamcy.Domain.Models.Supplier", b =>
@@ -816,12 +883,12 @@ namespace Pharamcy.Presistance.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<double>("FinancialDue")
+                        .HasColumnType("float");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PharamcyId")
-                        .HasColumnType("int");
 
                     b.Property<int>("PharmacyId")
                         .HasColumnType("int");
@@ -841,13 +908,6 @@ namespace Pharamcy.Presistance.Migrations
                     b.HasKey("Name");
 
                     b.ToTable("systemMedicalCompanies", "Pharmacy");
-                });
-
-            modelBuilder.Entity("Pharamcy.Domain.Models.PartitionMedicine", b =>
-                {
-                    b.HasBaseType("Pharamcy.Domain.Models.Medicine");
-
-                    b.HasDiscriminator().HasValue("PartitionMedicine");
                 });
 
             modelBuilder.Entity("MedicalEffectiveMaterialMedicineDefinition", b =>
@@ -923,17 +983,6 @@ namespace Pharamcy.Presistance.Migrations
                         .HasForeignKey("PharmacyId");
                 });
 
-            modelBuilder.Entity("Pharamcy.Domain.Models.FinancialDues", b =>
-                {
-                    b.HasOne("Pharamcy.Domain.Models.Supplier", "Supplier")
-                        .WithMany()
-                        .HasForeignKey("SupplierId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Supplier");
-                });
-
             modelBuilder.Entity("Pharamcy.Domain.Models.Lost", b =>
                 {
                     b.HasOne("Pharamcy.Domain.Models.Pharmacy", null)
@@ -946,6 +995,10 @@ namespace Pharamcy.Presistance.Migrations
                     b.HasOne("Pharamcy.Domain.Models.Medicine", null)
                         .WithMany("EffectiveMaterials")
                         .HasForeignKey("MedicineId");
+
+                    b.HasOne("Pharamcy.Domain.Models.PartitionMedicine", null)
+                        .WithMany("EffectiveMaterials")
+                        .HasForeignKey("PartitionMedicineId");
                 });
 
             modelBuilder.Entity("Pharamcy.Domain.Models.Medicine", b =>
@@ -970,6 +1023,17 @@ namespace Pharamcy.Presistance.Migrations
                     b.Navigation("Medicine");
                 });
 
+            modelBuilder.Entity("Pharamcy.Domain.Models.PartitionMedicine", b =>
+                {
+                    b.HasOne("Pharamcy.Domain.Models.Pharmacy", "Pharmacy")
+                        .WithMany()
+                        .HasForeignKey("PharmacyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Pharmacy");
+                });
+
             modelBuilder.Entity("Pharamcy.Domain.Models.PartitionMedicineTracking", b =>
                 {
                     b.HasOne("Pharamcy.Domain.Models.PartitionMedicine", "PartitionMedicine")
@@ -992,7 +1056,18 @@ namespace Pharamcy.Presistance.Migrations
                     b.Navigation("Owner");
                 });
 
-            modelBuilder.Entity("Pharamcy.Domain.Models.PruchaseInvoiceItem", b =>
+            modelBuilder.Entity("Pharamcy.Domain.Models.PurchaseInvoice", b =>
+                {
+                    b.HasOne("Pharamcy.Domain.Models.Pharmacy", "Pharmacy")
+                        .WithMany("PurchaseInvoices")
+                        .HasForeignKey("PharmacyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Pharmacy");
+                });
+
+            modelBuilder.Entity("Pharamcy.Domain.Models.PurchaseInvoiceItem", b =>
                 {
                     b.HasOne("Pharamcy.Domain.Models.PurchaseInvoice", "PurchaseInvoice")
                         .WithMany("Items")
@@ -1003,13 +1078,6 @@ namespace Pharamcy.Presistance.Migrations
                     b.Navigation("PurchaseInvoice");
                 });
 
-            modelBuilder.Entity("Pharamcy.Domain.Models.PurchaseInvoice", b =>
-                {
-                    b.HasOne("Pharamcy.Domain.Models.Pharmacy", null)
-                        .WithMany("PurchaseInvoices")
-                        .HasForeignKey("PharmacyId");
-                });
-
             modelBuilder.Entity("Pharamcy.Domain.Models.SalesInvoice", b =>
                 {
                     b.HasOne("Pharamcy.Domain.Models.Pharmacy", null)
@@ -1017,15 +1085,15 @@ namespace Pharamcy.Presistance.Migrations
                         .HasForeignKey("PharmacyId");
                 });
 
-            modelBuilder.Entity("Pharamcy.Domain.Models.Store", b =>
+            modelBuilder.Entity("Pharamcy.Domain.Models.SalesInvoiceItem", b =>
                 {
-                    b.HasOne("Pharamcy.Domain.Models.Medicine", "Medicine")
-                        .WithMany()
-                        .HasForeignKey("MedicineId")
+                    b.HasOne("Pharamcy.Domain.Models.SalesInvoice", "SalesInvoice")
+                        .WithMany("Items")
+                        .HasForeignKey("SalesInvoiceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Medicine");
+                    b.Navigation("SalesInvoice");
                 });
 
             modelBuilder.Entity("Pharamcy.Domain.Models.Supplier", b =>
@@ -1046,6 +1114,13 @@ namespace Pharamcy.Presistance.Migrations
                     b.Navigation("Tracking");
                 });
 
+            modelBuilder.Entity("Pharamcy.Domain.Models.PartitionMedicine", b =>
+                {
+                    b.Navigation("EffectiveMaterials");
+
+                    b.Navigation("PartitionMedicineTrackings");
+                });
+
             modelBuilder.Entity("Pharamcy.Domain.Models.Pharmacy", b =>
                 {
                     b.Navigation("Clients");
@@ -1062,9 +1137,9 @@ namespace Pharamcy.Presistance.Migrations
                     b.Navigation("Items");
                 });
 
-            modelBuilder.Entity("Pharamcy.Domain.Models.PartitionMedicine", b =>
+            modelBuilder.Entity("Pharamcy.Domain.Models.SalesInvoice", b =>
                 {
-                    b.Navigation("PartitionMedicineTrackings");
+                    b.Navigation("Items");
                 });
 #pragma warning restore 612, 618
         }

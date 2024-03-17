@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Identity.Client;
 using Pharamcy.Domain.Identity;
 using Pharamcy.Domain.Models;
 
@@ -36,10 +35,10 @@ namespace Pharamcy.Presistance.Context
         public DbSet<Lost> Losts { get; set; }
         public DbSet<PurchaseInvoice> PurchaseInvoices { get; set; }
         public DbSet<SalesInvoice> SalesInvoices { get; set; }
-        public DbSet<Store> Stores { get; set; }
+        public DbSet<SalesInvoiceItem> SalesInvoiceItems { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
         public DbSet<SystemMedicalCompany> systemMedicalCompanies { get; set; }
-        public DbSet<MedicineDefinition> MedicalCompaniesDefinition { get; set; }
+        public DbSet<MedicineDefinition> MedicineDefinitions { get; set; }
         public DbSet<MedicalType> MedicalTypes { get; set; }
         public DbSet<MedicalEffectiveMaterial> MedicalEffectiveMaterials { get; set; }
         public DbSet<PartitionMedicine> PartitionMedicines { get; set; }

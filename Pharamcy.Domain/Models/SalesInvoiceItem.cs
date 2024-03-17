@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace Pharamcy.Domain.Models
 {
-    public class SalesInvoice : BaseEntity 
+    public class SalesInvoiceItem:BaseEntity
     {
-        public virtual List<SalesInvoiceItem> Items { get; set; }
+        public int SalesInvoiceId { get; set; }
+        public virtual SalesInvoice SalesInvoice { get; set; }
     }
 }

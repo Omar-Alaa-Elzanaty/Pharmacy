@@ -6,7 +6,7 @@ using Pharamcy.Shared;
 namespace Pharamcy.Presistance.Migrations
 {
     /// <inheritdoc />
-    public partial class dataseeding : Migration
+    public partial class RoleSeeding : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

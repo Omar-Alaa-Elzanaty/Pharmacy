@@ -38,7 +38,7 @@ namespace Pharamcy.Application.Features.Medicines.Queries.GetMedicineByName
             {
                 if(item.IsPartationing) {
 
-                    response.Add(_mapper.Map<GetMedicineByNameQueryDto>((PartitionMedicine)item));
+                    //response.Add(_mapper.Map<GetMedicineByNameQueryDto>((PartitionMedicine)item));
                     
 
 

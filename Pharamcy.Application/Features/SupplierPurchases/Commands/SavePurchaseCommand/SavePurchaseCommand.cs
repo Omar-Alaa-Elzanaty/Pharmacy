@@ -52,8 +52,8 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Commands.SavePurchaseC
     }
     public class SavePurchaseCommand : IRequest<Response>
     {
-        public List<Product> Products { get; set; }
-        public List<PartitionProduct> PartitionProducts { get; set; }
+        public List<Product>? Products { get; set; }
+        public List<PartitionProduct>? PartitionProducts { get; set; }
         public bool IsClosed { get; set; }
         public double TermAmount { get; set; }
         public int DiscountCostPrecent { get; set; }
@@ -89,6 +89,13 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Commands.SavePurchaseC
         public async Task<Response> Handle(SavePurchaseCommand command, CancellationToken cancellationToken)
         {
 
+            var pharmacy = await _unitOfWork.Repository<Domain.Models.Pharmacy>().GetItemOnAsync(i => i.Id == command.PharmacyId);
+
+            if (pharmacy == null)
+                return await Response.FailureAsync(_localizer["PharmacyNotExist"]);
+
+
+
             var purchaseinvoice = _mapper.Map<PurchaseInvoice>(command);
 
             purchaseinvoice.InvoiceImageUrl = await _mediaService.SaveAsync(command.InvoiceImage);
@@ -97,12 +104,15 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Commands.SavePurchaseC
 
 
 
-            purchaseinvoice.Items.AddRange(command.Products.Adapt<IEnumerable<PurchaseInvoiceItem>>());
+            if (command.Products != null)
+                purchaseinvoice.Items.AddRange(command.Products.Adapt<IEnumerable<PurchaseInvoiceItem>>());
 
-            purchaseinvoice.Items.AddRange(command.PartitionProducts.Adapt<IEnumerable<PurchaseInvoiceItem>>());
 
-           
-            
+            if (command.PartitionProducts != null)
+                purchaseinvoice.Items.AddRange(command.PartitionProducts.Adapt<IEnumerable<PurchaseInvoiceItem>>());
+
+
+
             var supplier = await _unitOfWork.Repository<Supplier>().GetItemOnAsync(i => i.Id == command.SupplierId);
 
             if (supplier == null)
@@ -113,49 +123,49 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Commands.SavePurchaseC
 
             supplier.FinancialDue = command.TermAmount;
 
-
-
-            foreach (var item in command.Products)
+            if (command.Products is not null)
             {
-                var medicine = await _unitOfWork.Repository<Medicine>().GetItemOnAsync(i => i.Id == item.MedicineId);
-                if (medicine == null)
+                foreach (var item in command.Products)
                 {
-                    return await Response.FailureAsync(_localizer["Faild"]);
-                }
+                    var medicine = await _unitOfWork.Repository<Medicine>().GetItemOnAsync(i => i.Id == item.MedicineId);
+                    if (medicine == null)
+                    {
+                        return await Response.FailureAsync(_localizer["Faild"]);
+                    }
 
-                if (medicine.Tracking.AsReadOnly().Any(x => x.PurchasePrice == item.PurchasePriceForUnit))
-                {
-
-                    medicine.Tracking.FirstOrDefault(i => i.PurchasePrice == item.PurchasePriceForUnit)!.Amount += item.RealAmount;
-
-                }
-
-                else
-                {
-
-                    medicine.Tracking.Add(_mapper.Map<MedicineTracking>(item));
-
+                    if (medicine.Tracking.AsReadOnly().Any(x => x.PurchasePrice == item.PurchasePriceForUnit))
+                    {
+                        medicine.Tracking.FirstOrDefault(i => i.PurchasePrice == item.PurchasePriceForUnit)!.Amount += item.RealAmount;
+                    }
+                    else
+                    {
+                       medicine.Tracking.Add(_mapper.Map<MedicineTracking>(item));
+                    }
                 }
             }
-            foreach (var item in command.PartitionProducts)
+            
+            if(command.PartitionProducts is not null)
             {
-                var medicine = await _unitOfWork.Repository<PartitionMedicine>().GetItemOnAsync(i => i.Id == item.MedicineId);
-                if (medicine == null)
+                foreach (var item in command.PartitionProducts)
                 {
-                    return await Response.FailureAsync(_localizer["Faild"]);
-                }
-                if (medicine.PartitionMedicineTrackings.Any(i => i.PurchasePrice == item.PurchasePriceForUnit && i.Taps == item.Taps && i.Tablets == item.Tablets))
-                {
-                    medicine.PartitionMedicineTrackings.
-                        FirstOrDefault(i => i.PurchasePrice == item.PurchasePriceForUnit)!.TabletsAvailableAmount += item.TabletsAvailableAmount;
-                }
-                else
-                {
-                    medicine.PartitionMedicineTrackings.Add(_mapper.Map<PartitionMedicineTracking>(item));
-                }
+                    var medicine = await _unitOfWork.Repository<PartitionMedicine>().GetItemOnAsync(i => i.Id == item.MedicineId);
+                    if (medicine == null)
+                    {
+                        return await Response.FailureAsync(_localizer["MedicineNotFound"].Value);
+                    }
 
+                    if (medicine.PartitionMedicineTrackings.Any(i => i.PurchasePrice == item.PurchasePriceForUnit && i.Taps == item.Taps && i.Tablets == item.Tablets))
+                    {
+                        medicine.PartitionMedicineTrackings.
+                            FirstOrDefault(i => i.PurchasePrice == item.PurchasePriceForUnit)!.TabletsAvailableAmount += item.TabletsAvailableAmount;
+                    }
+                    else
+                    {
+                        medicine.PartitionMedicineTrackings.Add(_mapper.Map<PartitionMedicineTracking>(item));
+                    }
+                }
             }
-
+           
             await _unitOfWork.SaveAsync();
             return await Response.SuccessAsync(_localizer["Success"]);
 
