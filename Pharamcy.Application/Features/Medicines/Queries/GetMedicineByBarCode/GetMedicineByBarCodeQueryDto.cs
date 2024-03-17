@@ -9,6 +9,6 @@
         public int BaseDiscount { get; set; }
         public double SellingPrice { get; set; }
         public int AdditionalTaxes { get; set; }
-        public bool IsPartition { get; set; }
+        public bool IsPartationing { get; set; }
     }
 }

@@ -1,9 +1,11 @@
-﻿using MapsterMapper;
+﻿using Mapster;
+using MapsterMapper;
 using MediatR;
 using Microsoft.Extensions.Localization;
 using Pharamcy.Application.Interfaces.Repositories;
 using Pharamcy.Domain.Models;
 using Pharamcy.Shared;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Pharamcy.Application.Features.Medicines.Queries.GetMedicineByName
 {
@@ -31,26 +33,22 @@ namespace Pharamcy.Application.Features.Medicines.Queries.GetMedicineByName
         public async Task<Response> Handle(GetMedicineByNameQuery query, CancellationToken cancellationToken)
         {
            
-            var entities =  _unitOfWork.Repository<Medicine>().GetAllAsync( x => x.EnglishName.Contains( query.Name) || x.ArabicName.Contains(query.Name)).Result.ToList();
-
-            List<GetMedicineByNameQueryDto> response=new();
-            foreach (var item in entities)
-            {
-                if(item.IsPartationing) {
-
-                    //response.Add(_mapper.Map<GetMedicineByNameQueryDto>((PartitionMedicine)item));
-                    
+            var entities =   _unitOfWork.Repository<Medicine>().
+            GetAllAsync(x => x.PharmacyId == query.PharmacyId &&
+            (x.NormalizedEnglishName.Contains(query.Name.ToUpper()) || x.ArabicName.Contains(query.Name))).Result.ToList();
 
 
-                }
 
-                else
-                    response.Add(_mapper.Map<GetMedicineByNameQueryDto>(item));
+            var Partitionentities =  _unitOfWork.Repository<PartitionMedicine>().
+            GetAllAsync(x => x.PharmacyId == query.PharmacyId &&
+            (x.NormalizedEnglishName.Contains(query.Name.ToUpper()) || x.ArabicName.Contains(query.Name))).Result.ToList();
 
 
-            }
 
+
+            List<GetMedicineByNameQueryDto> response = [.. entities?.Adapt<List<GetMedicineByNameQueryDto>>(),.. Partitionentities?.Adapt<List<GetMedicineByNameQueryDto>>()];
             
+
 
             return await Response.SuccessAsync(response, _localization["Success"].Value);
         }

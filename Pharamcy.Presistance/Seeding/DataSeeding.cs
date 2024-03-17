@@ -1,11 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Pharamcy.Application.Interfaces;
 using Pharamcy.Domain.Identity;
 using Pharamcy.Presistance.Context;
 using Pharamcy.Shared;
-using static System.Formats.Asn1.AsnWriter;
 
 namespace Pharamcy.Presistance.Seeding
 {

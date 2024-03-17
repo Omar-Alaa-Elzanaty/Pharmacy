@@ -8,7 +8,6 @@ namespace Pharamcy.Presistance.EntityConfiguration
     {
         public void Configure(EntityTypeBuilder<MedicineTracking> builder)
         {
-            builder.HasKey(x => new { x.Id, x.MedicineId });
         }
     }
 }

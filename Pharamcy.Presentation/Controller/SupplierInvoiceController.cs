@@ -62,11 +62,6 @@ namespace Pharamcy.Presentation.Controller
         {
             return Ok(await _mediator.Send(query));
         }
-        [HttpGet("GetPurchaseInvoiceByImportInvoiceNumber")]
-        public async Task<ActionResult<GetPurchaseInvoiceByImportInvoiceNumberQueryDto>> GetPurchaseInvoiceByImportInvoiceNumber(GetPurchaseInvoiceByImportInvoiceNumberQuery query)
-        {
-            return Ok(await _mediator.Send(query));
-        }
 
 
     }

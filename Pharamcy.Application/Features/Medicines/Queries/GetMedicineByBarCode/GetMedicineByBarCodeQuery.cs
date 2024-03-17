@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Mapster;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using Pharamcy.Application.Interfaces.Repositories;
@@ -28,13 +29,17 @@ namespace Pharamcy.Application.Features.Medicines.Queries.GetMedicineByBarCode
         public async Task<Response> Handle(GetMedicineByBarCodeQuery query, CancellationToken cancellationToken)
         {
             var medicine = _unitOfWork.Repository<MedicineTracking>().Entities()
-                            .FirstOrDefaultAsync(x => x.BarCode== query.BarCode && x.Medicine.PharmacyId == query.PharmacyId)
+                            .FirstOrDefaultAsync(x => (x.BarCode== query.BarCode||
+                            x.Medicine.ShortCode==int.Parse(query.BarCode)||
+                            x.Medicine.NationalCode== int.Parse(query.BarCode)) && x.Medicine.PharmacyId == query.PharmacyId)
                             .Result?.Medicine;
 
             if (medicine is null)
             {
                 var partitionmedicine = _unitOfWork.Repository<PartitionMedicineTracking>().Entities()
-                            .FirstOrDefaultAsync(x => (x.BarCode == query.BarCode ) && x.PartitionMedicine.PharmacyId == query.PharmacyId)
+                            .FirstOrDefaultAsync(x => (x.BarCode == query.BarCode ||
+                            x.PartitionMedicine.ShortCode.ToString() == query.BarCode ||
+                            x.PartitionMedicine.NationalCode.ToString() == query.BarCode) && x.PartitionMedicine.PharmacyId == query.PharmacyId)
                             .Result?.PartitionMedicine;
 
                 if (partitionmedicine is null)
@@ -53,7 +58,7 @@ namespace Pharamcy.Application.Features.Medicines.Queries.GetMedicineByBarCode
 
         private async Task<GetMedicineByBarCodeQueryDto> GetMedicineInfo(Medicine medicine, string Keyword)
         {
-            MedicineTracking? trackingInfo= medicine.Tracking.SingleOrDefault(i=>i.BarCode==Keyword)!;
+            MedicineTracking? trackingInfo= medicine.Tracking.SingleOrDefault(i=>i.BarCode==Keyword)??medicine.Tracking.LastOrDefault();
 
            
                  
@@ -66,12 +71,12 @@ namespace Pharamcy.Application.Features.Medicines.Queries.GetMedicineByBarCode
                 BaseDiscount = medicine.BuyDiscount ?? 0,
                 AdditionalTaxes = 14,
                 SellingPrice = trackingInfo.SalePrice,
-                IsPartition=false
+                IsPartationing=false
             };
         }
         private async Task<GetPartitionMedicineByBarCodeQueryDto> GetPartitionMedicineInfo(PartitionMedicine medicine, string barCode)
         {
-            PartitionMedicineTracking trackingInfo = medicine.PartitionMedicineTrackings.SingleOrDefault(x => x.BarCode == barCode )!;
+            PartitionMedicineTracking? trackingInfo = medicine.Tracking.SingleOrDefault(x => x.BarCode == barCode )??medicine.Tracking.LastOrDefault();
 
             
 
@@ -85,7 +90,7 @@ namespace Pharamcy.Application.Features.Medicines.Queries.GetMedicineByBarCode
                 AdditionalTaxes = 14,
                 SellingPrice = trackingInfo.SalePrice,
                 TabletsAmount = trackingInfo.Tablets,
-                IsPartition = true    
+                IsPartationing = true    
             };
         }
     }
