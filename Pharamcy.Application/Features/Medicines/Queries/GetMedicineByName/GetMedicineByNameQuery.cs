@@ -32,8 +32,10 @@ namespace Pharamcy.Application.Features.Medicines.Queries.GetMedicineByName
 
         public async Task<Response> Handle(GetMedicineByNameQuery query, CancellationToken cancellationToken)
         {
-            if (query.Name == null) return await Response.FailureAsync(_localization["NameRequired"]);
-
+            if (query.Name == null)
+            {
+                return await Response.FailureAsync(_localization["NameRequired"]);
+            }
            
             var entities =   _unitOfWork.Repository<Medicine>().
             GetAllAsync(x => x.PharmacyId == query.PharmacyId &&
