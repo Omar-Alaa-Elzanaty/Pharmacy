@@ -3,6 +3,7 @@ using Pharamcy.Application.Features.SupplierPurchases.Commands.SavePurchaseComma
 using Pharamcy.Application.Features.SupplierPurchases.Queries.GetNextSupplierInvoiceByPharmacyId;
 using Pharamcy.Application.Features.SupplierPurchases.Queries.GetPrevioudInvoiceByPharmacyId;
 using Pharamcy.Application.Features.SupplierPurchases.Queries.GetPurchaseInvoiceByImportInvoiceNumber;
+using Pharamcy.Application.Features.SupplierPurchases.Queries.GetSupplierInvoiceById;
 using Pharamcy.Domain.Models;
 
 namespace Pharamcy.Application.Common.Mapping
@@ -31,6 +32,10 @@ namespace Pharamcy.Application.Common.Mapping
 
             config.NewConfig<PurchaseInvoice, GetPurchaseInvoiceByImportInvoiceNumberQueryDto>();
             config.NewConfig<PurchaseInvoiceItem, GetPurchaseInvoiceItemsByImportInvoiceNumberQueryDto>();
+
+            config.NewConfig<PurchaseInvoice, GetSupplierInvoiceByIdQueryDto>().Map(i=>i.Items,i=>i.Items);
+
+
         }
     }
 }

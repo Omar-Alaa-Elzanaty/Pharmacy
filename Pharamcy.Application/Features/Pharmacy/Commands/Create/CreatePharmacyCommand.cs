@@ -57,7 +57,7 @@ namespace Pharamcy.Application.Features.Pharmacy.Commands.Create
             await _unitofWork.Repository<Domain.Models.Pharmacy>().AddAsync(pharmacy);
             await _unitofWork.SaveAsync();
 
-            return await Response.SuccessAsync(_localizer["Success"].Value); 
+            return await Response.SuccessAsync(pharmacy.Id,_localizer["Success"].Value); 
         }
 
     }

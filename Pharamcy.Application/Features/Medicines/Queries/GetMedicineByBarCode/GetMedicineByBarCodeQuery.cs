@@ -90,6 +90,7 @@ namespace Pharamcy.Application.Features.Medicines.Queries.GetMedicineByBarCode
                 AdditionalTaxes = 14,
                 SellingPrice = trackingInfo.SalePrice,
                 TabletsAmount = trackingInfo.Tablets,
+                 TapesAmount=trackingInfo.Taps,
                 IsPartationing = true    
             };
         }

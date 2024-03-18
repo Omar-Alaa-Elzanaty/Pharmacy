@@ -18,6 +18,26 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Queries.GetSupplierInv
         public double Paied { get; set; }
         public string CreatorName { get; set; }
         public bool IsClosed { get; set; }
+        public bool IsPartationing { get; set; }
         public string? InvoiceImageUrl { get; set; }
+        public List<GetSupplierInvoiceItemByIdQueryDto> Items { get; set; }
+
+    }
+    public class GetSupplierInvoiceItemByIdQueryDto
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public int Amount { get; set; }
+        public int Bonse { get; set; }
+        public int Shelf { get; set; } = 0;
+        public double UnitPrice { get; set; }
+        public int Taps { get; set; }
+        public int Tablets { get; set; }
+        public int Taxis { get; set; }
+        public int AdditionalDiscount { get; set; }
+        public int BaseDiscount { get; set; }
+        public double PurchasePrice { get; set; }
+        public double SalePrice { get; set; }
+        public DateOnly ExpireDate { get; set; }
     }
 }

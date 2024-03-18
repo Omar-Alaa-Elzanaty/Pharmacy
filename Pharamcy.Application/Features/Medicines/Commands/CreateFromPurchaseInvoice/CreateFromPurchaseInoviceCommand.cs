@@ -13,7 +13,7 @@ namespace Pharamcy.Application.Features.Medicines.Commands.CreateFromPurchaseInv
         public string EnglishName { get; set; }
         public string ArabicName { get; set; }
         public double PurchasePrice { get; set; }
-        public double SellingPrice { get; set; }
+        public double SalePrice { get; set; }
 
         public string Type { get; set; }
         public int? NationalCode { get; set; }
@@ -48,9 +48,17 @@ namespace Pharamcy.Application.Features.Medicines.Commands.CreateFromPurchaseInv
         }
         private async Task<Response> AddMedicine<T>(CreateFromPurchaseInoviceCommand command ) where T : BaseMedicine
         {
+            var pharmacy = await _unitOfWork.Repository<Domain.Models.Pharmacy>().GetItemOnAsync(i => i.Id == command.PharmacyId);
+
+            if(pharmacy == null ) { 
+            
+               return await Response.FailureAsync(_localization["PharmacyNotExist"].Value);
+            }
+
+
             BaseMedicine? entity =await _unitOfWork.Repository<T>().
                 GetItemOnAsync(x => x.PharmacyId==command.PharmacyId&&
-                (x.NormalizedEnglishName.Contains(command.EnglishName.ToUpper()) || x.NationalCode == command.NationalCode||x.ArabicName.Contains(command.ArabicName)));
+                (x.NormalizedEnglishName==command.EnglishName.ToUpper() || x.NationalCode == command.NationalCode||x.ArabicName==command.ArabicName));
 
 
             if(entity != null) { 
@@ -63,17 +71,19 @@ namespace Pharamcy.Application.Features.Medicines.Commands.CreateFromPurchaseInv
 
             await _unitOfWork.SaveAsync();
             
-            await AddTracking(medicine, command.Partation);
+            await AddTracking(medicine, command);
              
            return await Response.SuccessAsync(_localization["Success"].Value);
 
         }
-        private async Task AddTracking(BaseMedicine medicine, CreateFromPurchaseInoviceCommandPartitionInfo? info)
+        private async Task AddTracking(BaseMedicine medicine, CreateFromPurchaseInoviceCommand? info)
         {
             if(!medicine.IsPartationing) {
                 var input = (Medicine)medicine;
                 input.Tracking.Add(new()
                 {
+                    PurchasePrice=info.PurchasePrice,
+                    SalePrice=info.SalePrice,
                     Amount = 0,
                     MedicineId = medicine.Id,
                     BarCode = ""
@@ -84,10 +94,13 @@ namespace Pharamcy.Application.Features.Medicines.Commands.CreateFromPurchaseInv
                 var input = (PartitionMedicine)medicine;
                 input.Tracking.Add(new()
                 {
+                     PurchasePrice=info.PurchasePrice,
+                      SalePrice= info.SalePrice,
+                       TabletsAvailableAmount=0,
                     PartitionMedicineId = medicine.Id,
-                    TabletSalePrice = info.TabletPrice ?? 0,
-                    Tablets = info.TapesCount,
-                    Taps = info.TapesCount,
+                    TabletSalePrice = info.Partation.TabletPrice ?? 0,
+                    Tablets = info.Partation.TapesCount,
+                    Taps = info.Partation.TapesCount,
                     BarCode = "",
                 });
 
