@@ -16,5 +16,6 @@
   "SentOtp": "OTP Sent To Your Email.",
   "InCorrectOtp": "Incorrect OTP Number.",
   "SuccessChangePassword": "Password Change Successfully.",
-  "RoleNotExist": "This Role Is Not Exist."
+  "RoleNotExist": "This Role Is Not Exist.",
+  "NameRequired": "Name Field Is Required"
 }
