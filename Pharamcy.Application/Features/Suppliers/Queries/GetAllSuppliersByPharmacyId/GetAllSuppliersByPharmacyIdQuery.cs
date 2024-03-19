@@ -9,6 +9,11 @@ namespace Pharamcy.Application.Features.Suppliers.Queries.GetAllSuppliersByPharm
 {
     public class GetAllSuppliersByPharmacyIdQuery:IRequest<Response>
     {
+        public GetAllSuppliersByPharmacyIdQuery(int pharmacyId)
+        {
+            PharmacyId = pharmacyId;
+        }
+
         public int PharmacyId { get; set; }
     }
 

@@ -20,20 +20,20 @@ namespace Pharamcy.Presentation.Controller
         }
 
         [HttpGet("getSupplierDue")]
-        public async Task<IActionResult> GetSupplierDues(GetAllDeptsBySupplierdQuery query)
+        public async Task<IActionResult> GetSupplierDues([FromQuery]GetAllDeptsBySupplierdQuery query)
         {
 
             return Ok(await _mediator.Send(query));
         }
         [HttpGet("getAllByPhamracyIdPagination")]
-        public async Task<ActionResult<GetAllSupplierByPharamcyIdPaginationQueryDto>> GetAllSuppliersbyPharmacyIdPAgination(GetAllSupplierByPharamcyIdPaginationQuery query)
+        public async Task<ActionResult<GetAllSupplierByPharamcyIdPaginationQueryDto>> GetAllSuppliersbyPharmacyIdPAgination([FromQuery]GetAllSupplierByPharamcyIdPaginationQuery query)
         {
             return Ok(await _mediator.Send(query));
         }
-        [HttpGet("getAllByPhamracyId")]
-        public async Task<ActionResult<GetAllSuppliersByPharmacyIdQueryDto>> GetAllSuppliersbyPharmacyId(GetAllSuppliersByPharmacyIdQuery query)
+        [HttpGet("getAllByPhamracyId/{id}")]
+        public async Task<ActionResult<GetAllSuppliersByPharmacyIdQueryDto>> GetAllSuppliersbyPharmacyId(int id)
         {
-            return Ok(await _mediator.Send(query));
+            return Ok(await _mediator.Send(new GetAllSuppliersByPharmacyIdQuery(id)));
         }
 
         [HttpPost]
