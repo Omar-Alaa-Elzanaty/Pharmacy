@@ -16,7 +16,7 @@ namespace Pharamcy.Presistance.Repositories
             _context = context;
         }
 
-        public IBaseRepository<T> Repository<T>() where T : class
+        public IBaseRepository<T> Repository<T>() where T : BaseEntity
         {
             if (_repositries == null)
                 _repositries = new Hashtable();

@@ -1,6 +1,8 @@
-﻿namespace Pharamcy.Application.Interfaces.Repositories
+﻿using Pharamcy.Domain;
+
+namespace Pharamcy.Application.Interfaces.Repositories
 {
-    public interface IBaseRepository<T> where T:class
+    public interface IBaseRepository<T> where T:BaseEntity
     {
         //add-delete-update-getbyid
 

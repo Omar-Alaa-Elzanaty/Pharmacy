@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -7,17 +6,16 @@ using Pharamcy.Application.Interfaces.Repositories;
 using Pharamcy.Domain.Identity;
 using Pharamcy.Presistance.Context;
 using Pharamcy.Presistance.Repositories;
-using Pharamcy.Application.Interfaces;
-using Pharamcy.Presistance.Seeding;
 
 namespace Pharamcy.Presistance.Extention
 {
     public static class ServiceCollection
     {
-        public static IServiceCollection AddPresistance(this IServiceCollection services,IConfiguration configuration)
+        public static IServiceCollection AddPresistance(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddContext(configuration)
                     .AddTransient(typeof(IBaseRepository<>), typeof(BaseRepository<>))
+                    .AddTransient<IPharmacyRepository, PharmacyRepository>()
                     .AddTransient<IUnitOfWork, UnitOfWork>();
 
             return services;
@@ -35,7 +33,7 @@ namespace Pharamcy.Presistance.Extention
                     .AddUserManager<UserManager<ApplicationUser>>()
                     .AddRoleManager<RoleManager<IdentityRole>>()
                     .AddDefaultTokenProviders();
-            
+
 
             return services;
         }
