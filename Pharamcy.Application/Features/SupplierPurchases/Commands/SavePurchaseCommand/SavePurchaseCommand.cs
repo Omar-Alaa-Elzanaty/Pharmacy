@@ -113,6 +113,7 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Commands.SavePurchaseC
                 purchaseinvoice.Items.AddRange(command?.PartitionProducts.Adapt<List<PurchaseInvoiceItem>>() ?? new List<PurchaseInvoiceItem>());
 
             if(!command.IsClosed) {
+                await _unitOfWork.SaveAsync();
                 return await Response.SuccessAsync(_localizer["Success"]);
             }
 
