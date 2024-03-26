@@ -5,7 +5,6 @@ using Microsoft.Extensions.Localization;
 using Pharamcy.Application.Interfaces.Repositories;
 using Pharamcy.Domain.Models;
 using Pharamcy.Shared;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Pharamcy.Application.Features.Medicines.Queries.GetMedicineByName
 {
@@ -32,7 +31,7 @@ namespace Pharamcy.Application.Features.Medicines.Queries.GetMedicineByName
 
         public async Task<Response> Handle(GetMedicineByNameQuery query, CancellationToken cancellationToken)
         {
-            if (query.Name == null) return await Response.FailureAsync(_localization["NameRequired"]);
+            if (query.Name == null) return await Response.FailureAsync(_localization["NameRequired"].Value);
 
            
             var entities =   _unitOfWork.Repository<Medicine>().

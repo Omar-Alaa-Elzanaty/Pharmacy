@@ -17,5 +17,6 @@
   "InCorrectOtp": "Incorrect OTP Number.",
   "SuccessChangePassword": "Password Change Successfully.",
   "RoleNotExist": "This Role Is Not Exist.",
-  "NameRequired": "Name Field Is Required"
+  "NameRequired": "Name Field Is Required",
+  "ImportInvoiceNumberExist": "This ImportInvoiceNumber Already Exist "
 }

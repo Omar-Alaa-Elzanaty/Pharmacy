@@ -2,6 +2,7 @@
 using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using Pharamcy.Application.Interfaces.Media;
 using Pharamcy.Application.Interfaces.Repositories;
@@ -88,7 +89,13 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Commands.SavePurchaseC
 
         public async Task<Response> Handle(SavePurchaseCommand command, CancellationToken cancellationToken)
         {
+         
+            if(await _unitOfWork.Repository<PurchaseInvoice>().Entities().AnyAsync(i => i.ImportInvoiceNumber == command.ImportInvoiceNumber))
+            {
+                return await Response.FailureAsync(_localizer["ImportInvoiceNumberExist"].Value);
 
+            }
+         
             var pharmacy = await _unitOfWork.Repository<Domain.Models.Pharmacy>().GetItemOnAsync(i => i.Id == command.PharmacyId);
 
             if (pharmacy == null)

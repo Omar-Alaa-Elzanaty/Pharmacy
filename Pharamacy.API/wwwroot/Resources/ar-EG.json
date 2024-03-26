@@ -17,5 +17,6 @@
   "InCorrectOtp": ".رقم تحقق غير صحيح",
   "SuccessChangePassword": ".تم تغير الرقم السرى بنجاح",
   "RoleNotExist": ".هذا الدور ليس موجود",
-  "NameRequired": "يرجى ادخال الاسم"
+  "NameRequired": "يرجى ادخال الاسم",
+  "ImportInvoiceNumberExist": "رقم التوريد موجود مسبقا "
 }

@@ -33,6 +33,8 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Queries.GetPurchaseInv
 
         public async Task<Response> Handle(GetPurchaseInvoiceByImportInvoiceNumberQuery query, CancellationToken cancellationToken)
         {
+
+
             var invoice =  _unitOfWork.Repository<PurchaseInvoice>()
                 .GetItemOnAsync(x=>x.ImportInvoiceNumber==query.ImportInvoiceNumber&&x.PharmacyId==query.PharmacyId).Result.Adapt<GetPurchaseInvoiceByImportInvoiceNumberQueryDto>();
 
