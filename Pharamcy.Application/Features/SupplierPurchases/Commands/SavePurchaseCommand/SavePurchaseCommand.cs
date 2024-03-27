@@ -2,6 +2,7 @@
 using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using Microsoft.IdentityModel.Tokens;
 using Pharamcy.Application.Interfaces.Media;
@@ -27,7 +28,7 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Commands.SavePurchaseC
         public double PurchasePrice { get; set; }
         public double SalePrice { get; set; }
         public double SalePriceForUnit => SalePrice / Amount;
-        public DateOnly ExpireDate { get; set; }
+        public string ExpireDate { get; set; }
     }
     public class PartitionProduct
     {
@@ -49,11 +50,11 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Commands.SavePurchaseC
         public double SalePrice { get; set; }
         public int TabletsAvailableAmount => RealAmount * Taps * Tablets;
         public double TabletSalePrice { get; set; }
-        public DateOnly ExpireDate { get; set; }
+        public string ExpireDate { get; set; }
     }
     public class SavePurchaseCommand : IRequest<Response>
     {
-        public List<Product>? Products { get; set; }=[];
+        public List<Product>? Products { get; set; } = [];
         public List<PartitionProduct>? PartitionProducts { get; set; } = [];
         public bool IsClosed { get; set; }
         public double TermAmount { get; set; }
@@ -104,18 +105,41 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Commands.SavePurchaseC
                 return await Response.FailureAsync(_localizer["PharmacyNotExist"].Value);
             }
 
+            if (command.Products is not null)
+            {
+                var foundMedicinesCount = await _unitOfWork.Repository<Medicine>().Entities()
+                                    .CountAsync(x => x.PharmacyId == command.PharmacyId && command.Products.Any(p => p.Name == x.EnglishName));
+
+                if (foundMedicinesCount != command.Products.Count)
+                {
+                    return await Response.FailureAsync(_localizer["MedicineNotFound"].Value);
+                }
+            }
+
+            if (command.PartitionProducts is not null)
+            {
+                var foundMedicinesCount = await _unitOfWork.Repository<PartitionMedicine>().Entities()
+                    .CountAsync(x => x.PharmacyId == command.PharmacyId && command.PartitionProducts.Any(p => p.Name == x.EnglishName));
+
+                if (foundMedicinesCount != command.PartitionProducts.Count)
+                {
+                    return await Response.FailureAsync(_localizer["MedicineNotFound"].Value);
+                }
+            }
+
             var purchaseinvoice = _mapper.Map<PurchaseInvoice>(command);
 
-            if(command.InvoiceImage != null)
+            if (command.InvoiceImage != null)
             {
                 purchaseinvoice.InvoiceImageUrl = await _mediaService.SaveAsync(command.InvoiceImage);
             }
 
             await _unitOfWork.Repository<PurchaseInvoice>().AddAsync(purchaseinvoice);
-            purchaseinvoice.Items.AddRange(command?.Products.Adapt<List<PurchaseInvoiceItem>>()??new List<PurchaseInvoiceItem>());
+            purchaseinvoice.Items.AddRange(command?.Products.Adapt<List<PurchaseInvoiceItem>>() ?? new List<PurchaseInvoiceItem>());
             purchaseinvoice.Items.AddRange(command?.PartitionProducts.Adapt<List<PurchaseInvoiceItem>>() ?? new List<PurchaseInvoiceItem>());
 
-            if(!command.IsClosed) {
+            if (!command.IsClosed)
+            {
                 await _unitOfWork.SaveAsync();
                 return await Response.SuccessAsync(_localizer["Success"]);
             }
@@ -148,7 +172,7 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Commands.SavePurchaseC
                     {
                         medicine.Tracking.Add(_mapper.Map<MedicineTracking>(item));
                     }
-                } 
+                }
             }
 
             if (!command.PartitionProducts.IsNullOrEmpty())
@@ -170,9 +194,9 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Commands.SavePurchaseC
                     {
                         medicine.Tracking.Add(_mapper.Map<PartitionMedicineTracking>(item));
                     }
-                } 
+                }
             }
-           
+
             await _unitOfWork.SaveAsync();
             return await Response.SuccessAsync(_localizer["Success"]);
 

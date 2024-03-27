@@ -7,7 +7,7 @@ using Pharamcy.Shared;
 
 namespace Pharamcy.Application.Features.Suppliers.Queries.GetAllSuppliersByPharmacyId
 {
-    public class GetAllSuppliersByPharmacyIdQuery:IRequest<Response>
+    public class GetAllSuppliersByPharmacyIdQuery : IRequest<Response>
     {
         public GetAllSuppliersByPharmacyIdQuery(int pharmacyId)
         {
@@ -31,11 +31,11 @@ namespace Pharamcy.Application.Features.Suppliers.Queries.GetAllSuppliersByPharm
 
         public async Task<Response> Handle(GetAllSuppliersByPharmacyIdQuery query, CancellationToken cancellationToken)
         {
-           var Suppliers= _unitOfWork.Repository<Supplier>().GetAllAsync(i=>i.PharmacyId==query.PharmacyId).Result?.Adapt<List<GetAllSuppliersByPharmacyIdQueryDto>>();   
-            
-         
-            
-            return await Response.SuccessAsync(Suppliers, _localizer["Success"].Value);  
+            var Suppliers = _unitOfWork.Repository<Supplier>()
+                            .GetAllAsync(i => i.PharmacyId == query.PharmacyId)
+                            .Result?.Adapt<List<GetAllSuppliersByPharmacyIdQueryDto>>();
+
+            return await Response.SuccessAsync(Suppliers, _localizer["Success"].Value);
         }
     }
 }

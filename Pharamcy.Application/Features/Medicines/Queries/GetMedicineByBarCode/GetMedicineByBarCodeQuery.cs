@@ -1,5 +1,4 @@
-﻿using Mapster;
-using MediatR;
+﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using Pharamcy.Application.Interfaces.Repositories;
@@ -29,9 +28,9 @@ namespace Pharamcy.Application.Features.Medicines.Queries.GetMedicineByBarCode
         public async Task<Response> Handle(GetMedicineByBarCodeQuery query, CancellationToken cancellationToken)
         {
             var medicine = _unitOfWork.Repository<MedicineTracking>().Entities()
-                            .FirstOrDefaultAsync(x => (x.BarCode== query.BarCode||
-                            x.Medicine.ShortCode==int.Parse(query.BarCode)||
-                            x.Medicine.NationalCode== int.Parse(query.BarCode)) && x.Medicine.PharmacyId == query.PharmacyId)
+                            .FirstOrDefaultAsync(x => (x.BarCode == query.BarCode ||
+                            x.Medicine.ShortCode == int.Parse(query.BarCode) ||
+                            x.Medicine.NationalCode == int.Parse(query.BarCode)) && x.Medicine.PharmacyId == query.PharmacyId)
                             .Result?.Medicine;
 
             if (medicine is null)
@@ -58,40 +57,40 @@ namespace Pharamcy.Application.Features.Medicines.Queries.GetMedicineByBarCode
 
         private async Task<GetMedicineByBarCodeQueryDto> GetMedicineInfo(Medicine medicine, string Keyword)
         {
-            MedicineTracking? trackingInfo= medicine.Tracking.SingleOrDefault(i=>i.BarCode==Keyword)??medicine.Tracking.LastOrDefault();
+            MedicineTracking? trackingInfo = medicine.Tracking.SingleOrDefault(i => i.BarCode == Keyword) ?? medicine.Tracking.LastOrDefault();
 
-           
-                 
+
+
             return new()
             {
                 Id = medicine.Id,
-                Amount = trackingInfo.Amount,
+                Amount = trackingInfo?.Amount ?? 0,
                 EnglishName = medicine.EnglishName,
-                PurchasePrice = trackingInfo.PurchasePrice,
+                PurchasePrice = trackingInfo?.PurchasePrice ?? 0,
                 BaseDiscount = medicine.BuyDiscount ?? 0,
                 AdditionalTaxes = 14,
-                SellingPrice = trackingInfo.SalePrice,
-                IsPartationing=false
+                SellingPrice = trackingInfo?.SalePrice ?? 0,
+                IsPartationing = false
             };
         }
         private async Task<GetPartitionMedicineByBarCodeQueryDto> GetPartitionMedicineInfo(PartitionMedicine medicine, string barCode)
         {
-            PartitionMedicineTracking? trackingInfo = medicine.Tracking.SingleOrDefault(x => x.BarCode == barCode )??medicine.Tracking.LastOrDefault();
+            PartitionMedicineTracking? trackingInfo = medicine.Tracking.SingleOrDefault(x => x.BarCode == barCode) ?? medicine.Tracking.LastOrDefault();
 
-            
+
 
             return new()
             {
                 Id = medicine.Id,
-                Amount = trackingInfo.Amount,
+                Amount = trackingInfo?.Amount ?? 0,
                 EnglishName = medicine.EnglishName,
-                PurchasePrice = trackingInfo.PurchasePrice,
+                PurchasePrice = trackingInfo?.PurchasePrice ?? 0,
                 BaseDiscount = medicine.BuyDiscount ?? 0,
                 AdditionalTaxes = 14,
-                SellingPrice = trackingInfo.SalePrice,
-                TabletsAmount = trackingInfo.Tablets,
-                 TapesAmount=trackingInfo.Taps,
-                IsPartationing = true    
+                SellingPrice = trackingInfo?.SalePrice ?? 0,
+                TabletsAmount = trackingInfo?.Tablets ?? 0,
+                TapesAmount = trackingInfo?.Taps ?? 0,
+                IsPartationing = true
             };
         }
     }
