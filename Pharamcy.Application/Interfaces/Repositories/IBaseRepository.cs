@@ -11,6 +11,8 @@ namespace Pharamcy.Application.Interfaces.Repositories
         //public  Task<IEnumerable<T>> GetAllByIdAsync(Func<T,bool>match);
         public  Task<IEnumerable<TResult>> GetOnCriteriaAsync<TResult>(Func<T,bool>match,Func<T,TResult>selector);
 
+
+
         public Task<IEnumerable<T>> GetAllAsync();
         public  Task<IEnumerable<T>> GetAllAsync(Func<T, bool> match);
 

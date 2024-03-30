@@ -19,4 +19,6 @@
   "RoleNotExist": "This Role Is Not Exist.",
   "NameRequired": "Name Field Is Required",
   "UserNotFound": "User Not IN The System"
+  "NameRequired": "Name Field Is Required",
+  "ImportInvoiceNumberExist": "This ImportInvoiceNumber Already Exist "
 }
