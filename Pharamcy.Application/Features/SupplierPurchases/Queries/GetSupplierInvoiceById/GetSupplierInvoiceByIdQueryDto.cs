@@ -18,7 +18,6 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Queries.GetSupplierInv
         public double Paied { get; set; }
         public string CreatorName { get; set; }
         public bool IsClosed { get; set; }
-        public bool IsPartationing { get; set; }
         public string? InvoiceImageUrl { get; set; }
         public List<GetSupplierInvoiceItemByIdQueryDto> Items { get; set; }
 
@@ -38,6 +37,7 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Queries.GetSupplierInv
         public int BaseDiscount { get; set; }
         public double PurchasePrice { get; set; }
         public double SalePrice { get; set; }
+        public bool IsPartition { get; set; }
         public DateOnly ExpireDate { get; set; }
     }
 }

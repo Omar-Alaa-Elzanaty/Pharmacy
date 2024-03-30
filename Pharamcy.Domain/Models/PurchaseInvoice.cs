@@ -1,6 +1,6 @@
 ﻿namespace Pharamcy.Domain.Models
 {
-    public class PurchaseInvoice : BaseEntity
+    public class PurchaseInvoice: BaseEntity
     {
         public string SupplierName { get; set; }
         public int SupplierId { get; set; }

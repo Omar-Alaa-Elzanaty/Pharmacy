@@ -25,7 +25,7 @@ namespace Pharamcy.Domain.Models
 
         public double TabletSalePrice { get; set; }
 
-        public bool IsPartition => Tablets == 0;
+        public bool IsPartition => Tablets != 0;
         public int PurchaseInvoiceId { get; set; }
         public virtual PurchaseInvoice PurchaseInvoice { get; set; }
     }

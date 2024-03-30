@@ -19,4 +19,6 @@
   "RoleNotExist": ".هذا الدور ليس موجود",
   "NameRequired": "يرجى ادخال الاسم",
   "ImportInvoiceNumberExist": "رقم التوريد موجود مسبقا "
+  "NameRequired": "يرجى ادخال الاسم",
+  "UserNotFound": "المستخد غير مسجل بالنظام"
 }

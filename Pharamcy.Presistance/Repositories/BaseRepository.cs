@@ -1,10 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Pharamcy.Application.Interfaces.Repositories;
+using Pharamcy.Domain;
 using Pharamcy.Presistance.Context;
 
 namespace Pharamcy.Presistance.Repositories
 {
-    public class BaseRepository<T> : IBaseRepository<T> where T : class
+    public class BaseRepository<T> : IBaseRepository<T> where T : BaseEntity
     {
         private readonly PharmacyDBContext _dbContext;
 

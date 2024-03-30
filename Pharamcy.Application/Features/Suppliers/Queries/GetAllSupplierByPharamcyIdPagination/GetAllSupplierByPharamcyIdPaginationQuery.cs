@@ -28,7 +28,7 @@ namespace Pharamcy.Application.Features.Suppliers.Queries.GetAllSupplierByPharam
 
             if (query.KeyWord is not null)
             {
-                entities = entities.Where(x => x.Name == query.KeyWord);
+                entities = entities.Where(x => x.Name.ToLower().Contains(query.KeyWord.ToLower()));
             }
 
             var result = await entities.Skip((query.PageNumber - 1) * query.PageSize).Take(query.PageSize)

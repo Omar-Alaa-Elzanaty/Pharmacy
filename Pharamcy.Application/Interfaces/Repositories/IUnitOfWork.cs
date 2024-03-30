@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Pharamcy.Domain;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace Pharamcy.Application.Interfaces.Repositories
 {
     public interface IUnitOfWork:IDisposable
     {
-        IBaseRepository<T> Repository<T>()where T : class;
+        IBaseRepository<T> Repository<T>()where T : BaseEntity;
         Task<int> SaveAsync();
 
     }

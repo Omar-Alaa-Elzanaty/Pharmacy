@@ -1,7 +1,5 @@
 ﻿using Mapster;
 using MediatR;
-using Microsoft.EntityFrameworkCore.Query;
-using Microsoft.Extensions.Localization;
 using Pharamcy.Application.Extensions;
 using Pharamcy.Application.Interfaces.Repositories;
 using Pharamcy.Domain.Models;
@@ -31,11 +29,11 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Queries.GetAllSupplier
 
         public async Task<PaginatedResponse<GetAllSupplierInvoicePaginationQueryDto>> Handle(GetAllSupplierInvoicePaginationQuery query, CancellationToken cancellationToken)
         {
-            var entities = _unitOfWork.Repository<PurchaseInvoice>().Entities();
+            var entities = _unitOfWork.Repository<PurchaseInvoice>().Entities().Where(x => x.PharmacyId == query.PharmacyId);
 
             if (query.SupplierId is not null)
             {
-                entities.Where(i => i.SupplierId == query.SupplierId);
+                entities = entities.Where(i => i.SupplierId == query.SupplierId);
             }
 
             if (query.StartDate is not null && query.EndDate is not null)
@@ -46,12 +44,12 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Queries.GetAllSupplier
             {
                 entities = entities.Where(x => x.CreatedDate >= query.StartDate);
             }
-            else if(query.EndDate is not null) 
+            else if (query.EndDate is not null)
             {
                 entities = entities.Where(x => x.CreatedDate <= query.EndDate);
             }
 
-            if(query.ImportNumber is not null)
+            if (query.ImportNumber is not null)
             {
                 entities = entities.Where(x => x.ImportInvoiceNumber.Contains(query.ImportNumber));
             }
