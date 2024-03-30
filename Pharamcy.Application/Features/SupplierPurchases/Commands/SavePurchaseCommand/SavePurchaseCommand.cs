@@ -98,6 +98,7 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Commands.SavePurchaseC
 
         public async Task<Response> Handle(SavePurchaseCommand command, CancellationToken cancellationToken)
         {
+
             var ishasPharmacy = _pharmacyRepository.FindByUserId(command.userId).Result.Any(x => x == command.PharmacyId);
 
             if (ishasPharmacy == false)
@@ -108,7 +109,8 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Commands.SavePurchaseC
             if (command.Products is not null)
             {
                 var foundMedicinesCount = await _unitOfWork.Repository<Medicine>().Entities()
-                                    .CountAsync(x => x.PharmacyId == command.PharmacyId && command.Products.Any(p => p.Name == x.EnglishName));
+                                    .Where(x => x.PharmacyId == command.PharmacyId
+                                    && command.Products.Select(x => x.Name).Contains(x.EnglishName)).CountAsync();
 
                 if (foundMedicinesCount != command.Products.Count)
                 {
@@ -119,7 +121,8 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Commands.SavePurchaseC
             if (command.PartitionProducts is not null)
             {
                 var foundMedicinesCount = await _unitOfWork.Repository<PartitionMedicine>().Entities()
-                    .CountAsync(x => x.PharmacyId == command.PharmacyId && command.PartitionProducts.Any(p => p.Name == x.EnglishName));
+                    .Where(x => x.PharmacyId == command.PharmacyId
+                    && command.PartitionProducts.Select(x => x.Name).Contains(x.EnglishName)).CountAsync();
 
                 if (foundMedicinesCount != command.PartitionProducts.Count)
                 {

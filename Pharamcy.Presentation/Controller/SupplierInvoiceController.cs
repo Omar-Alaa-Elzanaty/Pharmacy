@@ -11,7 +11,7 @@ using Pharamcy.Application.Features.SupplierPurchases.Queries.GetSupplierInvoice
 namespace Pharamcy.Presentation.Controller
 {
     [Route("api/[controller]")]
-   // [Authorize]
+    // [Authorize]
     public class SupplierInvoiceController : ApiControllerBase
     {
         private readonly IMediator _mediator;
@@ -52,13 +52,13 @@ namespace Pharamcy.Presentation.Controller
         }
 
         [HttpGet("getByImportNumber")]
-        public async Task<ActionResult<GetPurchaseInvoiceByImportInvoiceNumberQueryDto>>GetByImportNumber(GetPurchaseInvoiceByImportInvoiceNumberQuery query)
+        public async Task<ActionResult<GetPurchaseInvoiceByImportInvoiceNumberQueryDto>> GetByImportNumber(GetPurchaseInvoiceByImportInvoiceNumberQuery query)
         {
             return Ok(await _mediator.Send(query));
         }
 
         [HttpGet("getAllByPagination")]
-        public async Task<ActionResult<GetAllSupplierInvoicePaginationQueryDto>>GetAllByPagination(GetAllSupplierInvoicePaginationQuery query)
+        public async Task<ActionResult<GetAllSupplierInvoicePaginationQueryDto>> GetAllByPagination(GetAllSupplierInvoicePaginationQuery query)
         {
             return Ok(await _mediator.Send(query));
         }
