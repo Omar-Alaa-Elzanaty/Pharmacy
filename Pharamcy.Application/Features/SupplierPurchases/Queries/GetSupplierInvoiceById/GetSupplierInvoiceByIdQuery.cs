@@ -42,7 +42,7 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Queries.GetSupplierInv
                 return await Response.FailureAsync(_localization["InvoiceNotFound"].Value);
             }
 
-            var invoice = entity.Adapt<GetSupplierInvoiceByIdQueryDto>();
+            var invoice = entity?.Adapt<GetSupplierInvoiceByIdQueryDto>();
 
             return await Response.SuccessAsync(invoice);
         }

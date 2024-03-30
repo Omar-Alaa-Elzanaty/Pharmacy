@@ -179,6 +179,9 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Commands.SavePurchaseC
             {
                 foreach (var item in command.PartitionProducts)
                 {
+                    if (item.Tablets == 0 || item.Taps == 0)
+                        return await Response.FailureAsync("Taps and Tablets Should not be 0");
+
                     var medicine = await _unitOfWork.Repository<PartitionMedicine>().GetItemOnAsync(i => i.Id == item.MedicineId);
                     if (medicine == null)
                     {
