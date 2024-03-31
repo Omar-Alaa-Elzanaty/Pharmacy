@@ -20,7 +20,7 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Queries.GetNextSupplie
         public string CreatorName { get; set; }
         public bool IsClosed { get; set; }
         public string? InvoiceImageUrl { get; set; }
-        public DateTime CreationDate { get; set; }
+        public DateTime CreatedDate { get; set; }
     }
     public class GetNextInvoiceItemsByPharmacyIdQueryDto
     {

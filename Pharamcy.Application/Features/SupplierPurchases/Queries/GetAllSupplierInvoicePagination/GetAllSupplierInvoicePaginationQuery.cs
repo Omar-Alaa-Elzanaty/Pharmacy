@@ -29,7 +29,9 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Queries.GetAllSupplier
 
         public async Task<PaginatedResponse<GetAllSupplierInvoicePaginationQueryDto>> Handle(GetAllSupplierInvoicePaginationQuery query, CancellationToken cancellationToken)
         {
-            var entities = _unitOfWork.Repository<PurchaseInvoice>().Entities().Where(x => x.PharmacyId == query.PharmacyId);
+            IQueryable<PurchaseInvoice> entities = _unitOfWork.Repository<PurchaseInvoice>().Entities()
+                .Where(x => x.PharmacyId == query.PharmacyId)
+                .OrderByDescending(x => x.CreatedDate);
 
             if (query.SupplierId is not null)
             {
