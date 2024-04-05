@@ -106,7 +106,8 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Commands.SavePurchaseC
                 return await Response.FailureAsync(_localizer["PharmacyNotExist"].Value);
             }
          
-            if(await _unitOfWork.Repository<PurchaseInvoice>().Entities().AnyAsync(i => i.ImportInvoiceNumber == command.ImportInvoiceNumber))
+            if(await _unitOfWork.Repository<PurchaseInvoice>().Entities()
+                .AnyAsync(i => i.ImportInvoiceNumber == command.ImportInvoiceNumber&&i.PharmacyId==command.PharmacyId))
             {
                 return await Response.FailureAsync(_localizer["ImportInvoiceNumberExist"].Value);
 
@@ -159,7 +160,6 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Commands.SavePurchaseC
 
             if (supplier == null)
             {
-
                 return await Response.FailureAsync("SupplierNotExist");
             }
 
