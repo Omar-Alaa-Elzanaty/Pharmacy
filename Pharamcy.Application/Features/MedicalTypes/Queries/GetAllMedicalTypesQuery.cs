@@ -30,7 +30,7 @@ namespace Pharamcy.Application.Features.MedicalTypes.Queries
         public async Task<Response> Handle(GetAllMedicalTypesQuery query, CancellationToken cancellationToken)
         {
             var entities = await _unitOfWork.Repository<MedicalType>().Entities()
-                .Where(x => (query.Keyword != null && query.Keyword.Count() == 0) ?
+                .Where(x => (query.Keyword != null && query.Keyword.Count() != 0) ?
                 x.Name.ToLower().Trim().Contains(query.Keyword.ToLower().Trim()) : true)
                 .ToListAsync();
 

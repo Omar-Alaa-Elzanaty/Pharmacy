@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Pharamcy.Presistance.Context;
 
@@ -11,9 +12,11 @@ using Pharamcy.Presistance.Context;
 namespace Pharamcy.Presistance.Migrations
 {
     [DbContext(typeof(PharmacyDBContext))]
-    partial class PharmacyDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240406144840_DropimportInvoiceNumber")]
+    partial class DropimportInvoiceNumber
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -369,12 +372,9 @@ namespace Pharamcy.Presistance.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Name")
-                        .IsUnique();
 
                     b.ToTable("MedicalTypes", "Pharmacy");
                 });
@@ -731,10 +731,6 @@ namespace Pharamcy.Presistance.Migrations
 
                     b.Property<int>("DiscountCostPrecent")
                         .HasColumnType("int");
-
-                    b.Property<string>("ImportInvoiceNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("InvoiceImageUrl")
                         .HasColumnType("nvarchar(max)");

@@ -8,7 +8,7 @@ namespace Pharamcy.Presistance.EntityConfiguration
     {
         public void Configure(EntityTypeBuilder<PurchaseInvoice> builder)
         {
-            builder.HasIndex(x=>x.ImportInvoiceNumber).IsUnique();
+            //builder.HasIndex(x=>x.ImportInvoiceNumber).IsUnique();
         }
     }
 }
