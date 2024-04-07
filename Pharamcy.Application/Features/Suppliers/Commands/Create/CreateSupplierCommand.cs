@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using Pharamcy.Application.Interfaces.Repositories;
+using Pharamcy.Domain.Comman.Enums;
 using Pharamcy.Domain.Models;
 using Pharamcy.Shared;
 
@@ -11,6 +12,7 @@ namespace Pharamcy.Application.Features.Suppliers.Commands.Create
     public record CreateSupplierCommand : IRequest<Response>
     {
         public string Name { get; set; }
+        public SupplierType Type { get; set; }
         public int PharmacyId { get; set; }
     }
     internal class CreateSupplierCommandHandler : IRequestHandler<CreateSupplierCommand, Response>

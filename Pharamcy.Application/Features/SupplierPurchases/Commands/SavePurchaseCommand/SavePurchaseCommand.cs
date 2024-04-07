@@ -105,14 +105,14 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Commands.SavePurchaseC
             {
                 return await Response.FailureAsync(_localizer["PharmacyNotExist"].Value);
             }
-         
-            if(await _unitOfWork.Repository<PurchaseInvoice>().Entities()
-                .AnyAsync(i => i.ImportInvoiceNumber == command.ImportInvoiceNumber&&i.PharmacyId==command.PharmacyId))
+
+            if (await _unitOfWork.Repository<PurchaseInvoice>().Entities()
+                .AnyAsync(i => i.ImportInvoiceNumber == command.ImportInvoiceNumber && i.PharmacyId == command.PharmacyId))
             {
                 return await Response.FailureAsync(_localizer["ImportInvoiceNumberExist"].Value);
 
             }
-         
+
             var pharmacy = await _unitOfWork.Repository<Domain.Models.Pharmacy>().GetItemOnAsync(i => i.Id == command.PharmacyId);
 
             if (command.Products is not null)
