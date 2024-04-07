@@ -170,6 +170,7 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Commands.SavePurchaseC
                 foreach (var item in command.Products)
                 {
                     var medicine = await _unitOfWork.Repository<Medicine>().GetItemOnAsync(i => i.Id == item.MedicineId);
+
                     if (medicine == null)
                     {
                         return await Response.FailureAsync(_localizer["Failed"]);

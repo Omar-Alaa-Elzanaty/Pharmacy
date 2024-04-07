@@ -35,6 +35,8 @@ namespace Pharamcy.Application.Features.Suppliers.Queries.GetAllSupplierByPharam
             //var result = await entities.Skip((query.PageNumber - 1) * query.PageSize).Take(query.PageSize)
             //                           .ToListAsync(cancellationToken: cancellationToken);
 
+            entities = entities.OrderByDescending(x => x.CreatedDate);
+
             var suppliers = await entities.ProjectToType<GetAllSupplierByPharamcyIdPaginationQueryDto>()
                                 .ToPaginatedListAsync(query.PageNumber, query.PageSize, cancellationToken);
 
