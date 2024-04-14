@@ -35,7 +35,7 @@ namespace Pharamcy.Presentation.Controller
         }
 
         [HttpGet("GetByNameSalesInvoice")]
-        public async Task<ActionResult<GetMedicineForSalesInvoiceByNameQueryDto>>GetByName([FromBody]GetMedicineForSalesInvoiceByNameQuery query)
+        public async Task<ActionResult<GetMedicineForSalesInvoiceByNameQueryDto>> GetByName([FromBody] GetMedicineForSalesInvoiceByNameQuery query)
         {
             return Ok(await _mediator.Send(query));
         }

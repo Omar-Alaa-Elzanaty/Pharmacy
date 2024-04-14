@@ -2,6 +2,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Client;
+using Pharamcy.Application.Features.Clients.Commands.Create;
+using Pharamcy.Application.Features.Clients.Commands.Delete;
+using Pharamcy.Application.Features.Clients.Commands.Update;
 
 namespace Pharamcy.Presentation.Controller
 {
@@ -21,5 +24,23 @@ namespace Pharamcy.Presentation.Controller
         //{
 
         //}
+
+        [HttpPost]
+        public async Task<ActionResult<int>> Create(CreateClientCommand command)
+        {
+            return Ok(await _mediator.Send(command));
+        }
+
+        [HttpDelete]
+        public async Task<ActionResult<string>>Delete(DeleteClientCommand command)
+        {
+            return Ok(await _mediator.Send(command));
+        }
+
+        [HttpPut]
+        public async Task<ActionResult<int>>Update(UpdateClientCommand command)
+        {
+            return Ok(await _mediator.Send(command));
+        }
     }
 }

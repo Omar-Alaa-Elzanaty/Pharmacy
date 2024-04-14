@@ -11,10 +11,10 @@ namespace Pharamcy.Application.Features.Medicines.Queries.GetMedicineByBarCodeSa
         public int Id { get; set; }
         public string Name { get; set; }
         public bool IsPartationing { get; set; }
-        public MedicineDetails MedicineDetails { get; set; }
-        public PartitionMedicineDetails? PartitionMedicineDetails { get; set; }
+        public MedicineDetailsByBarCode MedicineDetails { get; set; }
+        public PartitionMedicineDetailsByBarCode? PartitionMedicineDetails { get; set; }
     }
-    public class MedicineDetails
+    public class MedicineDetailsByBarCode
     {
         public int Id { get; set; }
         public int Amount { get; set; }
@@ -23,7 +23,7 @@ namespace Pharamcy.Application.Features.Medicines.Queries.GetMedicineByBarCodeSa
         public DateTime ExpireDate { get; set; }
     }
 
-    public class PartitionMedicineDetails : MedicineDetails
+    public class PartitionMedicineDetailsByBarCode : MedicineDetailsByBarCode
     {
         public int TabletsAvailableAmount { get; set; }
         public int TapsAvailableAmount { get; set; }

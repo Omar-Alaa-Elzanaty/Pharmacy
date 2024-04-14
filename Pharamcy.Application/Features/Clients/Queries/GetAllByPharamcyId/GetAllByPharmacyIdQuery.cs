@@ -34,7 +34,7 @@ namespace Pharamcy.Application.Features.Clients.Queries.GetAllByPharamcyId
             //var clients=_unitOfWork.Repository<Client>().Entities()
             //    .Where(x=>x)
             //TODO: 
-            return null;
+            throw new NotImplementedException();
         }
     }
 }

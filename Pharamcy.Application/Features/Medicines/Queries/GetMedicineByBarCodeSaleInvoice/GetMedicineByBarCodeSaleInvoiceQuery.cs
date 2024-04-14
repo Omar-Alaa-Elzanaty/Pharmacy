@@ -46,7 +46,7 @@ namespace Pharamcy.Application.Features.Medicines.Queries.GetMedicineByBarCodeSa
                     Id = medicineTracking.MedicineId,
                     Name = medicineTracking.Medicine.EnglishName,
                     IsPartationing = false,
-                    MedicineDetails = medicineTracking.Adapt<MedicineDetails>()
+                    MedicineDetails = medicineTracking.Adapt<MedicineDetailsByBarCode>()
                 });
             }
 
@@ -60,7 +60,7 @@ namespace Pharamcy.Application.Features.Medicines.Queries.GetMedicineByBarCodeSa
                     Id = partitionMedicineTracking.PartitionMedicineId,
                     Name = partitionMedicineTracking.PartitionMedicine.EnglishName,
                     IsPartationing = true,
-                    PartitionMedicineDetails = partitionMedicineTracking.Adapt<PartitionMedicineDetails>()
+                    PartitionMedicineDetails = partitionMedicineTracking.Adapt<PartitionMedicineDetailsByBarCode>()
                 };
                 ParitionMedicineInfo.PartitionMedicineDetails.TapsAvailableAmount =
                                     partitionMedicineTracking.Amount / partitionMedicineTracking.Taps;

@@ -38,20 +38,22 @@ namespace Pharamcy.Application.Features.Deliveries.Commands.Update
 
             if(pharmacy is null)
             {
-                return await Response.FailureAsync(_localization[""].Value);
+                return await Response.FailureAsync(_localization["InvalidRequest"].Value);
             }
 
             var delivery = pharmacy.Deliveries.SingleOrDefault(x => x.Id == command.Id);
 
             if(delivery is null)
             {
-                return await Response.FailureAsync(_localization[""].Value);
+                return await Response.FailureAsync(_localization["InvalidRequest"].Value);
             }
 
             delivery.Name = command.Name;
 
             await _unitOfWork.Repository<Domain.Models.Pharmacy>().UpdateAsync(pharmacy);
             await _unitOfWork.SaveAsync();
+
+            return await Response.SuccessAsync(_localization["Success"].Value);
         }
     }
 }
