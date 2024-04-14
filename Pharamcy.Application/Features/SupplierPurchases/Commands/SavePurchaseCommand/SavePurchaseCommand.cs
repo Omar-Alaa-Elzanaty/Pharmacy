@@ -172,7 +172,13 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Commands.SavePurchaseC
                         return await Response.FailureAsync(_localizer["Failed"]);
                     }
 
-                    if (medicine.Tracking.AsReadOnly().Any(x => x.PurchasePrice == item.PurchasePriceForUnit))
+                    if(!DateOnly.TryParse(item.ExpireDate,out DateOnly result))
+                    {
+                        return await Response.FailureAsync("ExpireDate Is Invalid Format");
+                    }
+
+
+                    if (medicine.Tracking.AsReadOnly().Any(x => x.PurchasePrice == item.PurchasePriceForUnit&&x.ExpireDate==result))
                     {
                         medicine.Tracking.FirstOrDefault(i => i.PurchasePrice == item.PurchasePriceForUnit)!.Amount += item.RealAmount;
                     }
@@ -196,7 +202,12 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Commands.SavePurchaseC
                         return await Response.FailureAsync(_localizer["MedicineNotFound"].Value);
                     }
 
-                    if (medicine.Tracking.Any(i => i.PurchasePrice == item.PurchasePriceForUnit && i.Taps == item.Taps && i.Tablets == item.Tablets))
+                    if (!DateOnly.TryParse(item.ExpireDate, out DateOnly result))
+                    {
+                        return await Response.FailureAsync("ExpireDate Is Invalid Format");
+                    }
+
+                    if (medicine.Tracking.Any(i => i.PurchasePrice == item.PurchasePriceForUnit && i.Taps == item.Taps && i.Tablets == item.Tablets && i.ExpireDate== result))
                     {
                         medicine.Tracking.
                             FirstOrDefault(i => i.PurchasePrice == item.PurchasePriceForUnit && i.Taps == item.Taps && i.Tablets == item.Tablets)!.TabletsAvailableAmount += item.TabletsAvailableAmount;

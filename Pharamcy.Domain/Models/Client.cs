@@ -12,6 +12,6 @@
         public bool OnlyCash { get; set; }
         public int Relay { get; set; }
         public int PharmacyId { get; set; }
-        public Pharmacy Pharmacy  { get; set; }
+        public virtual Pharmacy Pharmacy  { get; set; }
     }
 }

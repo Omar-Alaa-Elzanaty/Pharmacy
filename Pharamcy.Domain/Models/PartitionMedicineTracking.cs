@@ -17,6 +17,7 @@ namespace Pharamcy.Domain.Models
         public int TabletsAvailableAmount { get; set; }
         public double TabletSalePrice { get; set; }
         public int PartitionMedicineId { get; set; }
+        public DateOnly ExpireDate { get; set; }
         public virtual PartitionMedicine PartitionMedicine { get; set; }
     }
 }

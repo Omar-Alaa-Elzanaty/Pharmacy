@@ -13,7 +13,7 @@
         public string Notes { get; set; }
         public string InvoiceWriter { get; set; }
         public int ClientId { get; set; }
-        public Client Client { get; set; }
+        public virtual Client Client { get; set; }
         public virtual List<SalesInvoiceItem> Items { get; set; }
     }
 }
