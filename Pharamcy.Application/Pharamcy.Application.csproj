@@ -24,7 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Clients\Commands\" />
     <Folder Include="Features\Deliveries\Queries\NewFolder\" />
     <Folder Include="Features\MedicalTypes\Commands\" />
     <Folder Include="Features\SystemAdmin\Commands\" />
