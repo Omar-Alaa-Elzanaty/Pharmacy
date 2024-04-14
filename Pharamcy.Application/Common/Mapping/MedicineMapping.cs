@@ -1,6 +1,7 @@
 ﻿using Mapster;
 using Pharamcy.Application.Features.Medicines.Queries.GetMedicineByBarCode;
 using Pharamcy.Application.Features.Medicines.Queries.GetMedicineByName;
+using Pharamcy.Application.Features.Medicines.Queries.GetMedicineForSalesInvoiceByName;
 using Pharamcy.Domain.Models;
 
 namespace Pharamcy.Application.Common.Mapping

@@ -18,6 +18,7 @@ namespace Pharamcy.Domain.Models
         public virtual List<SalesInvoice> SalesInvoices { get; set; } = new();
         public virtual List<Client> Clients { get; set; } = new();
         public virtual List<Lost> LostProfits { get; set; } = new(); 
+        public virtual List<Delivery> Deliveries { get; set; } = new();
 
     }
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Pharamcy.Presistance.Context;
 
@@ -11,9 +12,11 @@ using Pharamcy.Presistance.Context;
 namespace Pharamcy.Presistance.Migrations
 {
     [DbContext(typeof(PharmacyDBContext))]
-    partial class PharmacyDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240414052100_CustomerEdition")]
+    partial class CustomerEdition
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -306,31 +309,6 @@ namespace Pharamcy.Presistance.Migrations
                     b.HasIndex("PharmacyId");
 
                     b.ToTable("Clients", "Pharmacy");
-                });
-
-            modelBuilder.Entity("Pharamcy.Domain.Models.Delivery", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PharmacyId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PharmacyId");
-
-                    b.ToTable("Delivery", "Pharmacy");
                 });
 
             modelBuilder.Entity("Pharamcy.Domain.Models.Lost", b =>
@@ -1017,17 +995,6 @@ namespace Pharamcy.Presistance.Migrations
                         .HasForeignKey("PharmacyId");
                 });
 
-            modelBuilder.Entity("Pharamcy.Domain.Models.Delivery", b =>
-                {
-                    b.HasOne("Pharamcy.Domain.Models.Pharmacy", "Pharmacy")
-                        .WithMany("Deliveries")
-                        .HasForeignKey("PharmacyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Pharmacy");
-                });
-
             modelBuilder.Entity("Pharamcy.Domain.Models.Lost", b =>
                 {
                     b.HasOne("Pharamcy.Domain.Models.Pharmacy", null)
@@ -1169,8 +1136,6 @@ namespace Pharamcy.Presistance.Migrations
             modelBuilder.Entity("Pharamcy.Domain.Models.Pharmacy", b =>
                 {
                     b.Navigation("Clients");
-
-                    b.Navigation("Deliveries");
 
                     b.Navigation("LostProfits");
 

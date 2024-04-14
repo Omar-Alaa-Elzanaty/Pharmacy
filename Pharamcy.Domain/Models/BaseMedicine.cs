@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Pharamcy.Domain.Models
+﻿namespace Pharamcy.Domain.Models
 {
-    public abstract class BaseMedicine:BaseEntity
+    public abstract class BaseMedicine : BaseEntity
     {
         public string EnglishName { get; set; }
         public string NormalizedEnglishName => EnglishName.ToUpper();
