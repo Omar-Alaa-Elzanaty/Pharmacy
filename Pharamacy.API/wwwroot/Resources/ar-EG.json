@@ -17,7 +17,10 @@
   "InCorrectOtp": ".رقم تحقق غير صحيح",
   "SuccessChangePassword": ".تم تغير الرقم السرى بنجاح",
   "RoleNotExist": ".هذا الدور ليس موجود",
+  "ClientNotExist": ".هذا العميل ليس موجود",
+  "MedicineNotExist": ".هذا الدواء ليس موجود",
   "NameRequired": "يرجى ادخال الاسم",
   "ImportInvoiceNumberExist": "رقم التوريد موجود مسبقا ",
+  "NameRequired": "يرجى ادخال الاسم",
   "UserNotFound": "المستخد غير مسجل بالنظام"
 }
