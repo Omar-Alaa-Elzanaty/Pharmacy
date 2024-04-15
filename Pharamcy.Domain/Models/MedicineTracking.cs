@@ -7,6 +7,7 @@
         public double PurchasePrice { get; set; }
         public double SalePrice { get; set; }
         public int MedicineId { get; set; }
+        public DateTime ExpireDate { get; set; }
         public virtual Medicine Medicine { get; set; }
     }
 }

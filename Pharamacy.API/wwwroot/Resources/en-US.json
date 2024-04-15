@@ -17,7 +17,9 @@
   "InCorrectOtp": "Incorrect OTP Number.",
   "SuccessChangePassword": "Password Change Successfully.",
   "RoleNotExist": "This Role Is Not Exist.",
+  "ClientNotExist": "This Client Is Not Exist.",
+  "MedicineNotExist": "This Medicine Is Not Exist.",
   "NameRequired": "Name Field Is Required",
-  "UserNotFound": "User Not IN The System",
-  "ImportInvoiceNumberExist": "This ImportInvoiceNumber Already Exist "
+  "ImportInvoiceNumberExist": "This ImportInvoiceNumber Already Exist ",
+  "UserNotFound": "User Not IN The System"
 }

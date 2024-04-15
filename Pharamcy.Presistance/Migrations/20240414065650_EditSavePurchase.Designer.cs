@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Pharamcy.Presistance.Context;
 
@@ -11,9 +12,11 @@ using Pharamcy.Presistance.Context;
 namespace Pharamcy.Presistance.Migrations
 {
     [DbContext(typeof(PharmacyDBContext))]
-    partial class PharmacyDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240414065650_EditSavePurchase")]
+    partial class EditSavePurchase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -519,8 +522,8 @@ namespace Pharamcy.Presistance.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("ExpireDate")
-                        .HasColumnType("datetime2");
+                    b.Property<DateOnly>("ExpireDate")
+                        .HasColumnType("date");
 
                     b.Property<int>("MedicineId")
                         .HasColumnType("int");
@@ -636,8 +639,8 @@ namespace Pharamcy.Presistance.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("ExpireDate")
-                        .HasColumnType("datetime2");
+                    b.Property<DateOnly>("ExpireDate")
+                        .HasColumnType("date");
 
                     b.Property<int>("PartitionMedicineId")
                         .HasColumnType("int");
@@ -853,8 +856,12 @@ namespace Pharamcy.Presistance.Migrations
                     b.Property<double>("AdditionalValue")
                         .HasColumnType("float");
 
-                    b.Property<int?>("ClientId")
+                    b.Property<int>("ClientId")
                         .HasColumnType("int");
+
+                    b.Property<string>("ClientName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -874,7 +881,7 @@ namespace Pharamcy.Presistance.Migrations
                     b.Property<double>("Paied")
                         .HasColumnType("float");
 
-                    b.Property<int>("PharmacyId")
+                    b.Property<int?>("PharmacyId")
                         .HasColumnType("int");
 
                     b.Property<double>("TermAmount")
@@ -963,9 +970,6 @@ namespace Pharamcy.Presistance.Migrations
 
                     b.Property<int>("PharmacyId")
                         .HasColumnType("int");
-
-                    b.Property<byte>("Type")
-                        .HasColumnType("tinyint");
 
                     b.HasKey("Id");
 
@@ -1160,17 +1164,15 @@ namespace Pharamcy.Presistance.Migrations
                 {
                     b.HasOne("Pharamcy.Domain.Models.Client", "Client")
                         .WithMany()
-                        .HasForeignKey("ClientId");
-
-                    b.HasOne("Pharamcy.Domain.Models.Pharmacy", "Pharmacy")
-                        .WithMany("SalesInvoices")
-                        .HasForeignKey("PharmacyId")
+                        .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Client");
+                    b.HasOne("Pharamcy.Domain.Models.Pharmacy", null)
+                        .WithMany("SalesInvoices")
+                        .HasForeignKey("PharmacyId");
 
-                    b.Navigation("Pharmacy");
+                    b.Navigation("Client");
                 });
 
             modelBuilder.Entity("Pharamcy.Domain.Models.SalesInvoiceItem", b =>
