@@ -1,6 +1,7 @@
 ﻿using Mapster;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Pharamcy.Application.Extensions;
 using Pharamcy.Application.Interfaces.Repositories;
 using Pharamcy.Domain.Models;
 using Pharamcy.Shared;
@@ -31,10 +32,12 @@ namespace Pharamcy.Application.Features.Suppliers.Queries.GetAllSupplierByPharam
                 entities = entities.Where(x => x.Name.ToLower().Contains(query.KeyWord.ToLower()));
             }
 
-            var result = await entities.Skip((query.PageNumber - 1) * query.PageSize).Take(query.PageSize)
-                                       .ToListAsync(cancellationToken: cancellationToken);
+            //var result = await entities.Skip((query.PageNumber - 1) * query.PageSize).Take(query.PageSize)
+            //                           .ToListAsync(cancellationToken: cancellationToken);
 
-            var suppliers = result.Adapt<List<GetAllSupplierByPharamcyIdPaginationQueryDto>>();
+            var suppliers = await entities.ProjectToType<GetAllSupplierByPharamcyIdPaginationQueryDto>()
+                                .ToPaginatedListAsync(query.PageNumber, query.PageSize, cancellationToken);
+
 
             return await Response.SuccessAsync(suppliers);
         }

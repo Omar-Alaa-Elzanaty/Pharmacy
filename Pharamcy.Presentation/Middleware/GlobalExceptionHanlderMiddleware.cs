@@ -48,7 +48,29 @@ namespace Pharamcy.Presentation.Middleware
             {
                 await HandlingExceptionAsync(context, ex);
             }
+            catch (Exception ex)
+            {
+                await HandlingExceptionAsync(context, ex);
+            }
         }
+
+        private static Task HandlingExceptionAsync(HttpContext context, Exception ex)
+        {
+            var response = new Response();
+            response.IsSuccess = false;
+            response.Message = ex.Message;
+            response.StatusCode = HttpStatusCode.InternalServerError;
+            var jsonOptions = new JsonSerializerOptions()
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            };
+            var exceptionResult = JsonSerializer.Serialize(response, jsonOptions);
+
+            context.Response.ContentType = "application/json";
+            context.Response.StatusCode = (int)HttpStatusCode.OK;
+            return context.Response.WriteAsync(exceptionResult);
+        }
+
         private static Task HandlingExceptionAsync(HttpContext context, GlobalException exception)
         {
             var response = new Response() { IsSuccess = false };

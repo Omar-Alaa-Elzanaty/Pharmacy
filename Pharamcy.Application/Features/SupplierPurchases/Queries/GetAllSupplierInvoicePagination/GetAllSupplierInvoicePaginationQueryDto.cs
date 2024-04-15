@@ -11,6 +11,6 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Queries.GetAllSupplier
     {
         public int Id { get; set; }
         public string ImportInvoiceNumber { get; set; }
-        public DateTime CreationDate { get; set; }
+        public DateTime CreatedDate { get; set; }
     }
 }

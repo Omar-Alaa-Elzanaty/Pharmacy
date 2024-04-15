@@ -20,6 +20,6 @@
   "ClientNotExist": ".هذا العميل ليس موجود",
   "MedicineNotExist": ".هذا الدواء ليس موجود",
   "NameRequired": "يرجى ادخال الاسم",
-  "ImportInvoiceNumberExist": "رقم التوريد موجود مسبقا "
+  "ImportInvoiceNumberExist": "رقم التوريد موجود مسبقا ",
   "UserNotFound": "المستخد غير مسجل بالنظام"
 }

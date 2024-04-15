@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Pharamcy.Presistance.Context;
 
@@ -11,9 +12,11 @@ using Pharamcy.Presistance.Context;
 namespace Pharamcy.Presistance.Migrations
 {
     [DbContext(typeof(PharmacyDBContext))]
-    partial class PharmacyDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240406144840_DropimportInvoiceNumber")]
+    partial class DropimportInvoiceNumber
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -272,8 +275,8 @@ namespace Pharamcy.Presistance.Migrations
                     b.Property<int>("CreditLimit")
                         .HasColumnType("int");
 
-                    b.Property<double>("Indebtedness")
-                        .HasColumnType("float");
+                    b.Property<int>("Indebtedness")
+                        .HasColumnType("int");
 
                     b.Property<bool>("IsCompany")
                         .HasColumnType("bit");
@@ -288,7 +291,7 @@ namespace Pharamcy.Presistance.Migrations
                     b.Property<bool>("OnlyCash")
                         .HasColumnType("bit");
 
-                    b.Property<int>("PharmacyId")
+                    b.Property<int?>("PharmacyId")
                         .HasColumnType("int");
 
                     b.Property<string>("PhoneNumber")
@@ -369,12 +372,9 @@ namespace Pharamcy.Presistance.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Name")
-                        .IsUnique();
 
                     b.ToTable("MedicalTypes", "Pharmacy");
                 });
@@ -519,9 +519,6 @@ namespace Pharamcy.Presistance.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("ExpireDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<int>("MedicineId")
                         .HasColumnType("int");
 
@@ -636,9 +633,6 @@ namespace Pharamcy.Presistance.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("ExpireDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<int>("PartitionMedicineId")
                         .HasColumnType("int");
 
@@ -738,10 +732,6 @@ namespace Pharamcy.Presistance.Migrations
                     b.Property<int>("DiscountCostPrecent")
                         .HasColumnType("int");
 
-                    b.Property<string>("ImportInvoiceNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("InvoiceImageUrl")
                         .HasColumnType("nvarchar(max)");
 
@@ -772,9 +762,6 @@ namespace Pharamcy.Presistance.Migrations
                         .HasColumnType("float");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ImportInvoiceNumber")
-                        .IsUnique();
 
                     b.HasIndex("PharmacyId");
 
@@ -850,48 +837,13 @@ namespace Pharamcy.Presistance.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<double>("AdditionalValue")
-                        .HasColumnType("float");
-
-                    b.Property<int?>("ClientId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("DeliveryName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("InvoiceWriter")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Notes")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("Paied")
-                        .HasColumnType("float");
-
-                    b.Property<int>("PharmacyId")
+                    b.Property<int?>("PharmacyId")
                         .HasColumnType("int");
 
-                    b.Property<double>("TermAmount")
-                        .HasColumnType("float");
-
-                    b.Property<double>("TotalDiscount")
-                        .HasColumnType("float");
-
-                    b.Property<double>("TotalOfSalePrice")
-                        .HasColumnType("float");
-
-                    b.Property<double>("TotalOfSalePriceAfterDiscount")
-                        .HasColumnType("float");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("ClientId");
 
                     b.HasIndex("PharmacyId");
 
@@ -906,34 +858,10 @@ namespace Pharamcy.Presistance.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("Amount")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Discount")
-                        .HasColumnType("int");
-
-                    b.Property<DateOnly>("ExpireDate")
-                        .HasColumnType("date");
-
-                    b.Property<double>("PriceAfterDiscount")
-                        .HasColumnType("float");
-
-                    b.Property<double>("SalePrice")
-                        .HasColumnType("float");
-
                     b.Property<int>("SalesInvoiceId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Tablets")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Taps")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Taxis")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -1052,13 +980,9 @@ namespace Pharamcy.Presistance.Migrations
 
             modelBuilder.Entity("Pharamcy.Domain.Models.Client", b =>
                 {
-                    b.HasOne("Pharamcy.Domain.Models.Pharmacy", "Pharmacy")
+                    b.HasOne("Pharamcy.Domain.Models.Pharmacy", null)
                         .WithMany("Clients")
-                        .HasForeignKey("PharmacyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Pharmacy");
+                        .HasForeignKey("PharmacyId");
                 });
 
             modelBuilder.Entity("Pharamcy.Domain.Models.Lost", b =>
@@ -1158,19 +1082,9 @@ namespace Pharamcy.Presistance.Migrations
 
             modelBuilder.Entity("Pharamcy.Domain.Models.SalesInvoice", b =>
                 {
-                    b.HasOne("Pharamcy.Domain.Models.Client", "Client")
-                        .WithMany()
-                        .HasForeignKey("ClientId");
-
-                    b.HasOne("Pharamcy.Domain.Models.Pharmacy", "Pharmacy")
+                    b.HasOne("Pharamcy.Domain.Models.Pharmacy", null)
                         .WithMany("SalesInvoices")
-                        .HasForeignKey("PharmacyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Client");
-
-                    b.Navigation("Pharmacy");
+                        .HasForeignKey("PharmacyId");
                 });
 
             modelBuilder.Entity("Pharamcy.Domain.Models.SalesInvoiceItem", b =>
