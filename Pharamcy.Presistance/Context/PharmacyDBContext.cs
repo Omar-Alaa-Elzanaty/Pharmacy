@@ -44,5 +44,6 @@ namespace Pharamcy.Presistance.Context
         public DbSet<PartitionMedicine> PartitionMedicines { get; set; }
         public DbSet<PartitionMedicineTracking> PartitionMedicineTrackings { get; set; }
         public DbSet<MedicineTracking> MedicineTrackings { get; set; }
+        public DbSet<Offer> Offers { get; set; }
     }
 }
