@@ -16,7 +16,7 @@ namespace Pharamcy.Application.Features.SaleInvoice.Queries.GetSaleInvoiceByIdPa
         public int PageSize { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
-        public int Id { get; set; }
+        public int InoviceId { get; set; }
     }
     public class GetSaleInvoiceByIdPaginationQueryHandler : IRequestHandler<GetSaleInvoiceByIdPaginationQuery, PaginatedResponse<GetSaleInvoiceByIdPaginationQueryDto>>
     {
@@ -29,7 +29,7 @@ namespace Pharamcy.Application.Features.SaleInvoice.Queries.GetSaleInvoiceByIdPa
         {
 
             var entities = _unitOfWork.Repository<SalesInvoice>()
-                .Entities().Where(x => x.PharmacyId == query.PharmacyId && x.Id.ToString().Contains(query.Id.ToString()));
+                .Entities().Where(x => x.PharmacyId == query.PharmacyId && x.Id.ToString().Contains(query.InoviceId.ToString()));
 
             if (query.ClientId is not null)
             {

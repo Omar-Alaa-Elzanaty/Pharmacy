@@ -24,11 +24,10 @@ namespace Pharamcy.Presentation.Controller
         {
             return Ok(await _mediator.Send(command));
         }
-        [HttpGet]
 
-        public async Task<IActionResult> SaleInvoiceById(GetSaleInvoiceByIdPaginationQuery query)
+        [HttpGet]
+        public async Task<IActionResult> Get([FromQuery]GetSaleInvoiceByIdPaginationQuery query)
         {
-            // command.UserId = User.Claims.FirstOrDefault(i => i.Type == ClaimTypes.NameIdentifier)!.Value;
             return Ok(await _mediator.Send(query));
 
         }

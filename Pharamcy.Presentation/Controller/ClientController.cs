@@ -8,7 +8,7 @@ using Pharamcy.Application.Features.Clients.Queries.GetAllClientsByPharmacyIDQue
 
 namespace Pharamcy.Presentation.Controller
 {
-	[Route("api/[controller]/[action]")]
+	[Route("api/[controller]")]
 	[ApiController]
 	public class ClientController:ApiControllerBase
     {

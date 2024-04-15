@@ -12,8 +12,8 @@ using Pharamcy.Presistance.Context;
 namespace Pharamcy.Presistance.Migrations
 {
     [DbContext(typeof(PharmacyDBContext))]
-    [Migration("20240414180941_EditSaleInvoice3")]
-    partial class EditSaleInvoice3
+    [Migration("20240415200826_Update1")]
+    partial class Update1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -265,8 +265,7 @@ namespace Pharamcy.Presistance.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Adress")
-                        .IsRequired()
+                    b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedDate")
@@ -275,11 +274,17 @@ namespace Pharamcy.Presistance.Migrations
                     b.Property<int>("CreditLimit")
                         .HasColumnType("int");
 
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<double>("Indebtedness")
                         .HasColumnType("float");
 
                     b.Property<bool>("IsCompany")
                         .HasColumnType("bit");
+
+                    b.Property<DateTime>("LastProcess")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("LocalDiscount")
                         .HasColumnType("int");
@@ -298,7 +303,10 @@ namespace Pharamcy.Presistance.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Relay")
+                    b.Property<int>("PointsForCurrency")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TotalPoints")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -306,6 +314,31 @@ namespace Pharamcy.Presistance.Migrations
                     b.HasIndex("PharmacyId");
 
                     b.ToTable("Clients", "Pharmacy");
+                });
+
+            modelBuilder.Entity("Pharamcy.Domain.Models.Delivery", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PharmacyId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PharmacyId");
+
+                    b.ToTable("Delivery", "Pharmacy");
                 });
 
             modelBuilder.Entity("Pharamcy.Domain.Models.Lost", b =>
@@ -541,6 +574,33 @@ namespace Pharamcy.Presistance.Migrations
                     b.ToTable("MedicineTrackings", "Pharmacy");
                 });
 
+            modelBuilder.Entity("Pharamcy.Domain.Models.Offer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("Discount_percentage")
+                        .HasColumnType("float");
+
+                    b.Property<int>("MedicineId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MedicineId");
+
+                    b.ToTable("Offers", "Pharmacy");
+                });
+
             modelBuilder.Entity("Pharamcy.Domain.Models.PartitionMedicine", b =>
                 {
                     b.Property<int>("Id")
@@ -743,7 +803,7 @@ namespace Pharamcy.Presistance.Migrations
 
                     b.Property<string>("ImportInvoiceNumber")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("InvoiceImageUrl")
                         .HasColumnType("nvarchar(max)");
@@ -775,9 +835,6 @@ namespace Pharamcy.Presistance.Migrations
                         .HasColumnType("float");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ImportInvoiceNumber")
-                        .IsUnique();
 
                     b.HasIndex("PharmacyId");
 
@@ -967,6 +1024,9 @@ namespace Pharamcy.Presistance.Migrations
                     b.Property<int>("PharmacyId")
                         .HasColumnType("int");
 
+                    b.Property<byte>("Type")
+                        .HasColumnType("tinyint");
+
                     b.HasKey("Id");
 
                     b.HasIndex("PharmacyId");
@@ -1061,6 +1121,17 @@ namespace Pharamcy.Presistance.Migrations
                     b.Navigation("Pharmacy");
                 });
 
+            modelBuilder.Entity("Pharamcy.Domain.Models.Delivery", b =>
+                {
+                    b.HasOne("Pharamcy.Domain.Models.Pharmacy", "Pharmacy")
+                        .WithMany("Deliveries")
+                        .HasForeignKey("PharmacyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Pharmacy");
+                });
+
             modelBuilder.Entity("Pharamcy.Domain.Models.Lost", b =>
                 {
                     b.HasOne("Pharamcy.Domain.Models.Pharmacy", null)
@@ -1094,6 +1165,17 @@ namespace Pharamcy.Presistance.Migrations
                 {
                     b.HasOne("Pharamcy.Domain.Models.Medicine", "Medicine")
                         .WithMany("Tracking")
+                        .HasForeignKey("MedicineId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Medicine");
+                });
+
+            modelBuilder.Entity("Pharamcy.Domain.Models.Offer", b =>
+                {
+                    b.HasOne("Pharamcy.Domain.Models.Medicine", "Medicine")
+                        .WithMany()
                         .HasForeignKey("MedicineId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1159,8 +1241,9 @@ namespace Pharamcy.Presistance.Migrations
             modelBuilder.Entity("Pharamcy.Domain.Models.SalesInvoice", b =>
                 {
                     b.HasOne("Pharamcy.Domain.Models.Client", "Client")
-                        .WithMany()
-                        .HasForeignKey("ClientId");
+                        .WithMany("Invoices")
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("Pharamcy.Domain.Models.Pharmacy", "Pharmacy")
                         .WithMany("SalesInvoices")
@@ -1195,6 +1278,11 @@ namespace Pharamcy.Presistance.Migrations
                     b.Navigation("Pharmacy");
                 });
 
+            modelBuilder.Entity("Pharamcy.Domain.Models.Client", b =>
+                {
+                    b.Navigation("Invoices");
+                });
+
             modelBuilder.Entity("Pharamcy.Domain.Models.Medicine", b =>
                 {
                     b.Navigation("EffectiveMaterials");
@@ -1212,6 +1300,8 @@ namespace Pharamcy.Presistance.Migrations
             modelBuilder.Entity("Pharamcy.Domain.Models.Pharmacy", b =>
                 {
                     b.Navigation("Clients");
+
+                    b.Navigation("Deliveries");
 
                     b.Navigation("LostProfits");
 
