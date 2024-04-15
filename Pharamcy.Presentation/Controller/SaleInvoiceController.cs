@@ -22,9 +22,7 @@ namespace Pharamcy.Presentation.Controller
         [HttpPost]
         public async Task<IActionResult> Create(SaveSaleInvoceCommand command)
         {
-            command.UserId = User.Claims.FirstOrDefault(i => i.Type == ClaimTypes.NameIdentifier)!.Value;
             return Ok(await _mediator.Send(command));
-
         }
         [HttpGet]
 
