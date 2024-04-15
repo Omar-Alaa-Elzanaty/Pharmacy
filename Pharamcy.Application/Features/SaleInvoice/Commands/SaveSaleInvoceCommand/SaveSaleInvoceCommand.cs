@@ -1,4 +1,5 @@
 ﻿using Mapster;
+using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Localization;
@@ -47,12 +48,14 @@ namespace Pharamcy.Application.Features.SaleInvoice.Commands.SaveSaleInvoceComma
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IStringLocalizer<SaveSaleInvoceCommandHandler> _localizer;
+        private readonly IMapper mapper;
 
 
-        public SaveSaleInvoceCommandHandler(IUnitOfWork unitOfWork, IStringLocalizer<SaveSaleInvoceCommandHandler> localizer)
+        public SaveSaleInvoceCommandHandler(IUnitOfWork unitOfWork, IStringLocalizer<SaveSaleInvoceCommandHandler> localizer, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _localizer = localizer;
+            this.mapper = mapper;
         }
 
         public async Task<Response> Handle(SaveSaleInvoceCommand command, CancellationToken cancellationToken)
@@ -85,6 +88,10 @@ namespace Pharamcy.Application.Features.SaleInvoice.Commands.SaveSaleInvoceComma
             {
                 return await Response.FailureAsync("Wrong Calculations");
             }
+            var asd = command.Adapt<SalesInvoice>();
+            
+            var qwe=mapper.Map<SalesInvoice>(command);
+
             await _unitOfWork.Repository<SalesInvoice>().AddAsync(command.Adapt<SalesInvoice>());
 
 
@@ -131,7 +138,7 @@ namespace Pharamcy.Application.Features.SaleInvoice.Commands.SaveSaleInvoceComma
             }
             await _unitOfWork.SaveAsync();
 
-            return await Response.SuccessAsync(_localizer["Failed"].Value);
+            return await Response.SuccessAsync(_localizer["Success"].Value);
 
         }
     }

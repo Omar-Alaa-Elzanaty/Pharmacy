@@ -115,8 +115,9 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Commands.SavePurchaseC
 
             if (command.Products is not null)
             {
-                var foundMedicinesCount = await _unitOfWork.Repository<Medicine>().Entities()
-                                    .CountAsync(x => x.PharmacyId == command.PharmacyId && command.Products.Any(p => p.Name == x.EnglishName));
+                var foundMedicinesCount = _unitOfWork.Repository<Medicine>()
+                    .GetAllAsync(x => x.PharmacyId == command.PharmacyId && command.Products.Any(p => p.Name == x.EnglishName)).Result.Count();
+                                    
 
                 if (foundMedicinesCount != command.Products.Count)
                 {
@@ -126,8 +127,8 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Commands.SavePurchaseC
 
             if (command.PartitionProducts is not null)
             {
-                var foundMedicinesCount = await _unitOfWork.Repository<PartitionMedicine>().Entities()
-                    .CountAsync(x => x.PharmacyId == command.PharmacyId && command.PartitionProducts.Any(p => p.Name == x.EnglishName));
+                var foundMedicinesCount = _unitOfWork.Repository<PartitionMedicine>()
+                    .GetAllAsync(x => x.PharmacyId == command.PharmacyId && command.PartitionProducts.Any(p => p.Name == x.EnglishName)).Result.Count();
 
                 if (foundMedicinesCount != command.PartitionProducts.Count)
                 {
@@ -172,7 +173,7 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Commands.SavePurchaseC
                         return await Response.FailureAsync(_localizer["Failed"]);
                     }
 
-                    if(!DateOnly.TryParse(item.ExpireDate,out DateOnly result))
+                    if(!DateTime.TryParse(item.ExpireDate,out DateTime result))
                     {
                         return await Response.FailureAsync("ExpireDate Is Invalid Format");
                     }
@@ -202,10 +203,13 @@ namespace Pharamcy.Application.Features.SupplierPurchases.Commands.SavePurchaseC
                         return await Response.FailureAsync(_localizer["MedicineNotFound"].Value);
                     }
 
-                    if (!DateOnly.TryParse(item.ExpireDate, out DateOnly result))
+                    if (!DateTime.TryParse(item.ExpireDate, out DateTime result))
                     {
                         return await Response.FailureAsync("ExpireDate Is Invalid Format");
                     }
+
+
+                    var asd = result;
 
                     if (medicine.Tracking.Any(i => i.PurchasePrice == item.PurchasePriceForUnit && i.Taps == item.Taps && i.Tablets == item.Tablets && i.ExpireDate== result))
                     {
