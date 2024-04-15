@@ -14,7 +14,7 @@
         public int Amount { get; set; }
         public double SalePrice { get; set; }
         public double PurchasePrice { get; set; }
-        public DateTime ExpireDate { get; set; }
+        public DateOnly ExpireDate { get; set; }
     }
 
     public class PartitionMedicineDetails : MedicineDetails

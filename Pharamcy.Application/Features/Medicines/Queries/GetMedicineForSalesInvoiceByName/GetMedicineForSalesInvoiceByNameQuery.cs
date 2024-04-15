@@ -61,7 +61,7 @@ namespace Pharamcy.Application.Features.Medicines.Queries.GetMedicineForSalesInv
                                             {
                                                 Id = x.Id,
                                                 Amount = x.Amount,
-                                                ExpireDate = DateTime.Now,//TODO: Edit with real expire Date
+                                                ExpireDate = x.ExpireDate,
                                                 PurchasePrice = x.PurchasePrice,
                                                 SalePrice = x.SalePrice,
                                                 TabletSalePrice = x.TabletSalePrice,

@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Identity.Client;
 using Pharamcy.Application.Features.Clients.Commands.Create;
 using Pharamcy.Application.Features.Clients.Commands.Delete;
 using Pharamcy.Application.Features.Clients.Commands.Update;
@@ -26,19 +25,19 @@ namespace Pharamcy.Presentation.Controller
         //}
 
         [HttpPost]
-        public async Task<ActionResult<int>> Create(CreateClientCommand command)
+        public async Task<ActionResult<int>> Create([FromBody]CreateClientCommand command)
         {
             return Ok(await _mediator.Send(command));
         }
 
         [HttpDelete]
-        public async Task<ActionResult<string>>Delete(DeleteClientCommand command)
+        public async Task<ActionResult<string>> Delete([FromBody] DeleteClientCommand command)
         {
             return Ok(await _mediator.Send(command));
         }
 
         [HttpPut]
-        public async Task<ActionResult<int>>Update(UpdateClientCommand command)
+        public async Task<ActionResult<int>> Update([FromBody]UpdateClientCommand command)
         {
             return Ok(await _mediator.Send(command));
         }

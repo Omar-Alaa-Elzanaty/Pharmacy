@@ -5,7 +5,7 @@ using System.Security.Claims;
 
 namespace Pharamcy.Presentation.Controller
 {
-    [Route("api/[controller]/[action]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class SaleInvoiceController: ApiControllerBase
     {
@@ -18,7 +18,7 @@ namespace Pharamcy.Presentation.Controller
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(SaveSaleInvoceCommand command)
+        public async Task<IActionResult> Create(SaveSaleInvoceCommand command)
         {
             command.UserId = User.Claims.FirstOrDefault(i => i.Type == ClaimTypes.NameIdentifier)!.Value;
             return Ok(await _mediator.Send(command));
