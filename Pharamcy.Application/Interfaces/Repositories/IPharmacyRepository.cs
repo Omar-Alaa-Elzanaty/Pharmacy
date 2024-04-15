@@ -10,5 +10,6 @@ namespace Pharamcy.Application.Interfaces.Repositories
     public interface IPharmacyRepository:IBaseRepository<Pharmacy>
     {
         Task<List<int>> FindByUserId(string userId);
+        Task<Pharmacy?> CheckPharmacy(int pharmacyId);
     }
 }

@@ -102,6 +102,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-DataSeeding.Initialize(app.Services.CreateScope().ServiceProvider);
+//TODO: DataSeeding.Initialize(app.Services.CreateScope().ServiceProvider);
 
 app.Run();

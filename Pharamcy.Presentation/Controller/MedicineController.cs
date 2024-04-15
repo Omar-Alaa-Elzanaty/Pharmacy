@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Pharamcy.Application.Features.Medicines.Commands.CreateFromPurchaseInvoice;
 using Pharamcy.Application.Features.Medicines.Queries.GetMedicineByBarCode;
+using Pharamcy.Application.Features.Medicines.Queries.GetMedicineByBarCodeSaleInvoice;
 using Pharamcy.Application.Features.Medicines.Queries.GetMedicineByName;
+using Pharamcy.Application.Features.Medicines.Queries.GetMedicineForSalesInvoiceByName;
 
 namespace Pharamcy.Presentation.Controller
 {
@@ -28,6 +30,18 @@ namespace Pharamcy.Presentation.Controller
         }
         [HttpGet("getByName")]
         public async Task<ActionResult<GetMedicineByNameQueryDto>> GetByName(GetMedicineByNameQuery query)
+        {
+            return Ok(await _mediator.Send(query));
+        }
+
+        [HttpGet("GetByNameSalesInvoice")]
+        public async Task<ActionResult<GetMedicineForSalesInvoiceByNameQueryDto>> GetByName([FromBody] GetMedicineForSalesInvoiceByNameQuery query)
+        {
+            return Ok(await _mediator.Send(query));
+        }
+
+        [HttpGet("GetByBarCodeSalesInvoice")]
+        public async Task<ActionResult<GetMedicineByBarCodeSaleInvoiceQueryDto>> GetByBarCode([FromBody] GetMedicineByBarCodeSaleInvoiceQuery query)
         {
             return Ok(await _mediator.Send(query));
         }
