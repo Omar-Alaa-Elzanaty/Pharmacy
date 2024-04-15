@@ -10,8 +10,13 @@ namespace Pharamcy.Application.Features.Clients.Queries.GetAllClientsByPharmacyI
 {
 	public class GetAllClientsByPharmacyIDQuery : IRequest<Response>
 	{
-		public int PharmacyID { get; set; }
-	}
+		public int PharmacyId { get; set; }
+
+        public GetAllClientsByPharmacyIDQuery(int pharmacyId)
+        {
+            PharmacyId = pharmacyId;
+        }
+    }
 	internal class GetAllClientsByPharmacyIDQueryHandler : IRequestHandler<GetAllClientsByPharmacyIDQuery, Response>
 	{
 		private readonly IUnitOfWork _unitofwork;
@@ -25,7 +30,7 @@ namespace Pharamcy.Application.Features.Clients.Queries.GetAllClientsByPharmacyI
 
 		public async Task<Response> Handle(GetAllClientsByPharmacyIDQuery query, CancellationToken cancellationToken)
 		{
-			var clients = await _unitofwork.Repository<Client>().GetAllAsync(oj => oj.Id == query.PharmacyID);
+			var clients = await _unitofwork.Repository<Client>().GetAllAsync(oj => oj.Id == query.PharmacyId);
 			return await Response.SuccessAsync(clients.Adapt<IEnumerable<GetAllClientsByPharmacyIDQueryDto>>(), _localizer["Success"].Value);
 		}
 	}
