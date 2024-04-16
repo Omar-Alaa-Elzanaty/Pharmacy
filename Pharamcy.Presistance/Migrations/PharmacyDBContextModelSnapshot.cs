@@ -800,7 +800,7 @@ namespace Pharamcy.Presistance.Migrations
 
                     b.Property<string>("ImportInvoiceNumber")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("InvoiceImageUrl")
                         .HasColumnType("nvarchar(max)");
@@ -832,6 +832,9 @@ namespace Pharamcy.Presistance.Migrations
                         .HasColumnType("float");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ImportInvoiceNumber")
+                        .IsUnique();
 
                     b.HasIndex("PharmacyId");
 
@@ -1020,9 +1023,6 @@ namespace Pharamcy.Presistance.Migrations
 
                     b.Property<int>("PharmacyId")
                         .HasColumnType("int");
-
-                    b.Property<byte>("Type")
-                        .HasColumnType("tinyint");
 
                     b.HasKey("Id");
 

@@ -26,14 +26,13 @@ namespace Pharamcy.Application.Features.Suppliers.Queries.GetAllSupplierByPharam
             var entities = _unitOfWork.Repository<Supplier>()
                                 .Entities()
                                 .Where(x => x.PharmacyId == query.PharmacyId);
-
+           
             if (query.KeyWord is not null)
             {
                 entities = entities.Where(x => x.Name.ToLower().Contains(query.KeyWord.ToLower()));
             }
 
-            //var result = await entities.Skip((query.PageNumber - 1) * query.PageSize).Take(query.PageSize)
-            //                           .ToListAsync(cancellationToken: cancellationToken);
+            //  var result =  entities.Skip((query.PageNumber - 1) * query.PageSize).Take(query.PageSize);
 
             var suppliers = await entities.ProjectToType<GetAllSupplierByPharamcyIdPaginationQueryDto>()
                                 .ToPaginatedListAsync(query.PageNumber, query.PageSize, cancellationToken);

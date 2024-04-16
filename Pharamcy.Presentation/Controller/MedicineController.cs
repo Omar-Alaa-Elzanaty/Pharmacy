@@ -4,6 +4,7 @@ using Pharamcy.Application.Features.Medicines.Commands.CreateFromPurchaseInvoice
 using Pharamcy.Application.Features.Medicines.Queries.GetMedicineByBarCode;
 using Pharamcy.Application.Features.Medicines.Queries.GetMedicineByBarCodeSaleInvoice;
 using Pharamcy.Application.Features.Medicines.Queries.GetMedicineByName;
+using Pharamcy.Application.Features.Medicines.Queries.GetMedicineByNamePagination;
 using Pharamcy.Application.Features.Medicines.Queries.GetMedicineForSalesInvoiceByName;
 
 namespace Pharamcy.Presentation.Controller
@@ -30,6 +31,11 @@ namespace Pharamcy.Presentation.Controller
         }
         [HttpGet("getByName")]
         public async Task<ActionResult<GetMedicineByNameQueryDto>> GetByName([FromQuery]GetMedicineByNameQuery query)
+        {
+            return Ok(await _mediator.Send(query));
+        }
+        [HttpGet("getByNamePagination")]
+        public async Task<ActionResult<GetMedicineByNameQueryDto>> GetByNamePagination([FromQuery] GetMedicineByNamePaginationQuery query)
         {
             return Ok(await _mediator.Send(query));
         }

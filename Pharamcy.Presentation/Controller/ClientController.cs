@@ -40,7 +40,9 @@ namespace Pharamcy.Presentation.Controller
         [HttpPut]
         public async Task<ActionResult<int>> Update([FromBody]UpdateClientCommand command)
         {
+
             return Ok(await _mediator.Send(command));
         }
+		
     }
 }

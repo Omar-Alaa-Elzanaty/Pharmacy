@@ -1,5 +1,6 @@
 ﻿using Mapster;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using Pharamcy.Application.Interfaces.Repositories;
 using Pharamcy.Domain.Models;
@@ -35,10 +36,10 @@ namespace Pharamcy.Application.Features.Medicines.Queries.GetMedicineByNamePagin
           if(query.IsPartationing is null)
             {
                 var entities= _unitOfWork.Repository<Medicine>().Entities()
-                    .Where(i=>i.NormalizedEnglishName.Contains(query.Name.ToUpper()));
+                    .Where(i=>i.EnglishName.ToUpper().Contains(query.Name.ToUpper())).ToListAsync();
                 
                 var Partitionentities= _unitOfWork.Repository<PartitionMedicine>().Entities()
-                    .Where(i=>i.NormalizedEnglishName.Contains(query.Name.ToUpper()));
+                    .Where(i=>i.EnglishName.ToUpper().Contains(query.Name.ToUpper())).ToListAsync();
 
                 medicines = [..entities?.Adapt<List<GetMedicineByNamePaginationQueryDto>>(),.. Partitionentities?.Adapt<List<GetMedicineByNamePaginationQueryDto>>()];
 
@@ -47,7 +48,7 @@ namespace Pharamcy.Application.Features.Medicines.Queries.GetMedicineByNamePagin
             }
           else if(query.IsPartationing==true)
             {
-                var Partitionentities = _unitOfWork.Repository<PartitionMedicine>().Entities().Where(i => i.NormalizedEnglishName.Contains(query.Name.ToUpper()));
+                var Partitionentities = _unitOfWork.Repository<PartitionMedicine>().Entities().Where(i => i.EnglishName.ToUpper().Contains(query.Name.ToUpper()));
 
                 medicines = [ .. Partitionentities.Adapt<List<GetMedicineByNamePaginationQueryDto>>()];
 
@@ -55,7 +56,7 @@ namespace Pharamcy.Application.Features.Medicines.Queries.GetMedicineByNamePagin
             else
             {
 
-                var entities = _unitOfWork.Repository<Medicine>().Entities().Where(i => i.NormalizedEnglishName.Contains(query.Name.ToUpper()));
+                var entities = _unitOfWork.Repository<Medicine>().Entities().Where(i => i.EnglishName.ToUpper().Contains(query.Name.ToUpper()));
 
                 medicines = [.. entities?.Adapt<List<GetMedicineByNamePaginationQueryDto>>()];
 
