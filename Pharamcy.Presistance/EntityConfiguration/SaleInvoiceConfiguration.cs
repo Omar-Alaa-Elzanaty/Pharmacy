@@ -18,7 +18,7 @@ namespace Pharamcy.Presistance.EntityConfiguration
             builder.HasOne(x => x.Client)
                 .WithMany(x=>x.Invoices)
                 .HasForeignKey(x => x.ClientId)
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

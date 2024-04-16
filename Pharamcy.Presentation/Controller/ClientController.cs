@@ -8,7 +8,7 @@ using Pharamcy.Application.Features.Clients.Queries.GetAllClientsByPharmacyIDQue
 
 namespace Pharamcy.Presentation.Controller
 {
-	[Route("api/[controller]/[action]")]
+	[Route("api/[controller]")]
 	[ApiController]
 	public class ClientController:ApiControllerBase
     {
@@ -19,11 +19,11 @@ namespace Pharamcy.Presentation.Controller
             _mediator = mediator;
         }
 
-        //[HttpGet("{pharmacyId}")]
-        //public async Task<ActionResult<GetAllClientQeryDto>>Get(int pharmacyId)
-        //{
-
-        //}
+        [HttpGet("{pharmacyId}")]
+        public async Task<ActionResult<GetAllClientsByPharmacyIDQueryDto>> Get(int pharmacyId)
+        {
+            return Ok(await _mediator.Send(new GetAllClientsByPharmacyIDQuery(pharmacyId)));
+        }
 
         [HttpPost]
         public async Task<ActionResult<int>> Create([FromBody]CreateClientCommand command)
@@ -43,10 +43,6 @@ namespace Pharamcy.Presentation.Controller
 
             return Ok(await _mediator.Send(command));
         }
-		[HttpGet]
-		public async Task<IActionResult> GetAll(int id)
-        {
-			return Ok(await _mediator.Send(new GetAllClientsByPharmacyIDQuery { PharmacyID=id}));
-        }
+		
     }
 }

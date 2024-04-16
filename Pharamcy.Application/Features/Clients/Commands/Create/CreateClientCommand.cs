@@ -50,7 +50,7 @@ namespace Pharamcy.Application.Features.Clients.Commands.Create
         {
             var validationResult = await _validator.ValidateAsync(command, cancellationToken);
 
-            if (validationResult.IsValid)
+            if (!validationResult.IsValid)
             {
                 return await Response.FailureAsync(validationResult.Errors.First().ErrorMessage);
             }

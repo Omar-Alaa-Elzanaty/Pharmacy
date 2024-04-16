@@ -34,7 +34,7 @@ namespace Pharamcy.Application.Features.Deliveries.Commands.Update
 
         public async Task<Response> Handle(UpdateDeliveryCommand command, CancellationToken cancellationToken)
         {
-            var pharmacy = await _unitOfWork.Repository<Domain.Models.Pharmacy>().GetByIdAsync(command.Id);
+            var pharmacy = await _unitOfWork.Repository<Domain.Models.Pharmacy>().GetByIdAsync(command.PharmacyId);
 
             if(pharmacy is null)
             {

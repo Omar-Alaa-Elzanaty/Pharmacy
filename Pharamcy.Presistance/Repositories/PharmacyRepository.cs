@@ -78,10 +78,6 @@ namespace Pharamcy.Presistance.Repositories
             {
                 return null;
             }
-            else
-            {
-                return null;
-            }
 
             return pharmacy;
         }

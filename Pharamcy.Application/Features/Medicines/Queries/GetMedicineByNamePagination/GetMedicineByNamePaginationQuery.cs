@@ -34,12 +34,15 @@ namespace Pharamcy.Application.Features.Medicines.Queries.GetMedicineByNamePagin
 
           if(query.IsPartationing is null)
             {
-                var entities= _unitOfWork.Repository<Medicine>().Entities().Where(i=>i.NormalizedEnglishName.Contains(query.Name.ToUpper()));    
-                var Partitionentities= _unitOfWork.Repository<PartitionMedicine>().Entities().Where(i=>i.NormalizedEnglishName.Contains(query.Name.ToUpper()));
+                var entities= _unitOfWork.Repository<Medicine>().Entities()
+                    .Where(i=>i.NormalizedEnglishName.Contains(query.Name.ToUpper()));
+                
+                var Partitionentities= _unitOfWork.Repository<PartitionMedicine>().Entities()
+                    .Where(i=>i.NormalizedEnglishName.Contains(query.Name.ToUpper()));
 
                 medicines = [..entities?.Adapt<List<GetMedicineByNamePaginationQueryDto>>(),.. Partitionentities?.Adapt<List<GetMedicineByNamePaginationQueryDto>>()];
 
-                 medicines.Skip((query.PageNumber - 1) * query.PageSize).Take(query.PageSize);
+                medicines.Skip((query.PageNumber - 1) * query.PageSize).Take(query.PageSize);
 
             }
           else if(query.IsPartationing==true)

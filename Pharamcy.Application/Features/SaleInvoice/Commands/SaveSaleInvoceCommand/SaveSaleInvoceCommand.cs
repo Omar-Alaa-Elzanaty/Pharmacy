@@ -1,6 +1,8 @@
-﻿using Mapster;
+﻿using System.Security.Claims;
+using Mapster;
 using MapsterMapper;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Localization;
 using Pharamcy.Application.Interfaces.Repositories;
@@ -28,8 +30,6 @@ namespace Pharamcy.Application.Features.SaleInvoice.Commands.SaveSaleInvoceComma
     }
     public class SaveSaleInvoceCommand : IRequest<Response>
     {
-        
-        public string UserId { get; set; }
         public int PharmacyId { get; set; }
         public int? ClientId { get; set; }
         public double TotalOfSalePrice { get; set; }
@@ -49,24 +49,34 @@ namespace Pharamcy.Application.Features.SaleInvoice.Commands.SaveSaleInvoceComma
         private readonly IUnitOfWork _unitOfWork;
         private readonly IStringLocalizer<SaveSaleInvoceCommandHandler> _localizer;
         private readonly IMapper mapper;
+        private readonly IHttpContextAccessor _context;
 
 
-        public SaveSaleInvoceCommandHandler(IUnitOfWork unitOfWork, IStringLocalizer<SaveSaleInvoceCommandHandler> localizer, IMapper mapper)
+        public SaveSaleInvoceCommandHandler(
+            IUnitOfWork unitOfWork,
+            IStringLocalizer<SaveSaleInvoceCommandHandler> localizer,
+            IMapper mapper,
+            IHttpContextAccessor context)
         {
             _unitOfWork = unitOfWork;
             _localizer = localizer;
             this.mapper = mapper;
+            _context = context;
         }
 
         public async Task<Response> Handle(SaveSaleInvoceCommand command, CancellationToken cancellationToken)
         {
-            var pharmacy = await _unitOfWork.Repository<Domain.Models.Pharmacy>().GetItemOnAsync(i => i.Id == command.PharmacyId);
+            var pharmacy = await _unitOfWork.Repository<Domain.Models.Pharmacy>()
+                .GetItemOnAsync(i => i.Id == command.PharmacyId);
+
+            var userId = _context.HttpContext!.User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
 
             if (pharmacy == null) 
             { 
                 return await Response.FailureAsync(_localizer["PharmacyNotExist"].Value);
             }
-            if (pharmacy.OwnerId != command.UserId)
+
+            if (pharmacy.OwnerId != userId)
             {
                 return await Response.FailureAsync("UserNotFound");
             }
