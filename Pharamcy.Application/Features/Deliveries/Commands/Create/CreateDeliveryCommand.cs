@@ -46,7 +46,7 @@ namespace Pharamcy.Application.Features.Deliveries.Commands.Create
             await _unitOfWork.Repository<Delivery>().AddAsync(delivery);
             await _unitOfWork.SaveAsync();
 
-            return await Response.SuccessAsync(delivery.Id);
+            return await Response.SuccessAsync(delivery.Id, _localization["Success"].Value);
         }
     }
 }

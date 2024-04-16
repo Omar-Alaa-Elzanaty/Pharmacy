@@ -37,7 +37,7 @@ namespace Pharamcy.Application.Features.Deliveries.Queries.GetAllDeliveries
                 .Where(x => x.PharmacyId == query.PharmacyId)
                 .ToListAsync();
 
-            var deliveries = entities.Adapt<GetAllDeliveriesByPharmacyIdQueryDto>();
+            var deliveries = entities.Adapt<List<GetAllDeliveriesByPharmacyIdQueryDto>>();
 
             return await Response.SuccessAsync(deliveries);
         }
