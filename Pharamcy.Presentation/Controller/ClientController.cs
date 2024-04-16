@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Pharamcy.Application.Features.Clients.Commands.Create;
 using Pharamcy.Application.Features.Clients.Commands.Delete;
 using Pharamcy.Application.Features.Clients.Commands.Update;
+using Pharamcy.Application.Features.Clients.Queries.GetAllClientsByPharmacyIDQuery;
 
 namespace Pharamcy.Presentation.Controller
 {
@@ -38,10 +39,13 @@ namespace Pharamcy.Presentation.Controller
 
         [HttpPut]
         public async Task<ActionResult<int>> Update([FromBody]UpdateClientCommand command)
-		[HttpGet]
-		public async Task<IActionResult> GetAllAsync(int id)
         {
+
             return Ok(await _mediator.Send(command));
+        }
+		[HttpGet]
+		public async Task<IActionResult> GetAll(int id)
+        {
 			return Ok(await _mediator.Send(new GetAllClientsByPharmacyIDQuery { PharmacyID=id}));
         }
     }
