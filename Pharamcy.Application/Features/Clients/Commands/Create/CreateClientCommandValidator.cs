@@ -12,7 +12,6 @@ namespace Pharamcy.Application.Features.Clients.Commands.Create
         public CreateClientCommandValidator()
         {
             RuleFor(x => x.PhoneNumber).Length(11);
-            RuleFor(x => x.PhoneNumber).MaximumLength(20);
             RuleFor(x => x.Email).EmailAddress();
         }
     }

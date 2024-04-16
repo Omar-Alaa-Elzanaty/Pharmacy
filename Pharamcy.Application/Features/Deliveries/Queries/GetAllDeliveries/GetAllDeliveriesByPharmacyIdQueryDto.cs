@@ -8,6 +8,7 @@ namespace Pharamcy.Application.Features.Deliveries.Queries.GetAllDeliveries
 {
     public class GetAllDeliveriesByPharmacyIdQueryDto
     {
+        public int Id { get; set; }
         public string Name { get; set; }
     }
 }

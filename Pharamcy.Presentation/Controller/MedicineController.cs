@@ -24,24 +24,24 @@ namespace Pharamcy.Presentation.Controller
             return Ok(await _mediator.Send(command));
         }
         [HttpGet("BarCode")]
-        public async Task<ActionResult<GetMedicineByBarCodeQueryDto>> GetByBarCode(GetMedicineByBarCodeQuery query)
+        public async Task<ActionResult<GetMedicineByBarCodeQueryDto>> GetByBarCode([FromQuery]GetMedicineByBarCodeQuery query)
         {
             return Ok(await _mediator.Send(query));
         }
         [HttpGet("getByName")]
-        public async Task<ActionResult<GetMedicineByNameQueryDto>> GetByName(GetMedicineByNameQuery query)
+        public async Task<ActionResult<GetMedicineByNameQueryDto>> GetByName([FromQuery]GetMedicineByNameQuery query)
         {
             return Ok(await _mediator.Send(query));
         }
 
         [HttpGet("GetByNameSalesInvoice")]
-        public async Task<ActionResult<GetMedicineForSalesInvoiceByNameQueryDto>> GetByName([FromBody] GetMedicineForSalesInvoiceByNameQuery query)
+        public async Task<ActionResult<GetMedicineForSalesInvoiceByNameQueryDto>> GetByName([FromQuery] GetMedicineForSalesInvoiceByNameQuery query)
         {
             return Ok(await _mediator.Send(query));
         }
 
         [HttpGet("GetByBarCodeSalesInvoice")]
-        public async Task<ActionResult<GetMedicineByBarCodeSaleInvoiceQueryDto>> GetByBarCode([FromBody] GetMedicineByBarCodeSaleInvoiceQuery query)
+        public async Task<ActionResult<GetMedicineByBarCodeSaleInvoiceQueryDto>> GetByBarCode([FromQuery] GetMedicineByBarCodeSaleInvoiceQuery query)
         {
             return Ok(await _mediator.Send(query));
         }
